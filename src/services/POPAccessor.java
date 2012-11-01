@@ -29,6 +29,10 @@ public class POPAccessor {
 	}
 	
 	public List<Model.Message> fetchMessages() throws Exception {
+		return fetchMessages(false);
+	}
+	
+	public List<Model.Message> fetchMessages(boolean delete_from_server) throws Exception {
 		Folder folder = store.getFolder("INBOX");
 		folder.open(Folder.READ_ONLY);
 		
@@ -56,6 +60,10 @@ public class POPAccessor {
 				}
 			}
 			res.add(new Model.Message(m.getSubject(), body));
+		}
+		
+		if (delete_from_server) {
+			folder.close(false);
 		}
 		
 		return res;
