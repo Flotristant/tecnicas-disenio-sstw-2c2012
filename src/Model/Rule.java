@@ -1,15 +1,12 @@
 package Model;
 
-import java.util.Collection;
 
 public abstract class Rule implements IRule {
 
-	protected Collection<ActionRule> collectionActions;
+	protected Iterable<ActionRule> collectionActions;
 	
 	@Override
-	public void execute() {
+	public void execute(Message message) {
 		// TODO Auto-generated method stub
-
 	}
-
 }
