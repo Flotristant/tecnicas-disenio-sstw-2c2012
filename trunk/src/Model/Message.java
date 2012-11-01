@@ -3,35 +3,22 @@ package Model;
 import java.util.*;
 
 public class Message {
-	private String subject, body, from, to;
+	private String subject, body, sender;
 	private Map<String, byte[]> attachments;
 	
-	public Message(String subject, String body, Map<String, byte[]> attachments) {
+	public Message(String sender, String subject, String body, Map<String, byte[]> attachments) {
+		this.setSender(sender);
 		this.subject = subject;
 		this.body = body;
 		this.attachments = attachments;
 	}
 	
-	public String getFrom() {
-		return from;
+	public Message(String sender, String subject, String body) {
+		this(sender, subject, body, new HashMap<String, byte[]>());
 	}
-
-	public void setFrom(String from) {
-		this.from = from;
-	}
-
-	public String getTo() {
-		return to;
-	}
-
-	public void setTo(String to) {
-		this.to = to;
-	}
-
+	
 	public Message(String subject, String body) {
-		this.subject = subject;
-		this.body = body;
-		this.attachments = new HashMap<String, byte[]>();
+		this("", subject, body, new HashMap<String, byte[]>());
 	}
 
 	public String getSubject() {
@@ -57,12 +44,12 @@ public class Message {
 	public void setAttachment(String filename, byte[] data) {
 		this.attachments.put(filename, data);
 	}
-	
-	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append(String.format("Subject: %s\n", this.subject));
-		str.append(String.format("Body: %s\n", this.body));
-		str.append(String.format("Attachments: %s\n", this.attachments));
-		return str.toString();
+
+	public String getSender() {
+		return sender;
+	}
+
+	private void setSender(String sender) {
+		this.sender = sender;
 	}
 }

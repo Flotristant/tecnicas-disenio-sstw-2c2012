@@ -1,5 +1,5 @@
 package Model;
 
 public interface IRule {
-	public void execute();
+	public void execute(Message message);
 }
