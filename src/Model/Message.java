@@ -3,7 +3,7 @@ package Model;
 import java.util.*;
 
 public class Message {
-	private String subject, body;
+	private String subject, body, from, to;
 	private Map<String, byte[]> attachments;
 	
 	public Message(String subject, String body, Map<String, byte[]> attachments) {
@@ -12,6 +12,22 @@ public class Message {
 		this.attachments = attachments;
 	}
 	
+	public String getFrom() {
+		return from;
+	}
+
+	public void setFrom(String from) {
+		this.from = from;
+	}
+
+	public String getTo() {
+		return to;
+	}
+
+	public void setTo(String to) {
+		this.to = to;
+	}
+
 	public Message(String subject, String body) {
 		this.subject = subject;
 		this.body = body;

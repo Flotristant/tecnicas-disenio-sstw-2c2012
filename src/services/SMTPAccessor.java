@@ -7,10 +7,10 @@ import javax.mail.internet.MimeMessage;
 
 public class SMTPAccessor {
 	private Session session;
-	private String from, passwd;
+	private String user, passwd;
 	
 	public SMTPAccessor (String host, String user, String passwd) {
-		this.from = user;
+		this.user = user;
 		this.passwd = passwd;
 		
 		Properties props = new Properties();
@@ -30,24 +30,25 @@ public class SMTPAccessor {
 		// Si requiere o no usuario y password para conectarse.
 		props.setProperty("mail.smtp.auth", "true");
 		
-		Session session = Session.getDefaultInstance(props);
+		session = Session.getDefaultInstance(props);
 		session.setDebug(true);
 	}
 	
-	public void sendMessage(Model.Message message, String to) throws Exception {
+	public void sendMessage(Model.Message message) throws Exception {
 		MimeMessage mimemessage = new MimeMessage(session);
 		 
 		// Quien envia el correo
-		mimemessage.setFrom(new InternetAddress(from));
+		mimemessage.setFrom(new InternetAddress(message.getFrom()));
 
 		// A quien va dirigido
-		mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+		mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(message.getTo()));
 		
 		mimemessage.setSubject(message.getSubject());
 		mimemessage.setText(message.getBody());
 		
 		Transport t = session.getTransport("smtp");
-		t.connect(from, passwd);
+		t.connect(this.user, this.passwd);
+		
 		t.sendMessage(mimemessage, mimemessage.getAllRecipients());
 		t.close();
 	}
