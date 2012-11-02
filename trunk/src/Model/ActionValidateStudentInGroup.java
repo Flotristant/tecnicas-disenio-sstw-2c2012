@@ -1,6 +1,5 @@
 package Model;
 
-import java.util.HashSet;
 import java.util.Map;
 import persistence.IStudentPersistence;
 
@@ -22,16 +21,21 @@ public class ActionValidateStudentInGroup extends ActionRule {
 	}
 	
 	private boolean validateStudentsInGroup() {
-		HashSet<String> keys = (HashSet<String>) this.attachment.keySet();
-		if (keys.toArray().length > 1) return false;
+		if (this.attachment.keySet().size() != 1) return false;
 		
-		String body = this.attachment.get(keys.toArray()[0]).toString();
+		String body = new String(this.attachment.get(this.attachment.keySet().toArray()[0]));
 		
 		String[] padrones = body.split(" |\n");
+
 		//si hay algo no numérico rechazo todo el txt
-		for (int i= 0; i < padrones.length; i++ )
-			if (Integer.getInteger(padrones[i]) == null) return false;
-		for (int i= 0; i < padrones.length; i++ ) {
+		for (int i = 0; i < padrones.length; i++)			
+			try {
+				Integer.valueOf(padrones[i]);
+			}
+			catch(NumberFormatException e) {
+				return false;
+			}
+		for (int i = 0; i < padrones.length; i++) {
 			if (!this.studentPersistence.validateStudentInCuatrimestre(this.codigoMateria, padrones[i])) return false;
 			if (!this.studentPersistence.validateStudentInGroup(this.codigoMateria, padrones[i])) return false;
 		}
