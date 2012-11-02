@@ -9,6 +9,7 @@ public class RuleEntregaTp extends Rule {
 		return rule;
 	}
 	public RuleEntregaTp(){
+		//TODO validar email : que el sender este en la bd y con un grupo asignado. entonces se asigna ese tp a ese numero de grupos
 		this.collectionActions = new ArrayList<ActionRule>();
 //		((ArrayList<ActionRule>)collectionActions).add(new ActionValidarEmail(message, mailPersistence))
 	}
