@@ -38,15 +38,22 @@ public class StudentPersistenceMock implements IStudentPersistence {
 
 	@Override
 	public boolean validateStudentInCuatrimestre(String codigoMateria,
-			String padrones) {
-		// TODO Auto-generated method stub
-		return false;
+			String padron) {
+		this.padron = padron;
+		this.codigoMateria = codigoMateria;
+		
+		if (padron.equals("10000"))
+			return false;
+		return true;
 	}
 
 	@Override
 	public boolean validateStudentInGroup(String codigoMateria, String padron) {
-		// TODO Auto-generated method stub
-		return false;
+		this.codigoMateria = codigoMateria;
+		this.padron = padron;
+		if (padron.equals("90000"))
+			return false;
+		return true;
 	}
 
 }
