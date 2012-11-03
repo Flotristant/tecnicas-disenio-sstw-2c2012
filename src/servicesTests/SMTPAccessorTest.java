@@ -16,6 +16,7 @@ public class SMTPAccessorTest {
 		SMTPAccessor smtp = new SMTPAccessor("smtp.gmail.com", "tecnicasprueba01@gmail.com", "tecnicas01prueba");
 		try {
 			Message m = new Message("subject", "body");
+			m.setAttachment("test.txt", "hola".getBytes());
 			m.setFrom("tecnicasprueba01@gmail.com");
 			m.setTo("aletorrado@gmail.com");
 			smtp.sendMessage(m);

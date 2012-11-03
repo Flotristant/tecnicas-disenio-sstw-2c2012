@@ -62,6 +62,10 @@ public class Message {
 	public void setAttachment(String filename, byte[] data) {
 		this.attachments.put(filename, data);
 	}
+	
+	public Map<String, byte[]> getAttachments() {
+		return this.attachments;
+	}
 
 	public String getSender() {
 		return sender;

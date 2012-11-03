@@ -44,22 +44,32 @@ public class POPAccessor {
 		
 		for (Message m : mensajes) {
 			// solo soportamos mensajes de texto plano
+			HashMap<String, byte[]> attachs = new HashMap<String, byte[]>();
 			String body = "--empty--";
 			if (m.isMimeType("text/*")) {
 				body = (String) m.getContent();
 			} else if (m.isMimeType("multipart/*")) {
 				Multipart multipart = (Multipart) m.getContent();
 				for (int i = 0; i<multipart.getCount(); i++) {
-					Part p = multipart.getBodyPart(i);
-					if (p.isMimeType("text/plain")) {
-						body = (String) p.getContent();
-						break;
-					} else if (p.isMimeType("text/*")) {
-						body = (String) p.getContent();
+					BodyPart p = multipart.getBodyPart(i);
+					boolean plaintext_found = false;
+					String filename = p.getFileName();
+					if (filename == null) { // cuerpo del mail
+						if (p.isMimeType("text/plain")) {
+							body = (String) p.getContent();
+							plaintext_found = true;
+						} else if (p.isMimeType("text/*") && !plaintext_found) {
+							body = (String) p.getContent();
+						}
+					} else { // attach
+						String content = (String)p.getContent();
+						attachs.put(filename, content.getBytes());
 					}
 				}
 			}
-			res.add(new Model.Message(m.getSubject(), body));
+			Model.Message modelmessage = new Model.Message(m.getSubject(), body);
+			modelmessage.getAttachments().putAll(attachs);
+			res.add(modelmessage);
 		}
 		
 		if (delete_from_server) {
