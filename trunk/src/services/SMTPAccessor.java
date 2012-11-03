@@ -1,9 +1,15 @@
 package services;
 
 import java.util.*;
+
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
+import javax.mail.util.ByteArrayDataSource;
 
 public class SMTPAccessor {
 	private Session session;
@@ -44,7 +50,24 @@ public class SMTPAccessor {
 		mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(message.getTo()));
 		
 		mimemessage.setSubject(message.getSubject());
-		mimemessage.setText(message.getBody());
+		
+	    // create the message part 
+	    MimeBodyPart messageBodyPart = new MimeBodyPart();
+	    messageBodyPart.setText(message.getBody());
+
+	    Multipart multipart = new MimeMultipart();
+	    multipart.addBodyPart(messageBodyPart);
+	    
+	    for (String filename : message.getAttachments().keySet()) {
+		    messageBodyPart = new MimeBodyPart();
+		    DataSource source = new ByteArrayDataSource(message.getAttachment(filename), "application/octet-stream");
+		    messageBodyPart.setDataHandler(new DataHandler(source));
+		    messageBodyPart.setFileName(filename);
+		    multipart.addBodyPart(messageBodyPart);
+	    }
+
+	    // Put parts in message
+	    mimemessage.setContent(multipart);
 		
 		Transport t = session.getTransport("smtp");
 		t.connect(this.user, this.passwd);
