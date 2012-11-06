@@ -1,4 +1,4 @@
-package Controller;
+package controller;
 
 public class PatternRule {
 //	public IRule searchPattern(String subject)
