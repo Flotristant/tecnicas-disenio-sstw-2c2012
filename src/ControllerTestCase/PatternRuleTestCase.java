@@ -1,10 +1,11 @@
-package ControllerTestCase;
+package controller.tests;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
-import Controller.PatternRule;
+import controller.PatternRule;
+
 
 
 public class PatternRuleTestCase {
