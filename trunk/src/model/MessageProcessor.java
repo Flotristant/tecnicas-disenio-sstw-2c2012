@@ -10,12 +10,28 @@ public class MessageProcessor {
 		while (it.hasNext()) {
 			model.Message m = it.next();
 			
-			System.out.print("FROM: " + m.getFrom());
+			System.out.print("FROM: " + m.getSender());
 			System.out.print(" \n");
-			System.out.print("TO: " + m.getTo());
+			System.out.print("TO: ");
 			System.out.print(" \n");
-			System.out.print("CC: " + m.getToCC());
-		
+			List<String> to = m.getTo();
+			Iterator<String> ite = to.iterator();
+			while (ite.hasNext()) {
+				String st= ite.next();
+				System.out.print("Es una to: " + st);
+				System.out.print(" \n");
+			}
+			
+			System.out.print("CC:");
+			System.out.print(" \n");
+			List<String> cc = m.getToCC();
+			 ite = cc.iterator();
+			while (ite.hasNext()) {
+				String st= ite.next();
+				System.out.print("Es una cc: " + st);
+				System.out.print(" \n");
+			}
+			
 			System.out.print(" \n");
 			System.out.print("SUBJECT: " + m.getSubject());
 			System.out.print(" \n");

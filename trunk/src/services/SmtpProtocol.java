@@ -52,15 +52,26 @@ public class SmtpProtocol extends SenderProtocol {
 				MimeMessage mimemessage = new MimeMessage(session);
 		 
 				// Quien envia el correo
-				mimemessage.setFrom(new InternetAddress(message.getFrom()));
+				mimemessage.setFrom(new InternetAddress(message.getSender()));
 
 				//TODO: pincha si hay mas de 1 dir TO
 				// A quien va dirigido
-				mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(message.getTo()));
-				
+				List<String> to= message.getTo();
+				Iterator<String> ite = to.iterator();
+				while (ite.hasNext()) {
+					String str= ite.next();
+					mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(str));
+				}
+		
 				//TODO:pincha con + de 1 cc
-				if ( message.getToCC() != null ) {
-					mimemessage.addRecipient(Message.RecipientType.CC, new InternetAddress(message.getToCC()));
+				
+				if (message.getToCC() != null ) {
+					List<String> toCC = message.getToCC();
+					ite = toCC.iterator();
+					while (ite.hasNext()) {
+						String str= ite.next();
+						mimemessage.addRecipient(Message.RecipientType.CC, new InternetAddress(str));
+					}
 				}
 		
 				mimemessage.setSubject(message.getSubject());
