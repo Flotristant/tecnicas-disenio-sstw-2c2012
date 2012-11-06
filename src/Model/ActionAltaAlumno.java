@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import persistence.IStudentPersistence;
 
@@ -18,6 +18,10 @@ public class ActionAltaAlumno extends ActionRule {
 		this.sender = sender;
 	}
 	
+	public ActionAltaAlumno(IStudentPersistence studentPersistence) {
+		this("", "", "", "", studentPersistence);
+	}
+
 	@Override
 	public boolean execute() {
 		this.studentPersistence.saveStudent(codigo, padron, name, sender);

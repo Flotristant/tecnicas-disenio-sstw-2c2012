@@ -1,14 +1,14 @@
-package Model;
+package model;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class MessageProcessor {
 	
-	public 	List<Model.Message> process(List<Model.Message> mesagge) {
-		Iterator<Model.Message> it = mesagge.iterator();
+	public 	List<model.Message> process(List<model.Message> mesagge) {
+		Iterator<model.Message> it = mesagge.iterator();
 		while (it.hasNext()) {
-			Model.Message m = it.next();
+			model.Message m = it.next();
 			
 			System.out.print("FROM: " + m.getFrom());
 			System.out.print(" \n");
@@ -23,8 +23,8 @@ public class MessageProcessor {
 			System.out.print(" \n");
 		}
 	
-		List<Model.Message> lista = new ArrayList<Model.Message>();
-		Model.Message respuesta = new Model.Message("pruebatecnicas@gmail.com","pruebatecnicas@hotmail.com","Respuesta","HOOla");
+		List<model.Message> lista = new ArrayList<model.Message>();
+		model.Message respuesta = new model.Message("pruebatecnicas@gmail.com","pruebatecnicas@hotmail.com","Respuesta","HOOla");
 		respuesta.addCC("gusttavo_fco@hotmail.com");
 		lista.add(respuesta);
 		return lista;
