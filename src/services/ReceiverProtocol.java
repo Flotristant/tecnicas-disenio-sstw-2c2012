@@ -10,5 +10,5 @@ public abstract class ReceiverProtocol extends ProtocolMail {
 		super(user, pass, port, host);
 	}
 
-	public abstract  List<Model.Message> receive() throws MessagingException, IOException;	
+	public abstract  List<model.Message> receive() throws MessagingException, IOException;	
 }

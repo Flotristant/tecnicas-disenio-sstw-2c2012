@@ -31,7 +31,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 	}
 
 	@Override
-	public  List<Model.Message> receive() throws MessagingException, IOException {
+	public  List<model.Message> receive() throws MessagingException, IOException {
         
 		URLName url = new URLName("pop3", this.host, Integer.parseInt(this.port), "",
                 this.user, this.pass);
@@ -45,7 +45,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 		
 		// Convertimos de javax.mail.Message a Model.Message
 		
-		ArrayList<Model.Message> res = new ArrayList<Model.Message>();
+		ArrayList<model.Message> res = new ArrayList<model.Message>();
 		
 		for (Message m : mensajes) {
 			// solo soportamos mensajes de texto plano
@@ -72,7 +72,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 					}
 				}
 			}
-			Model.Message modelmessage = new Model.Message(InternetAddress.toString(m.getFrom()), 
+			model.Message modelmessage = new model.Message(InternetAddress.toString(m.getFrom()), 
 					InternetAddress.toString(m.getRecipients(Message.RecipientType.TO)), m.getSubject(), body);
 			
 			Address[] ccTo = m.getRecipients(Message.RecipientType.CC);

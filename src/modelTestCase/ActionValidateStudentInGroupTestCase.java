@@ -4,12 +4,13 @@ import java.util.HashMap;
 
 import junit.framework.Assert;
 
+import model.ActionValidateStudentInGroup;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import persistenceMocks.StudentPersistenceMock;
 
-import Model.ActionValidateStudentInGroup;
 
 public class ActionValidateStudentInGroupTestCase {
 

@@ -2,11 +2,12 @@ package modelTestCase;
 
 import junit.framework.Assert;
 
+import model.ActionAltaAlumno;
+
 import org.junit.Test;
 
 import persistenceMocks.StudentPersistenceMock;
 
-import Model.ActionAltaAlumno;
 
 public class ActionAltaAlumnoTestCase {
 

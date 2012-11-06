@@ -41,14 +41,14 @@ public class SmtpProtocol extends SenderProtocol {
 	}
 
 	@Override
-	public void send(List<Model.Message> messages) throws AddressException, MessagingException {
+	public void send(List<model.Message> messages) throws AddressException, MessagingException {
 		
 		if (messages != null ) {
-			Iterator<Model.Message> it= messages.iterator();
+			Iterator<model.Message> it= messages.iterator();
 		
 			while (it.hasNext()) {
 			
-				Model.Message message = it.next();
+				model.Message message = it.next();
 				MimeMessage mimemessage = new MimeMessage(session);
 		 
 				// Quien envia el correo
