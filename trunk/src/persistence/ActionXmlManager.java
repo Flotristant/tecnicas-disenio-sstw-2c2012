@@ -17,14 +17,14 @@ public class ActionXmlManager implements IXmlManager<ActionRule> {
 	public Element getElementFromItem(ActionRule item, Document document) {
 		Element actionElement = document.createElement("action");
 		
-		actionElement.setAttribute("name", item.getClass().getName());
+		actionElement.setAttribute("name", item.getClass().getSimpleName());
 		return actionElement;
 	}
 
 	@Override
 	public ActionRule getItemFromXmlElement(Element actionElement) throws Exception {
 		
-		switch (actionElement.getAttribute("action")) {
+		switch (actionElement.getAttribute("name")) {
 		case "ActionAltaAlumno" : return new ActionAltaAlumno(new StudentPersistence());
 		case "ActionValidarEmail" : return new ActionValidarEmail(new MailPersistence());
 		case "ActionSaveTp" : return new ActionSaveTp(new TpPersistence());
