@@ -1,12 +1,17 @@
 package model;
 
-public class RuleAltaMateria extends Rule {
-	private static final String rule = "\\[ALTA-MATERIA-[0-9]{2}\\.?[0-9]{2}\\] [0-9]{5}-.*" ;
+import java.util.regex.Matcher;
 
-	public static String getRule() {
-		return rule;
+public class RuleAltaMateria extends Rule {
+
+	public RuleAltaMateria(String stringRule) {
+		super(stringRule);
 	}
 
-	
-	
+	@Override
+	protected void searchComponentsInSubject(Matcher matcher) {
+		super.setCodigoMateria(matcher.group(1));
+		super.setPadron(matcher.group(2));
+		super.setName(matcher.group(3));
+	}
 }

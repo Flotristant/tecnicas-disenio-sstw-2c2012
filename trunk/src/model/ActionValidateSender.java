@@ -5,15 +5,9 @@ import persistence.IMailPersistence;
 public class ActionValidateSender extends ActionRule {
 
 	private IMailPersistence mailPersistence;
-	private String sender;
-
-	public ActionValidateSender(String sender, IMailPersistence mailPersistence) {
-		this.sender = sender;
-		this.mailPersistence = mailPersistence;
-	}
 
 	public ActionValidateSender(IMailPersistence mailPersistence) {
-		this("", mailPersistence);
+		this.mailPersistence = mailPersistence;
 	}
 
 	@Override
@@ -22,7 +16,11 @@ public class ActionValidateSender extends ActionRule {
 	}
 	
 	private boolean validateSender() {
-		return mailPersistence.existsMail(this.sender);
+		return mailPersistence.existsMail(this.message.getSender());
+	}
+
+	@Override
+	protected void initializeActions(Rule rule) {
 	}
 		
 }

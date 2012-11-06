@@ -10,22 +10,22 @@ public class ActionAltaAlumno extends ActionRule {
 	private String codigo;
 	private String sender;
 
-	public ActionAltaAlumno(String codigoMateria,String padron, String name, String sender, IStudentPersistence studentPersistence) {
-		this.studentPersistence = studentPersistence;
-		this.padron = padron;
-		this.name = name;
-		this.codigo = codigoMateria;
-		this.sender = sender;
-	}
-	
 	public ActionAltaAlumno(IStudentPersistence studentPersistence) {
-		this("", "", "", "", studentPersistence);
+		this.studentPersistence = studentPersistence;
 	}
 
 	@Override
 	public boolean execute() {
 		this.studentPersistence.saveStudent(codigo, padron, name, sender);
 		return true;
+	}
+
+	@Override
+	protected void initializeActions(Rule rule) {
+		this.padron = rule.getPadron();
+		this.name = rule.getName();
+		this.codigo = rule.getCodigoMateria();
+		this.sender = this.message.getSender();
 	}
 	
 }

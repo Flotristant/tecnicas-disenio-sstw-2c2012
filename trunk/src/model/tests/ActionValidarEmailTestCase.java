@@ -1,6 +1,10 @@
 package model.tests;
 
+import java.util.HashMap;
+
 import model.ActionValidateSender;
+import model.Message;
+import model.RuleAltaGrupo;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,7 +17,8 @@ public class ActionValidarEmailTestCase {
 	@Test
 	public void testShouldReturnTrueWhenValidateEmail() {
 		MailPersistenceMock mailPersistence = new MailPersistenceMock();
-		ActionValidateSender validatorEmail = new ActionValidateSender("francisco", mailPersistence);
+		ActionValidateSender validatorEmail = new ActionValidateSender(mailPersistence);
+		validatorEmail.initialize(new RuleAltaGrupo("rule1") , new Message("francisco", "subject", "body", new HashMap<String, byte[]>()));
 		
 		Assert.assertTrue(validatorEmail.execute());
 		

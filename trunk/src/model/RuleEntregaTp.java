@@ -1,17 +1,15 @@
 package model;
 
-import java.util.ArrayList;
+import java.util.regex.Matcher;
 
 public class RuleEntregaTp extends Rule {
-	private static final String rule = "\\[ENTREGA-TP-[0-9]+\\]" ;
 
-	public static String getRule() {
-		return rule;
-	}
-	public RuleEntregaTp(){
-		//TODO validar email : que el sender este en la bd y con un grupo asignado. entonces se asigna ese tp a ese numero de grupos
-		this.setCollectionActions(new ArrayList<ActionRule>());
-//		((ArrayList<ActionRule>)collectionActions).add(new ActionValidarEmail(message, mailPersistence))
+	public RuleEntregaTp(String stringRule) {
+		super(stringRule);
 	}
 
+	@Override
+	protected void searchComponentsInSubject(Matcher matcher) {
+		super.setTpNumber(matcher.group(1));
+	}
 }
