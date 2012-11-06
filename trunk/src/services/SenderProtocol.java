@@ -9,5 +9,5 @@ public abstract class SenderProtocol extends ProtocolMail {
 		super(user, pass, port, host);
 	}
 
-	public abstract void send(List<Model.Message> messages) throws AddressException, MessagingException;
+	public abstract void send(List<model.Message> messages) throws AddressException, MessagingException;
 }
