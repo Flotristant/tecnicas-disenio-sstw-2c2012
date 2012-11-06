@@ -1,8 +1,13 @@
 package model.tests;
 
+import java.util.HashMap;
+
 import junit.framework.Assert;
 
 import model.ActionAltaAlumno;
+import model.Message;
+import model.Rule;
+import model.RuleAltaMateria;
 
 import org.junit.Test;
 
@@ -13,9 +18,13 @@ public class ActionAltaAlumnoTestCase {
 
 	@Test
 	public void testShouldAltaAlumnoPassWhenCreateAnStudent() {
+		Rule rule = new RuleAltaMateria("ruleAltaMateria");
+		rule.setCodigoMateria("7502");
+		rule.setPadron("91227");
+		rule.setName("francisco");
 		StudentPersistenceMock studentPersistence = new StudentPersistenceMock();
-		ActionAltaAlumno altaAlumno = new ActionAltaAlumno("7502","91227","francisco","francisco@soler", studentPersistence);
-		
+		ActionAltaAlumno altaAlumno = new ActionAltaAlumno(studentPersistence);
+		altaAlumno.initialize(rule, new Message("francisco@soler", "", "", new HashMap<String, byte[]>()));
 		altaAlumno.execute();
 		
 		Assert.assertEquals("7502", studentPersistence.getCodigoMateriaToSave());

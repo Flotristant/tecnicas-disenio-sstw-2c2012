@@ -4,16 +4,10 @@ import persistence.IMailPersistence;
 
 public class ActionValidarEmail extends ActionRule {
 
-	private Message message;
 	private IMailPersistence mailPersistence;
 
-	public ActionValidarEmail(Message message, IMailPersistence mailPersistence) {
-		this.message = message;
-		this.mailPersistence = mailPersistence;
-	}
-
 	public ActionValidarEmail(IMailPersistence mailPersistence) {
-		this(null, mailPersistence);
+		this.mailPersistence = mailPersistence;
 	}
 
 	@Override
@@ -22,11 +16,11 @@ public class ActionValidarEmail extends ActionRule {
 	}
 	
 	private boolean validarDireccionEmail() {
-		return mailPersistence.existsMail(message.getSender());
+		return mailPersistence.existsMail(this.message.getSender());
 	}
 	
-	public void setMessage(Message message) {
-		this.message = message;
+	@Override
+	protected void initializeActions(Rule rule) {
 	}
 		
 }

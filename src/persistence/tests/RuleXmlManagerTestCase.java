@@ -9,6 +9,7 @@ import model.ActionRule;
 import model.ActionSaveTp;
 import model.ActionValidarEmail;
 import model.Rule;
+import model.RuleAltaMateria;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -40,7 +41,7 @@ public class RuleXmlManagerTestCase {
 	@Test
 	public void testShouldGenerateAnXmlElementFromRule() throws Exception
 	{
-		Rule rule = new Rule("pattern1");
+		Rule rule = new RuleAltaMateria("pattern1");
 		rule.addAction(action1);
 		rule.addAction(action2);
 		
@@ -62,7 +63,7 @@ public class RuleXmlManagerTestCase {
 	@Test
 	public void testShouldGenerateARuleFromXml() throws Exception
 	{
-		String xml = "<rule pattern='pattern1'>" +
+		String xml = "<rule name='RuleAltaMateria' pattern='pattern1'>" +
 				"<action name='ActionAltaAlumno'/><action name='ActionSaveTp'/>" +
 				"<action name='ActionValidarEmail'/></rule>";
 		

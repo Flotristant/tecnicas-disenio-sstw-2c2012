@@ -9,14 +9,8 @@ public class ActionValidateStudentInGroup extends ActionRule {
 	private String codigoMateria;
 	private Map<String, byte[]> attachment;
 
-	public ActionValidateStudentInGroup(String codigoMateria, Map<String, byte[]> attachment, IStudentPersistence studentPersistence){
-		this.attachment = attachment;
-		this.codigoMateria = codigoMateria;
-		this.studentPersistence = studentPersistence;
-	}
-
 	public ActionValidateStudentInGroup(IStudentPersistence studentPersistence) {
-		this("", null, studentPersistence);
+		this.studentPersistence = studentPersistence;
 	}
 
 	@Override
@@ -44,5 +38,11 @@ public class ActionValidateStudentInGroup extends ActionRule {
 			if (!this.studentPersistence.validateStudentInGroup(this.codigoMateria, padrones[i])) return false;
 		}
 		return true;
+	}
+
+	@Override
+	protected void initializeActions(Rule rule) {
+		this.attachment = this.message.getAttachments();
+		this.codigoMateria = rule.getCodigoMateria();
 	}
 }

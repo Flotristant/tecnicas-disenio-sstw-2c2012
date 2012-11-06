@@ -1,11 +1,15 @@
 package model;
 
-public class RuleConsultaTema extends Rule {
-	private static final String rule = "\\[CONSULTA-((PUBLICA)|(PRIVADA))\\] .*" ;
+import java.util.regex.Matcher;
 
-	public static String getRule() {
-		return rule;
+public class RuleConsultaTema extends Rule {
+
+	public RuleConsultaTema(String stringRule) {
+		super(stringRule);
 	}
 
-
+	@Override
+	protected void searchComponentsInSubject(Matcher matcher) {
+		super.setTypeOfQuery(matcher.group(1));
+	}
 }

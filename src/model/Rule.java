@@ -1,33 +1,88 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
-
-public class Rule implements IRule {
+public abstract class Rule implements IRule {
 
 	private ArrayList<ActionRule> collectionActions;
-	private String rule;
+	protected String pattern;
+	private String typeOfQuery;
+	private String tpNumber;
+	private String codigoMateria;
+	private String padron;
+	private String name;
 	
+	public void setTypeOfQuery(String typeOfQuery) {
+		this.typeOfQuery = typeOfQuery;
+	}
+
+	public void setTpNumber(String tpNumber) {
+		this.tpNumber = tpNumber;
+	}
+
+	public void setCodigoMateria(String codigoMateria) {
+		this.codigoMateria = codigoMateria;
+	}
+
+	public void setPadron(String padron) {
+		this.padron = padron;
+	}
+
 	public Rule(String stringRule) {
-		this.rule = stringRule;
+		this.pattern = stringRule;
 		this.collectionActions = new ArrayList<ActionRule>();
 	}
 
 	public String getPattern() {
-		return this.rule;
+		return this.pattern;
 	}
 	
 	@Override
 	public void execute(Message message) {
-		for (ActionRule action : this.collectionActions)
+		String subject = message.getSubject();
+		Pattern pattern = Pattern.compile(this.pattern);
+		Matcher matcher = pattern.matcher(subject);
+		if (matcher.matches())
+			searchComponentsInSubject(matcher);
+		for (ActionRule action : this.collectionActions) {
+			action.initialize(this, message);
 			action.execute();
+		}
 	}
 
+	protected abstract void searchComponentsInSubject(Matcher matcher);
+	
 	public Iterable<ActionRule> getActions() {
 		return collectionActions;
 	}
 
 	public void addAction(ActionRule action) {
 		this.collectionActions.add(action);
+	}
+
+	public String getTypeOfQuery() {
+		return this.typeOfQuery;
+	}
+
+	public String getTpNumber() {
+		return this.tpNumber;
+	}
+
+	public String getCodigoMateria() {
+		return this.codigoMateria;
+	}
+
+	public String getPadron() {
+		return this.padron;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

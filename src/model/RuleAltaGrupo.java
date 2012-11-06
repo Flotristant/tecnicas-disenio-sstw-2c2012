@@ -1,10 +1,14 @@
 package model;
 
-public class RuleAltaGrupo extends Rule {
-	private static final String rule = "\\[ALTA-GRUPO\\]" ;
+import java.util.regex.Matcher;
 
-	public static String getRule() {
-		return rule;
+public class RuleAltaGrupo extends Rule {
+
+	public RuleAltaGrupo(String stringRule) {
+		super(stringRule);
 	}
-	
+
+	@Override
+	protected void searchComponentsInSubject(Matcher matcher) {
+	}
 }

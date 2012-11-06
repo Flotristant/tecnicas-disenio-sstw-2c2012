@@ -7,6 +7,7 @@ import model.ActionAltaAlumno;
 import model.ActionRule;
 import model.ActionSaveTp;
 import model.Rule;
+import model.RuleAltaGrupo;
 
 import org.junit.Test;
 
@@ -17,7 +18,7 @@ public class RuleTestCase {
 	
 	@Test
 	public void testShouldSaveCorrectlyPattern() {
-		Rule rule = new Rule("pattern1");
+		Rule rule = new RuleAltaGrupo("pattern1");
 		
 		Assert.assertEquals("pattern1", rule.getPattern());
 	}
@@ -27,7 +28,7 @@ public class RuleTestCase {
 		ActionAltaAlumno action1 = new ActionAltaAlumno(new StudentPersistenceMock()); 
 		ActionSaveTp action2 = new ActionSaveTp(new TpPersistenceMock());
 		
-		Rule rule = new Rule("pattern1");
+		Rule rule = new RuleAltaGrupo("pattern1");
 		rule.addAction(action1);
 		rule.addAction(action2);
 		
