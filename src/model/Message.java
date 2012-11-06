@@ -3,37 +3,34 @@ package model;
 import java.util.*;
 
 public class Message {
-	private String subject, body, sender;
+	private String subject, body;
 	private Map<String, byte[]> attachments;
 	private String from;
-	private String to;
-//	private List<String> cc;
-//	private List<String> bcc;
-	private String cc;
-	private String bcc;
+	private List<String> to;
+	private List<String> cc;
+	private List<String> bcc;
 	
 	public Message(String sender, String subject, String body, Map<String, byte[]> attachments) {
-		this.setSender(sender);
 		this.subject = subject;
 		this.body = body;
 		this.attachments = attachments;
-		this.cc=null;
-		this.bcc=null;
+		this.cc = new ArrayList<String>();
+		this.bcc = new ArrayList<String>();
 	}
 	
 	public Message(String from, String to, String subject, String body) {
 		this.from = from;
-		this.to = to;
+		this.setTo(to);
 		this.subject = subject;
 		this.body = body;
 		this.attachments = new HashMap<String, byte[]>();
-//		this.cc = new ArrayList<String>();
-//		this.bcc = new ArrayList<String>();
+		this.cc = null;
+		this.bcc = null;
 	}
 	
 	
 	
-	public String getFrom() {
+	public String getSender() {
 		return from;
 	}
 
@@ -41,21 +38,13 @@ public class Message {
 		this.from = from;
 	}
 	
-	public String getTo() {
+	public List<String> getTo() {
 		return to;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	private void setTo(String to) {
+		this.to = this.splitDirs(to);
 	}
-	
-//	public Message(String sender, String subject, String body) {
-//		this(sender, subject, body, new HashMap<String, byte[]>());
-//	}
-//	
-//	public Message(String subject, String body) {
-//		this("", subject, body, new HashMap<String, byte[]>());
-//	}
 
 	public String getSubject() {
 		return subject;
@@ -84,14 +73,6 @@ public class Message {
 	public Map<String, byte[]> getAttachments() {
 		return this.attachments;
 	}
-
-	public String getSender() {
-		return sender;
-	}
-
-	private void setSender(String sender) {
-		this.sender = sender;
-	}
 	
 	public String toString() {
 		StringBuilder str = new StringBuilder();
@@ -100,23 +81,37 @@ public class Message {
 		str.append(String.format("Attachments: %s\n", this.attachments));
 		return str.toString();
 	}
+
+	private List<String> splitDirs(String str) {
+		String[] strs = str.split(",");
+		List<String> dirs = new ArrayList<String>();
+		for (int i=0; i < strs.length; i++) {
+			strs[i]=strs[i].replaceAll("(\\n|\\r|\\t)","");
+			strs[i]=strs[i].replaceAll(" " ,"");
+			int j = strs[i].indexOf('<');
+			if ( j != -1) {
+				strs[i]= strs[i].substring(j+1, strs[i].length()-1);
+				strs[i]= strs[i].replaceAll(">"," ");
+			}
+			
+			dirs.add(strs[i]);
+		}
+		return dirs;
+	}
 	
 	public void addCC(String toCC) {
-		this.cc= toCC;
-	//	this.cc.add(toCC);
+		this.cc = this.splitDirs(toCC);		
 	}
 	
 	public void addBCC(String toBCC) {
-		this.bcc = toBCC;
-	//	this.bcc.add(toBCC);
+		this.bcc = this.splitDirs(toBCC);
 	}
 
-	
-	public String getToCC() {
+	public List<String> getToCC() {
 		return this.cc;
 	}
 	
-	public String getToBCC() {
+	public List<String> getToBCC() {
 		return this.bcc;
 	}
 }
