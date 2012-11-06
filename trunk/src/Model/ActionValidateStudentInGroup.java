@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.Map;
 import persistence.IStudentPersistence;
@@ -13,6 +13,10 @@ public class ActionValidateStudentInGroup extends ActionRule {
 		this.attachment = attachment;
 		this.codigoMateria = codigoMateria;
 		this.studentPersistence = studentPersistence;
+	}
+
+	public ActionValidateStudentInGroup(IStudentPersistence studentPersistence) {
+		this("", null, studentPersistence);
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class RuleAltaMateria extends Rule {
 	private static final String rule = "\\[ALTA-MATERIA-[0-9]{2}\\.?[0-9]{2}\\] [0-9]{5}-.*" ;

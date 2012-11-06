@@ -1,4 +1,4 @@
-package Model;
+package model;
 import java.io.IOException;
 import java.util.*;
 import javax.mail.MessagingException;
@@ -28,8 +28,8 @@ public class Email {
 
 	public void processMail() throws MessagingException, IOException {
 		MessageProcessor mp = new MessageProcessor();
-		List<Model.Message> incomingMessages = this.receiver.receive();
-		List<Model.Message> answerMessages = mp.process(incomingMessages);
+		List<model.Message> incomingMessages = this.receiver.receive();
+		List<model.Message> answerMessages = mp.process(incomingMessages);
 		this.sender.send(answerMessages);
 	}
 

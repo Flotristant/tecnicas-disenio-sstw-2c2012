@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ public class RuleEntregaTp extends Rule {
 	}
 	public RuleEntregaTp(){
 		//TODO validar email : que el sender este en la bd y con un grupo asignado. entonces se asigna ese tp a ese numero de grupos
-		this.collectionActions = new ArrayList<ActionRule>();
+		this.setCollectionActions(new ArrayList<ActionRule>());
 //		((ArrayList<ActionRule>)collectionActions).add(new ActionValidarEmail(message, mailPersistence))
 	}
 
