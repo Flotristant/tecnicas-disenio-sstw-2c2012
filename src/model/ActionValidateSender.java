@@ -1,7 +1,6 @@
 package model;
 
 import persistence.IMailPersistence;
-import persistence.MailPersistence;
 
 public class ActionValidateSender extends ActionRule {
 

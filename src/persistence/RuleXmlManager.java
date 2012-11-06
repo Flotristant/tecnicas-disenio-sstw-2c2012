@@ -15,7 +15,10 @@ public class RuleXmlManager implements IXmlManager<Rule> {
 		
 		Element ruleElement = document.createElement("rule");
 		
-		ruleElement.setAttribute("rule", item.getRule());
+		ruleElement.setAttribute("pattern", item.getPattern());
+		
+		if (item.getActions() == null) return ruleElement;
+		
 		for (ActionRule action : item.getActions())
 			ruleElement.appendChild(new ActionXmlManager().
 				getElementFromItem(action, document));
@@ -24,7 +27,7 @@ public class RuleXmlManager implements IXmlManager<Rule> {
 
 	@Override
 	public Rule getItemFromXmlElement(Element ruleElement) throws Exception {
-		Rule rule = new Rule(ruleElement.getAttribute("rule"));
+		Rule rule = new Rule(ruleElement.getAttribute("pattern"));
 		
 		for (int i = 0; i < ruleElement.getChildNodes().getLength(); i++) {
 			Node actionNode = ruleElement.getChildNodes().item(i);

@@ -10,15 +10,17 @@ public class Rule implements IRule {
 	
 	public Rule(String stringRule) {
 		this.rule = stringRule;
+		this.collectionActions = new ArrayList<ActionRule>();
 	}
 
-	public String getRule() {
+	public String getPattern() {
 		return this.rule;
 	}
 	
 	@Override
 	public void execute(Message message) {
-		// TODO Auto-generated method stub
+		for (ActionRule action : this.collectionActions)
+			action.execute();
 	}
 
 	public Iterable<ActionRule> getActions() {
