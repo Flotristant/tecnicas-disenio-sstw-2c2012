@@ -56,7 +56,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 		
 		for (Message m : mensajes) {
 			// solo soportamos mensajes de texto plano
-			HashMap<String, byte[]> attachs = new HashMap<String, byte[]>();
+			HashMap<String, String> attachs = new HashMap<String, String>();
 			String body = "--empty--";
 			if (m.isMimeType("text/*")) {
 				body = (String) m.getContent();
@@ -76,8 +76,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 					} else {//atach
 						MimeBodyPart mbp = (MimeBodyPart)p;
 						mbp.saveFile(this.path_attc + p.getFileName());
-//						String content = (String)p.getContent();
-//						attachs.put(filename, content.getBytes());
+						attachs.put(filename, this.path_attc);
 					}
 				}
 			}
@@ -92,10 +91,9 @@ public class Pop3Protocol extends ReceiverProtocol {
 			if ( bccTo != null ) {
 					modelmessage.addCC(InternetAddress.toString(bccTo));
 			}
-						
-			modelmessage.getAttachments().putAll(attachs);
 			
-			
+			modelmessage.addAttachments(attachs);
+					
 			res.add(modelmessage);
 		}
 		
