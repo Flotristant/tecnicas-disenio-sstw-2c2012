@@ -26,7 +26,7 @@ public class Message {
 		return sender;
 	}
 
-	public void setFrom(String from) {
+	public void setSender(String from) {
 		this.sender = from;
 	}
 	
@@ -34,9 +34,6 @@ public class Message {
 		return to;
 	}
 
-	public void addTo(String dirTo) {
-		this.to.add(dirTo);
-	}
 	private void setTo(String to) {
 		this.to = this.splitDirs(to);
 	}
@@ -68,14 +65,6 @@ public class Message {
 	public Map<String, byte[]> getAttachments() {
 		return this.attachments;
 	}
-	
-	public String toString() {
-		StringBuilder str = new StringBuilder();
-		str.append(String.format("Subject: %s\n", this.subject));
-		str.append(String.format("Body: %s\n", this.body));
-		str.append(String.format("Attachments: %s\n", this.attachments));
-		return str.toString();
-	}
 
 	private List<String> splitDirs(String str) {
 		String[] strs = str.split(",");
@@ -98,15 +87,16 @@ public class Message {
 		this.cc = this.splitDirs(toCC);		
 	}
 	
-	public void addBCC(String toBCC) {
-		this.bcc = this.splitDirs(toBCC);
-	}
-
 	public List<String> getToCC() {
 		return this.cc;
 	}
 	
+	public void addBCC(String toBCC) {
+		this.bcc = this.splitDirs(toBCC);
+	}
+		
 	public List<String> getToBCC() {
 		return this.bcc;
 	}
+
 }
