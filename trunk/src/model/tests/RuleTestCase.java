@@ -17,10 +17,10 @@ import persistence.mocks.TpPersistenceMock;
 public class RuleTestCase {
 	
 	@Test
-	public void testShouldSaveCorrectlyPattern() {
-		Rule rule = new RuleAltaGrupo("pattern1");
+	public void testShouldFailRuleWithoutPattern() {
+		Rule rule = new RuleAltaGrupo();
 		
-		Assert.assertEquals("pattern1", rule.getPattern());
+		Assert.assertNull(rule.getPattern());
 	}
 	
 	@Test
@@ -28,7 +28,7 @@ public class RuleTestCase {
 		ActionAltaAlumno action1 = new ActionAltaAlumno(new StudentPersistenceMock()); 
 		ActionSaveTp action2 = new ActionSaveTp(new TpPersistenceMock());
 		
-		Rule rule = new RuleAltaGrupo("pattern1");
+		Rule rule = new RuleAltaGrupo();
 		rule.addAction(action1);
 		rule.addAction(action2);
 		

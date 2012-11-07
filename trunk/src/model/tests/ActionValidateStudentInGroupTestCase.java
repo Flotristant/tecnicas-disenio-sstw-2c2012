@@ -21,7 +21,7 @@ public class ActionValidateStudentInGroupTestCase {
 	
 	@Before
 	public void setUp() throws Exception {
-		this.rule = new RuleAltaGrupo("rule1");
+		this.rule = new RuleAltaGrupo();
 		this.rule.setCodigoMateria("7502");
 		this.studentPersistence = new StudentPersistenceMock();
 		this.message = new Message("", "", "", "");

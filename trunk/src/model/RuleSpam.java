@@ -6,8 +6,8 @@ import java.util.regex.Matcher;
  */
 public class RuleSpam extends Rule{
 
-	public RuleSpam(String stringRule) {
-		super(stringRule);
+	public RuleSpam() {
+		super();
 	}
 
 	@Override

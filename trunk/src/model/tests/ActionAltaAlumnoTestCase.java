@@ -26,7 +26,8 @@ public class ActionAltaAlumnoTestCase {
 	
 	@Test
 	public void testShouldAltaAlumnoPassWhenCreateAnStudent() {
-		Rule rule = new RuleAltaMateria("ruleAltaMateria");
+		Rule rule = new RuleAltaMateria();
+		rule.setPattern("ruleAltaMateria");
 		rule.setCodigoMateria("7502");
 		rule.setPadron("91227");
 		rule.setName("francisco");

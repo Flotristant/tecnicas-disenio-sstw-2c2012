@@ -10,6 +10,8 @@ import model.ActionSaveTp;
 import model.ActionValidateSender;
 import model.Rule;
 import model.RuleAltaMateria;
+import model.factories.mocks.ActionRuleFactoryMock;
+import model.factories.mocks.RuleFactoryMock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,6 +31,8 @@ public class RuleXmlManagerTestCase {
 	private ActionSaveTp action2;
 	private ActionValidateSender action3;
 	private ArrayList<ActionRule> actionList;
+	private ActionRuleFactoryMock actionRuleFactory;
+	private RuleFactoryMock ruleFactory;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -36,18 +40,21 @@ public class RuleXmlManagerTestCase {
 		this.action2 = new ActionSaveTp(new TpPersistenceMock());
 		this.action3 = new ActionValidateSender(new MailPersistenceMock());
 		this.actionList = new ArrayList<ActionRule>();
+		this.actionRuleFactory = new ActionRuleFactoryMock();
+		this.ruleFactory = new RuleFactoryMock();
 	}
 	
 	@Test
 	public void testShouldGenerateAnXmlElementFromRule() throws Exception
 	{
-		Rule rule = new RuleAltaMateria("pattern1");
+		Rule rule = new RuleAltaMateria();
+		rule.setPattern("pattern1");
 		rule.addAction(action1);
 		rule.addAction(action2);
 		
 		Document document = TestUtilities.createDocument();
 		
-		RuleXmlManager xmlManager = new RuleXmlManager();
+		RuleXmlManager xmlManager = new RuleXmlManager(this.ruleFactory, this.actionRuleFactory);
 		
 		Element element = xmlManager.getElementFromItem(rule, document);
 		
@@ -69,7 +76,7 @@ public class RuleXmlManagerTestCase {
 		
 		Document document = TestUtilities.loadXMLFromString(xml);
 		
-		RuleXmlManager xmlManager = new RuleXmlManager();
+		RuleXmlManager xmlManager = new RuleXmlManager(this.ruleFactory, this.actionRuleFactory);
 		
 		Element ruleElement = (Element) document.getElementsByTagName("rule").item(0);
 		

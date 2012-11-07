@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 
 public class RuleConsultaTema extends Rule {
 
-	public RuleConsultaTema(String stringRule) {
-		super(stringRule);
+	public RuleConsultaTema() {
+		super();
 	}
 
 	@Override

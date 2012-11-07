@@ -14,6 +14,10 @@ public abstract class Rule implements IRule {
 	private String padron;
 	private String name;
 	
+	public Rule() {
+		this.collectionActions = new ArrayList<ActionRule>();
+	}
+	
 	public void setTypeOfQuery(String typeOfQuery) {
 		this.typeOfQuery = typeOfQuery;
 	}
@@ -28,11 +32,6 @@ public abstract class Rule implements IRule {
 
 	public void setPadron(String padron) {
 		this.padron = padron;
-	}
-
-	public Rule(String stringRule) {
-		this.pattern = stringRule;
-		this.collectionActions = new ArrayList<ActionRule>();
 	}
 
 	public String getPattern() {
@@ -84,5 +83,9 @@ public abstract class Rule implements IRule {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public void setPattern(String pattern) {
+		this.pattern = pattern;
 	}
 }

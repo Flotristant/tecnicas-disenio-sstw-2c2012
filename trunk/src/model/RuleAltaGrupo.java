@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 
 public class RuleAltaGrupo extends Rule {
 
-	public RuleAltaGrupo(String stringRule) {
-		super(stringRule);
+	public RuleAltaGrupo() {
+		super();
 	}
 
 	@Override
