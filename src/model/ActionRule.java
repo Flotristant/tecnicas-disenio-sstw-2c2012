@@ -4,10 +4,7 @@ public abstract class ActionRule {
 
 	protected Message message;
 	
-	public boolean execute() {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public abstract boolean execute(); 
 	
 	public void initialize(Rule rule, Message message) {
 		this.message = message;
