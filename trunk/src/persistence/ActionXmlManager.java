@@ -5,7 +5,6 @@ import java.lang.reflect.Constructor;
 import model.ActionAltaAlumno;
 import model.ActionRule;
 import model.ActionSaveTp;
-import model.ActionValidateEmail;
 import model.ActionValidateSender;
 import model.ActionValidateStudentInGroup;
 
@@ -34,7 +33,7 @@ public class ActionXmlManager implements IXmlManager<ActionRule> {
 		
 		switch (actionElement.getAttribute("name")) {
 		case "ActionAltaAlumno" : return new ActionAltaAlumno(new StudentPersistence());
-		case "ActionValidarEmail" : return new ActionValidateEmail(new MailPersistence());
+		case "ActionValidarEmail" : return new ActionValidateSender(new MailPersistence());
 		case "ActionSaveTp" : return new ActionSaveTp(new TpPersistence());
 		case "ActionValidateSender" : return new ActionValidateSender(new MailPersistence());
 		case "ActionValidateStudentInGroup" : return new ActionValidateStudentInGroup(new StudentPersistence());
