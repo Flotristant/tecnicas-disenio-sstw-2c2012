@@ -7,7 +7,7 @@ import junit.framework.Assert;
 import model.ActionAltaAlumno;
 import model.ActionRule;
 import model.ActionSaveTp;
-import model.ActionValidateEmail;
+import model.ActionValidateSender;
 import model.Rule;
 import model.RuleAltaMateria;
 
@@ -27,14 +27,14 @@ public class RuleXmlManagerTestCase {
 
 	private ActionAltaAlumno action1;
 	private ActionSaveTp action2;
-	private ActionValidateEmail action3;
+	private ActionValidateSender action3;
 	private ArrayList<ActionRule> actionList;
 	
 	@Before
 	public void setUp() throws Exception {
 		this.action1 = new ActionAltaAlumno(new StudentPersistenceMock());
 		this.action2 = new ActionSaveTp(new TpPersistenceMock());
-		this.action3 = new ActionValidateEmail(new MailPersistenceMock());
+		this.action3 = new ActionValidateSender(new MailPersistenceMock());
 		this.actionList = new ArrayList<ActionRule>();
 	}
 	
