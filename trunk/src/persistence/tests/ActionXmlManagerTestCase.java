@@ -19,19 +19,6 @@ public class ActionXmlManagerTestCase {
 	@Test
 	public void testShouldGenerateAnXmlElementFromRule() throws Exception
 	{
-//		Pattern pattern = Pattern.compile("[0-9]{5}");
-		Pattern pattern = Pattern.compile("\\[ALTA-MATERIA-[0-9]{2}\\.?[0-9]{2}\\] ([0-9]{5})-.*");
-		
-		Matcher matcher = pattern.matcher("[ALTA-MATERIA-75.04] 91227-francisco"); 
-		
-		
-		
-		if (matcher.matches()) {
-			System.out.println(matcher.group(1));
-		}
-		
-		
-		
 		ActionAltaAlumno action = new ActionAltaAlumno(new StudentPersistenceMock());
 		
 		Document document = TestUtilities.createDocument();
