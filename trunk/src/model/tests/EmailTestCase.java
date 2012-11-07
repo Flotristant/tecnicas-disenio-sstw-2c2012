@@ -6,10 +6,13 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import model.Email;
+import model.exceptions.*;
 import services.Pop3Protocol;
 import services.ReceiverProtocol;
 import services.SenderProtocol;
 import services.SmtpProtocol;
+import services.exceptions.InvalidPortFormatException;
+import services.exceptions.InvalidUserFormatException;
 
 
 public class EmailTestCase {
@@ -17,23 +20,45 @@ public class EmailTestCase {
 	public void testEmailValid() {
 		
 		Email email = null;
-		SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
-		ReceiverProtocol r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com");
+		SenderProtocol s = null;
+		ReceiverProtocol r = null;
 		try {
+			 s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
+			 r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com");
 			email = new Email(s,r);
-		} catch (Exception e) {
-			fail ("Mail mal creado");
+		}
+		
+		catch (InvalidAssociatedProtocolsException exce1) {
+			fail("Mails mal Creados");
+		}
+		
+		catch (InvalidUserFormatException exce2) {
+			fail ("Protocolos con usuario en formato incorrecto");
+		}
+		
+		catch (InvalidPortFormatException exce3) {
+			fail ("Protocolos con puertos en formato incorrecto");
 		}
 		
 		Assert.assertEquals("pepe@hotmail.com", email.getUser());
 		Assert.assertEquals("1234", email.getPassword());
 	}
 	
-	@Test  (expected = Exception.class)  
-	public void testEmailWithProtocolsNotEquals() throws Exception {
-		SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
-		ReceiverProtocol r = new Pop3Protocol("lol@aol.com", "password", "657", "pop3.live.com");
-		Email email = new Email(s,r);
+	@Test  (expected = InvalidAssociatedProtocolsException.class)  
+	public void testEmailWithProtocolsNotEquals() throws InvalidAssociatedProtocolsException {
+		try {
+			SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
+			ReceiverProtocol r = new Pop3Protocol("lol@aol.com", "password", "657", "pop3.live.com");
+			Email email = new Email(s,r);
+		}
+		catch (InvalidUserFormatException exce2) {
+			fail ("Protocolos con usuario en formato incorrecto");
+		}
+		
+		catch (InvalidPortFormatException exce3) {
+			fail ("Protocolos con puertos en formato incorrecto");
+		}
+		
 	}
 	
 	@Test

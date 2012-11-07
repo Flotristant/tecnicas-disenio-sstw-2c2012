@@ -2,6 +2,8 @@ package model;
 import java.io.IOException;
 import java.util.*;
 import javax.mail.MessagingException;
+
+import model.exceptions.InvalidAssociatedProtocolsException;
 import services.SenderProtocol;
 import services.ReceiverProtocol;
 
@@ -11,23 +13,18 @@ public class Email {
 	private SenderProtocol sender;
 	private ReceiverProtocol receiver;
 
-	public Email(SenderProtocol sender, ReceiverProtocol receiver) throws Exception {
-		if (this.validateProtocols(sender, receiver)) {
-			this.setReceiver(receiver);
-			this.setSender(sender);
-			this.setUser(sender.getUser());
-			this.setPassword(sender.getPass());
-		}
-		else {
-			throw new Exception("Protocolos asociados a cuentas distintas");
-		}
+	public Email(SenderProtocol sender, ReceiverProtocol receiver) throws InvalidAssociatedProtocolsException {
+		this.validateProtocols(sender, receiver);
+		this.setReceiver(receiver);
+		this.setSender(sender);
+		this.setUser(sender.getUser());
+		this.setPassword(sender.getPass());
 	}
 
-	private boolean validateProtocols(SenderProtocol s, ReceiverProtocol r) {
+	private void validateProtocols(SenderProtocol s, ReceiverProtocol r) throws InvalidAssociatedProtocolsException {
 		if ((s.getUser() != r.getUser()) || (s.getPass() != r.getPass())) {
-			return false;
+			throw new InvalidAssociatedProtocolsException();
 		}
-		else return true;
 	}
 
 	public void setSender(SenderProtocol sender) {

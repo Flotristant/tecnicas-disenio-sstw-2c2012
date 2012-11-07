@@ -7,6 +7,9 @@ import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 
+import services.exceptions.InvalidPortFormatException;
+import services.exceptions.InvalidUserFormatException;
+
 
 import com.sun.mail.pop3.POP3SSLStore;
 
@@ -15,7 +18,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 
 	private Session session;
 	
-	public Pop3Protocol(String user, String pass, String port, String host) {
+	public Pop3Protocol(String user, String pass, String port, String host) throws InvalidPortFormatException, InvalidUserFormatException {
 		super(user, pass, port, host);
 		
         Properties pop3Props = new Properties();
