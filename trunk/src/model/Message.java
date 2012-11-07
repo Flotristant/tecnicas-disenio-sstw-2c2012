@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Message {
 	private String subject, body;
-	private Map<String, byte[]> attachments;
+	private Map<String, String> attachments;
 	private String sender;
 	private List<String> to;
 	private List<String> cc;
@@ -16,7 +16,7 @@ public class Message {
 		this.setTo(to);
 		this.subject = subject;
 		this.body = body;
-		this.attachments = new HashMap<String, byte[]>();
+		this.attachments = null;
 		this.cc = null;
 		this.bcc = null;
 	}
@@ -54,15 +54,20 @@ public class Message {
 		this.body = body;
 	}
 	
-	public byte[] getAttachment(String filename) {
-		return this.attachments.get(filename);
+	public boolean isWithAttachments() {
+		if (this.attachments!= null) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
-	public void addAttachment(String filename, byte[] data) {
-		this.attachments.put(filename, data);
+	public void addAttachments(HashMap<String, String> attach) {
+		this.attachments = attach;
 	}
 	
-	public Map<String, byte[]> getAttachments() {
+	public Map<String, String> getAttachments() {
 		return this.attachments;
 	}
 
