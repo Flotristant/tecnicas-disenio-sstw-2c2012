@@ -97,7 +97,31 @@ public class SmtpProtocolTestCase {
 			 fail("Smtp mal formado");
 		 }
 		 try {
-			smtp.debugOn();
+		//	smtp.debugOn();
+			smtp.send(listm);
+		} 	
+		 catch (Exception e1) {
+			 fail("Mail no enviado");
+		 }
+	}
+	
+	@Test
+	public void testSendMessageWithFileValid() {
+		 model.Message m = new model.Message("pruebatecnicas@gmail.com","pruebatecnicas@hotmail.com",
+				 "subject","body");
+		 m.addAttachment("archivo.txt", "123 , esto es un adjunto".getBytes());
+		 m.addAttachment("archivo2", "jijijij3d3433dn3idneidndsded34535435345".getBytes());
+		 List<model.Message> listm = new ArrayList<model.Message>();
+		 listm.add(m);
+		 SmtpProtocol smtp = null;
+		 try {
+			smtp = new SmtpProtocol("pruebatecnicas@gmail.com", "mailprueba", "587", "smtp.gmail.com");
+		}
+		 catch (Exception e) {
+			 fail("Smtp mal formado");
+		 }
+		 try {
+		//	smtp.debugOn();
 			smtp.send(listm);
 		} 	
 		 catch (Exception e1) {
@@ -119,7 +143,7 @@ public class SmtpProtocolTestCase {
 			 fail("Smtp mal formado");
 		 }
 		 try {
-			smtp.debugOn();
+			//smtp.debugOn();
 			smtp.send(listm);
 		} 	
 		 catch (AddressException e1) {
@@ -142,7 +166,7 @@ public class SmtpProtocolTestCase {
 			 fail("Smtp mal formado");
 		 }
 		 try {
-			smtp.debugOn();
+		//	smtp.debugOn();
 			smtp.send(listm);
 		} 	
 		 catch (AddressException e1) {
