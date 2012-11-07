@@ -11,11 +11,23 @@ public class Email {
 	private SenderProtocol sender;
 	private ReceiverProtocol receiver;
 
-	public Email(String user, String password, SenderProtocol sender, ReceiverProtocol receiver) {
-		this.setUser(user);
-		this.setPassword(password);
-		this.setReceiver(receiver);
-		this.setSender(sender);
+	public Email(SenderProtocol sender, ReceiverProtocol receiver) throws Exception {
+		if (this.validateProtocols(sender, receiver)) {
+			this.setReceiver(receiver);
+			this.setSender(sender);
+			this.setUser(sender.getUser());
+			this.setPassword(sender.getPass());
+		}
+		else {
+			throw new Exception("Protocolos asociados a cuentas distintas");
+		}
+	}
+
+	private boolean validateProtocols(SenderProtocol s, ReceiverProtocol r) {
+		if ((s.getUser() != r.getUser()) || (s.getPass() != r.getPass())) {
+			return false;
+		}
+		else return true;
 	}
 
 	public void setSender(SenderProtocol sender) {

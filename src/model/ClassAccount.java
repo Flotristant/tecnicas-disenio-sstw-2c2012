@@ -30,6 +30,21 @@ public class ClassAccount {
 		}
 	}
 	
+	public List<String> getEmails() {
+		if (this.account_email.isEmpty()) {
+			return null;
+		}
+		else {
+			Iterator<Email> it = this.account_email.iterator();
+			List<String> emails= new ArrayList<String>();
+			while (it.hasNext()) {
+				Email e  = it.next();
+				emails.add(e.getUser());
+			}
+			return emails;
+		}
+	}
+	
 	public void processAccount() throws MessagingException, IOException {
 		Iterator<Email> it = this.account_email.iterator();
 		while (it.hasNext()) {
