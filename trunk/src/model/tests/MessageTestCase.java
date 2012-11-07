@@ -20,20 +20,10 @@ public class MessageTestCase {
 		List<String> dirTo = m.getTo();
 		Assert.assertEquals(1,dirTo.size());
 		Assert.assertTrue(dirTo.contains("to@hotmail.com"));
-		
-		m.addTo("to@gmail.com");
-		m.addTo("to@yahoo.com");
-		
-		dirTo = m.getTo();
-		Assert.assertEquals(3,dirTo.size());
-		Assert.assertTrue(dirTo.contains("to@gmail.com"));
-		Assert.assertTrue(dirTo.contains("to@yahoo.com"));
-		
-		
+				
 	}
 	
 	@Test
-	
 	public void testSplitDirs() {
 		
 		model.Message m2 = new model.Message("from@gmail.com","to@hotmail.com, to@yahoo.com, to@gmail.com","subject","body");
