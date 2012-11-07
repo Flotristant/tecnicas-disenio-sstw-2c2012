@@ -60,7 +60,6 @@ public class SmtpProtocol extends SenderProtocol {
 				// Quien envia el correo
 				mimemessage.setFrom(new InternetAddress(message.getSender()));
 
-				//TODO: pincha si hay mas de 1 dir TO
 				// A quien va dirigido
 				List<String> to= message.getTo();
 				Iterator<String> ite = to.iterator();
@@ -69,7 +68,6 @@ public class SmtpProtocol extends SenderProtocol {
 					mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(str));
 				}
 		
-				//TODO:pincha con + de 1 cc
 				
 				if (message.getToCC() != null ) {
 					List<String> toCC = message.getToCC();

@@ -22,18 +22,28 @@ public class ClassAccountTestCase {
 	
 	@Test
 	public void testClassAccountValid() {
-		ClassAccount cAcc= new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/gustavo/pruebas/");
-		Assert.assertEquals("Tecnicas de Diseño", cAcc.getName());
-		Assert.assertEquals("Materia de programacion", cAcc.getDescription());
-		Assert.assertEquals("75-10", cAcc.getCode());
-		Assert.assertEquals("75-10","/home/gustavo/pruebas/", cAcc.getPath_attach());
+		ClassAccount cAcc;
+		try {
+			cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/");
+			Assert.assertEquals("Tecnicas de Diseño", cAcc.getName());
+			Assert.assertEquals("Materia de programacion", cAcc.getDescription());
+			Assert.assertEquals("75-10", cAcc.getCode());
+			Assert.assertEquals("75-10","/home/", cAcc.getPath_attach());
+		} catch (InvalidPathDirectoryException e) {
+			fail("Path invalido");
+		}
 	}
 	
 	
 	@Test
 	public void testClassAccountEmails() {
 		
-		ClassAccount cAcc= new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/gustavo/pruebas/");
+		ClassAccount cAcc=null;
+		try {
+			cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/");
+		} catch (InvalidPathDirectoryException e1) {
+			fail("Path invalido");
+		}
 		Assert.assertEquals(cAcc.getEmails(), null);
 		
 		Email e,e2,e3;
@@ -41,13 +51,13 @@ public class ClassAccountTestCase {
 		
 		try {
 			SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
-			ReceiverProtocol r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com");
+			ReceiverProtocol r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com","/home/gustavo/Escritorio");
 			
 			SenderProtocol s2 = new SmtpProtocol("abc@gmail.com", "2222", "9969", "smpt.live.com");
-			ReceiverProtocol r2 = new Pop3Protocol("abc@gmail.com", "2222", "949", "pop3.live.com");
+			ReceiverProtocol r2 = new Pop3Protocol("abc@gmail.com", "2222", "949", "pop3.live.com","/home/gustavo/Escritorio");
 			
 			SenderProtocol s3 = new SmtpProtocol("hsa2@yahoo.com", "sdsdsd", "4", "smpt.live.com");
-			ReceiverProtocol r3 = new Pop3Protocol("hsa2@yahoo.com", "sdsdsd", "92", "pop3.live.com");
+			ReceiverProtocol r3 = new Pop3Protocol("hsa2@yahoo.com", "sdsdsd", "92", "pop3.live.com","/home/gustavo/Escritorio");
 			e = new Email(s,r);
 			e2 = new Email(s2 , r2);
 			e3 = new Email( s3, r3);
@@ -82,6 +92,12 @@ public class ClassAccountTestCase {
 		Assert.assertFalse(listaEmails.contains("abc@gmail.com"));
 		Assert.assertTrue(listaEmails.contains("hsa2@yahoo.com"));
 				
+	}
+	
+	@Test(expected=InvalidPathDirectoryException.class)
+	public void testClassInvalidPath() throws InvalidPathDirectoryException {
+		@SuppressWarnings("unused")
+		ClassAccount cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/Pepe/");				
 	}
 	
 	@Test

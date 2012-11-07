@@ -24,7 +24,7 @@ public class EmailTestCase {
 		ReceiverProtocol r = null;
 		try {
 			 s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
-			 r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com");
+			 r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com", "/home/gustavo/Escritorio");
 			email = new Email(s,r);
 		}
 		
@@ -48,7 +48,7 @@ public class EmailTestCase {
 	public void testEmailWithProtocolsNotEquals() throws InvalidAssociatedProtocolsException {
 		try {
 			SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
-			ReceiverProtocol r = new Pop3Protocol("lol@aol.com", "password", "657", "pop3.live.com");
+			ReceiverProtocol r = new Pop3Protocol("lol@aol.com", "password", "657", "pop3.live.com","/home/gustavo/Escritorio");
 			@SuppressWarnings("unused")
 			Email email = new Email(s,r);
 		}
