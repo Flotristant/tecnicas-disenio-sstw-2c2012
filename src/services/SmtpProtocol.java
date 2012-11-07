@@ -9,11 +9,14 @@ import javax.mail.*;
 import javax.mail.internet.*;
 import javax.mail.util.ByteArrayDataSource;
 
+import services.exceptions.InvalidPortFormatException;
+import services.exceptions.InvalidUserFormatException;
+
 public class SmtpProtocol extends SenderProtocol {
 	
 	private Session session;
 	
-	public SmtpProtocol(String user, String pass, String port, String host) {
+	public SmtpProtocol(String user, String pass, String port, String host) throws InvalidPortFormatException, InvalidUserFormatException {
 		super(user, pass, port, host);
 		
 		Properties props = new Properties();

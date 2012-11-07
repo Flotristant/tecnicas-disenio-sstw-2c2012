@@ -1,9 +1,14 @@
 package services;
 
+import services.exceptions.InvalidPortFormatException;
+import services.exceptions.InvalidUserFormatException;
+
 public abstract class ProtocolMail {
 	protected String user, pass, port, host;
 	
-	public ProtocolMail(String user, String pass, String port, String host) {
+	public ProtocolMail(String user, String pass, String port, String host) throws InvalidPortFormatException, InvalidUserFormatException {
+		this.validatePort(port);
+		this.validateUser(user);
 		this.user= user;
 		this.pass= pass;
 		this.port = port;
@@ -42,4 +47,22 @@ public abstract class ProtocolMail {
 		this.host = host;
 	}
 	
+	private void validatePort(String port) throws InvalidPortFormatException {
+		int port_number = 0;
+		try {
+			port_number = Integer.parseInt(port);
+		}
+		catch (NumberFormatException e) {
+			throw new InvalidPortFormatException();		
+		}
+		if ( port_number <= 0) {
+			throw new InvalidPortFormatException();	
+		}
+	}
+	
+	private void validateUser(String user) throws InvalidUserFormatException {
+		if (!(user.contains("@"))) {
+			throw new InvalidUserFormatException();
+		}
+	}
 }

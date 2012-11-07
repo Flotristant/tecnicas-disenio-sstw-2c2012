@@ -6,6 +6,7 @@ import java.util.List;
 import junit.framework.Assert;
 import model.ClassAccount;
 import model.Email;
+import model.exceptions.*;
 
 import org.junit.Test;
 
@@ -13,6 +14,8 @@ import services.Pop3Protocol;
 import services.ReceiverProtocol;
 import services.SenderProtocol;
 import services.SmtpProtocol;
+import services.exceptions.InvalidPortFormatException;
+import services.exceptions.InvalidUserFormatException;
 
 
 public class ClassAccountTestCase {
@@ -33,27 +36,35 @@ public class ClassAccountTestCase {
 		ClassAccount cAcc= new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/gustavo/pruebas/");
 		Assert.assertEquals(cAcc.getEmails(), null);
 		
-		SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
-		ReceiverProtocol r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com");
-		
-		SenderProtocol s2 = new SmtpProtocol("abc@gmail.com", "2222", "9969", "smpt.live.com");
-		ReceiverProtocol r2 = new Pop3Protocol("abc@gmail.com", "2222", "949", "pop3.live.com");
-		
-		SenderProtocol s3 = new SmtpProtocol("hsa2@yahoo.com", "sdsdsd", "4", "smpt.live.com");
-		ReceiverProtocol r3 = new Pop3Protocol("hsa2@yahoo.com", "sdsdsd", "92", "pop3.live.com");
-		
-		Email e, e2, e3;
-		e = e2 = e3 = null;
+		Email e,e2,e3;
+		e=e2=e3=null;
 		
 		try {
+			SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
+			ReceiverProtocol r = new Pop3Protocol("pepe@hotmail.com", "1234", "9999", "pop3.live.com");
+			
+			SenderProtocol s2 = new SmtpProtocol("abc@gmail.com", "2222", "9969", "smpt.live.com");
+			ReceiverProtocol r2 = new Pop3Protocol("abc@gmail.com", "2222", "949", "pop3.live.com");
+			
+			SenderProtocol s3 = new SmtpProtocol("hsa2@yahoo.com", "sdsdsd", "4", "smpt.live.com");
+			ReceiverProtocol r3 = new Pop3Protocol("hsa2@yahoo.com", "sdsdsd", "92", "pop3.live.com");
 			e = new Email(s,r);
 			e2 = new Email(s2 , r2);
 			e3 = new Email( s3, r3);
 		}
-		catch (Exception e1) {
-			e1.printStackTrace();
+		
+		catch (InvalidAssociatedProtocolsException exce1) {
 			fail("Mails mal Creados");
 		}
+		
+		catch (InvalidUserFormatException exce2) {
+			fail ("Protocolos con usuario en formato incorrecto");
+		}
+		
+		catch (InvalidPortFormatException exce3) {
+			fail ("Protocolos con puertos en formato incorrecto");
+		}
+		
 		cAcc.addEmail(e);
 		cAcc.addEmail(e2);
 		cAcc.addEmail(e3);
