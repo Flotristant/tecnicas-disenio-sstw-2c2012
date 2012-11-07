@@ -43,6 +43,9 @@ public class SmtpProtocol extends SenderProtocol {
 		//this.session.setDebug(true);
 	}
 
+	public void debugOn() {
+		this.session.setDebug(true);
+	}
 	@Override
 	public void send(List<model.Message> messages) throws AddressException, MessagingException {
 		
