@@ -49,6 +49,7 @@ public class EmailTestCase {
 		try {
 			SenderProtocol s = new SmtpProtocol("pepe@hotmail.com", "1234", "9999", "smpt.live.com");
 			ReceiverProtocol r = new Pop3Protocol("lol@aol.com", "password", "657", "pop3.live.com");
+			@SuppressWarnings("unused")
 			Email email = new Email(s,r);
 		}
 		catch (InvalidUserFormatException exce2) {
