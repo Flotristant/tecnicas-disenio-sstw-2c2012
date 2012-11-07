@@ -5,21 +5,14 @@ import java.util.*;
 public class Message {
 	private String subject, body;
 	private Map<String, byte[]> attachments;
-	private String from;
+	private String sender;
 	private List<String> to;
 	private List<String> cc;
 	private List<String> bcc;
 	
-	public Message(String sender, String subject, String body, Map<String, byte[]> attachments) {
-		this.subject = subject;
-		this.body = body;
-		this.attachments = attachments;
-		this.cc = new ArrayList<String>();
-		this.bcc = new ArrayList<String>();
-	}
 	
 	public Message(String from, String to, String subject, String body) {
-		this.from = from;
+		this.sender = from;
 		this.setTo(to);
 		this.subject = subject;
 		this.body = body;
@@ -29,13 +22,12 @@ public class Message {
 	}
 	
 	
-	
 	public String getSender() {
-		return from;
+		return sender;
 	}
 
 	public void setFrom(String from) {
-		this.from = from;
+		this.sender = from;
 	}
 	
 	public List<String> getTo() {
