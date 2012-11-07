@@ -31,8 +31,8 @@ public class ActionAltaAlumnoTestCase {
 		rule.setPadron("91227");
 		rule.setName("francisco");
 		
-		altaAlumno.initialize(rule, new Message("francisco@soler", "", "", ""));
-		altaAlumno.execute();
+		this.altaAlumno.initialize(rule, new Message("francisco@soler", "", "", ""));
+		this.altaAlumno.execute();
 		
 		Assert.assertEquals("7502", this.studentPersistence.getCodigoMateriaToSave());
 		Assert.assertEquals("91227", this.studentPersistence.getPadronToSave());

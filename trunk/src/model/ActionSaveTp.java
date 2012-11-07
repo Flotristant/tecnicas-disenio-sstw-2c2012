@@ -11,18 +11,11 @@ public class ActionSaveTp extends ActionRule {
 	private String sender;
 	private Integer tpNumber;
 	private Map<String, byte[]> attachments;
-	public void setTpNumber(Integer tpNumber) {
-		this.tpNumber = tpNumber;
-	}
 
 	public ActionSaveTp(ITpPersistence tpPersistence) {
 		this.tpPersistence = tpPersistence;
 	}
 	
-	public void setAttachments(Map<String, byte[]> attachments) {
-		this.attachments = attachments;
-	}
-
 	@Override
 	public boolean execute() {
 		this.tpPersistence.saveTp(this.codigoMateria, this.sender, this.tpNumber, this.attachments);
