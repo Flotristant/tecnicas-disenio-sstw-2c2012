@@ -34,6 +34,9 @@ public class Message {
 		return to;
 	}
 
+	public void addTo(String dirTo) {
+		this.to.add(dirTo);
+	}
 	private void setTo(String to) {
 		this.to = this.splitDirs(to);
 	}

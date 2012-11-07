@@ -81,8 +81,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 					}
 				}
 			}
-			model.Message modelmessage = new model.Message(InternetAddress.toString(m.getFrom()), 
-					InternetAddress.toString(m.getRecipients(Message.RecipientType.TO)), m.getSubject(), body);
+			model.Message modelmessage = new model.Message(InternetAddress.toString(m.getFrom()), this.user, m.getSubject(), body);
 			
 			Address[] ccTo = m.getRecipients(Message.RecipientType.CC);
 			if ( ccTo != null ) {
