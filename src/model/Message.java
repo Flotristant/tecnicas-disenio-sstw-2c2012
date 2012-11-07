@@ -58,7 +58,7 @@ public class Message {
 		return this.attachments.get(filename);
 	}
 	
-	public void setAttachment(String filename, byte[] data) {
+	public void addAttachment(String filename, byte[] data) {
 		this.attachments.put(filename, data);
 	}
 	

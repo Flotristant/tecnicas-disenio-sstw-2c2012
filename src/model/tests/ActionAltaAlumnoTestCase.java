@@ -1,7 +1,5 @@
 package model.tests;
 
-import java.util.HashMap;
-
 import junit.framework.Assert;
 
 import model.ActionAltaAlumno;
@@ -24,7 +22,7 @@ public class ActionAltaAlumnoTestCase {
 		rule.setName("francisco");
 		StudentPersistenceMock studentPersistence = new StudentPersistenceMock();
 		ActionAltaAlumno altaAlumno = new ActionAltaAlumno(studentPersistence);
-		altaAlumno.initialize(rule, new Message("francisco@soler", "", "", new HashMap<String, byte[]>()));
+		altaAlumno.initialize(rule, new Message("francisco@soler", "", "", ""));
 		altaAlumno.execute();
 		
 		Assert.assertEquals("7502", studentPersistence.getCodigoMateriaToSave());
