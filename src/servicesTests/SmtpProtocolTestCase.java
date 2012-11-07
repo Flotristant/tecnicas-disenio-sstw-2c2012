@@ -15,7 +15,6 @@ import org.junit.Test;
 import services.SmtpProtocol;
 import services.exceptions.InvalidPortFormatException;
 import services.exceptions.InvalidUserFormatException;
-import model.Message;
 
 //data mail de  para pruebas 
 //user: pruebatecnicas@gmail.com pass: mailprueba host:smtp.gmail.com port:587
@@ -47,9 +46,9 @@ public class SmtpProtocolTestCase {
 	
 	@Test(expected = InvalidPortFormatException.class)
 	public void testSmtpProtocolPortInvalid() throws InvalidPortFormatException {
-		SmtpProtocol smtp = null;
 		try {
-			smtp = new SmtpProtocol("tecnicasprueba@gmail.com", "mailprueba", "2t22", "smtp.live.com");
+			@SuppressWarnings("unused")
+			SmtpProtocol smtp = new SmtpProtocol("tecnicasprueba@gmail.com", "mailprueba", "2t22", "smtp.live.com");
 		}
 
 		catch (InvalidUserFormatException e) {
@@ -60,9 +59,9 @@ public class SmtpProtocolTestCase {
 	
 	@Test(expected = InvalidPortFormatException.class)
 	public void testSmtpProtocolPortInvalid2() throws InvalidPortFormatException {
-		SmtpProtocol smtp = null;
 		try {
-			smtp = new SmtpProtocol("tecnicasprueba@gmail.com", "mailprueba", "-222", "smtp.live.com");
+			 @SuppressWarnings("unused")
+			SmtpProtocol smtp = new SmtpProtocol("tecnicasprueba@gmail.com", "mailprueba", "-222", "smtp.live.com");
 		}
 
 		catch (InvalidUserFormatException e) {
@@ -73,9 +72,9 @@ public class SmtpProtocolTestCase {
 	
 	@Test(expected = InvalidUserFormatException.class)
 	public void testSmtpProtocolUserInvalid() throws InvalidUserFormatException {
-		SmtpProtocol smtp = null;
 		try {
-			smtp = new SmtpProtocol("tecnicasprueba.gmail.com", "mailprueba", "2222", "smtp.live.com");
+			@SuppressWarnings("unused")
+			SmtpProtocol smtp = new SmtpProtocol("tecnicasprueba.gmail.com", "mailprueba", "2222", "smtp.live.com");
 		}
 
 		catch (InvalidPortFormatException e) {
