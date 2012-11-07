@@ -1,16 +1,16 @@
 package servicesTests;
-import static org.junit.Assert.*;
-
-import model.ClassAccount;
-import model.Email;
-
-import org.junit.Test;
-import java.io.IOException;
-
-import javax.mail.MessagingException;
-
-import services.Pop3Protocol;
-import services.SmtpProtocol;
+//import static org.junit.Assert.*;
+//
+//import model.ClassAccount;
+//import model.Email;
+//
+//import org.junit.Test;
+//import java.io.IOException;
+//
+//import javax.mail.MessagingException;
+//
+//import services.Pop3Protocol;
+//import services.SmtpProtocol;
 
 
 //data mail de  para pruebas 
