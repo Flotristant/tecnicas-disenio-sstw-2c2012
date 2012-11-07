@@ -1,13 +1,16 @@
 package model;
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 import javax.mail.MessagingException;
+
+import model.exceptions.InvalidPathDirectoryException;
 public class ClassAccount {
 	private String name, description, code, path_attach;
 	private List<Email> account_email;
 	
-	public ClassAccount(String name, String description, String code, String path_attach){
+	public ClassAccount(String name, String description, String code, String path_attach) throws InvalidPathDirectoryException{
 		this.setName(name);
 		this.setDescription(description);
 		this.setCode(code);
@@ -49,7 +52,7 @@ public class ClassAccount {
 		Iterator<Email> it = this.account_email.iterator();
 		while (it.hasNext()) {
 			Email e= it.next();
-			e.processMail();			
+			e.processMail(this.path_attach);			
 		}
 	}
 
@@ -77,7 +80,11 @@ public class ClassAccount {
 		return code;
 	}
 
-	public void setPath_attach(String path_attach) {
+	public void setPath_attach(String path_attach) throws InvalidPathDirectoryException {
+		File dir = new File(path_attach);
+		if (!dir.isDirectory()) {
+				throw new InvalidPathDirectoryException();
+		}
 		this.path_attach = path_attach;
 	}
 

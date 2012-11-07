@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
 
 import services.exceptions.InvalidPortFormatException;
 import services.exceptions.InvalidUserFormatException;
@@ -17,8 +18,9 @@ import com.sun.mail.pop3.POP3SSLStore;
 public class Pop3Protocol extends ReceiverProtocol {
 
 	private Session session;
+	private String path_attc;
 	
-	public Pop3Protocol(String user, String pass, String port, String host) throws InvalidPortFormatException, InvalidUserFormatException {
+	public Pop3Protocol(String user, String pass, String port, String host, String path_attch) throws InvalidPortFormatException, InvalidUserFormatException {
 		super(user, pass, port, host);
 		
         Properties pop3Props = new Properties();
@@ -31,6 +33,8 @@ public class Pop3Protocol extends ReceiverProtocol {
         pop3Props.setProperty("mail.pop3.socketFactory.port", this.port);
         
         this.session = Session.getInstance(pop3Props, null);
+        
+        this.path_attc = path_attch;
 	}
 
 	@Override
@@ -69,9 +73,11 @@ public class Pop3Protocol extends ReceiverProtocol {
 						} else if (p.isMimeType("text/*") && !plaintext_found) {
 							body = (String) p.getContent();
 						}
-					} else { // attach
-						String content = (String)p.getContent();
-						attachs.put(filename, content.getBytes());
+					} else {//atach
+						MimeBodyPart mbp = (MimeBodyPart)p;
+						mbp.saveFile(this.path_attc + p.getFileName());
+//						String content = (String)p.getContent();
+//						attachs.put(filename, content.getBytes());
 					}
 				}
 			}
@@ -97,5 +103,13 @@ public class Pop3Protocol extends ReceiverProtocol {
 		folder.close(true);
 		store.close();		
 		return res;
+	}
+
+	public void setPath_attc(String path_attc) {
+		this.path_attc = path_attc;
+	}
+
+	public String getPath_attc() {
+		return path_attc;
 	}
 }

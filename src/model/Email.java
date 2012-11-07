@@ -35,7 +35,7 @@ public class Email {
 		this.receiver=receiver;
 	}
 
-	public void processMail() throws MessagingException, IOException {
+	public void processMail(String working_path) throws MessagingException, IOException {
 		MessageProcessor mp = new MessageProcessor();
 		List<model.Message> incomingMessages = this.receiver.receive();
 		List<model.Message> answerMessages = mp.process(incomingMessages);

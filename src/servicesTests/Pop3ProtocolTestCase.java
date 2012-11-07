@@ -21,7 +21,7 @@ public class Pop3ProtocolTestCase {
 	public void testPop3ProcotolValidad() {
 		Pop3Protocol pop = null;
 		try {
-			pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "995", "pop.gmail.com");
+			pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "995", "pop.gmail.com","/home/gustavo/Escritorio");
 		}
 		
 		catch(InvalidPortFormatException e1) {
@@ -41,7 +41,7 @@ public class Pop3ProtocolTestCase {
 	public void testPopProtocolPortInvalid() throws InvalidPortFormatException {
 		try {
 			@SuppressWarnings("unused")
-			Pop3Protocol pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "aab2", "pop.gmail.com");
+			Pop3Protocol pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "aab2", "pop.gmail.com","/home/gustavo/Escritorio");
 		}
 
 		catch (InvalidUserFormatException e) {
@@ -54,7 +54,7 @@ public class Pop3ProtocolTestCase {
 	public void testPopProtocolPortInvalid2() throws InvalidPortFormatException {
 		try {
 			 @SuppressWarnings("unused")
-			Pop3Protocol pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "-400", "pop.gmail.com");
+			Pop3Protocol pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "-400", "pop.gmail.com","/home/gustavo/Escritorio");
 		}
 
 		catch (InvalidUserFormatException e) {
@@ -67,7 +67,7 @@ public class Pop3ProtocolTestCase {
 	public void testPopProtocolUserInvalid() throws InvalidUserFormatException {
 		try {
 			@SuppressWarnings("unused")
-			Pop3Protocol pop = new Pop3Protocol("pepegmail.com", "mailprueba", "995", "pop.gmail.com");
+			Pop3Protocol pop = new Pop3Protocol("pepegmail.com", "mailprueba", "995", "pop.gmail.com","/home/gustavo/Escritorio");
 		}
 
 		catch (InvalidPortFormatException e) {
@@ -80,7 +80,7 @@ public class Pop3ProtocolTestCase {
 	public void testPopConectionValid() {
 		 Pop3Protocol pop = null;
 		 try {
-			 pop = new Pop3Protocol("pruebatecnicas@gmail.com", "mailprueba", "995", "pop.gmail.com");
+			 pop = new Pop3Protocol("pruebatecnicas@gmail.com", "mailprueba", "995", "pop.gmail.com","/home/gustavo/Escritorio/");
 		}
 		 catch (Exception e) {
 			 fail("Pop mal formado");
@@ -107,7 +107,7 @@ public class Pop3ProtocolTestCase {
 	
 		 Pop3Protocol pop = null;
 		 try {
-			 pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "995", "HOST.ar");
+			 pop = new Pop3Protocol("tecnicasprueba@gmail.com", "mailprueba", "995", "HOST.ar","/home/gustavo/Escritorio/");
 		}
 		 catch (Exception e) {
 			 fail("Pop mal formado");
@@ -128,7 +128,7 @@ public class Pop3ProtocolTestCase {
 		
 		 Pop3Protocol pop = null;
 		 try {
-			 pop = new Pop3Protocol("tecnicasprueba@gmail.com", "CONTRASEniaFALSA", "995", "pop.gmail.com");
+			 pop = new Pop3Protocol("tecnicasprueba@gmail.com", "CONTRASEniaFALSA", "995", "pop.gmail.com","/home/gustavo/Escritorio/");
 		}
 		 catch (Exception e) {
 			 fail("Pop mal formado");
