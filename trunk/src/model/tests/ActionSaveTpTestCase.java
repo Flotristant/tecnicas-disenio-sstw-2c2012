@@ -23,12 +23,12 @@ public class ActionSaveTpTestCase {
 		rule.setCodigoMateria("75.05");
 		rule.setTpNumber("8");
 		TpPersistenceMock tpPersistence = new TpPersistenceMock();
-		HashMap<String,byte[]> attach = new HashMap<String, byte[]>();
-		attach.put("key1", "88".getBytes());
-		attach.put("key2", "89".getBytes());
+		Message message = new Message("sender", "", "", "");
+		message.addAttachment("key1", "88".getBytes());
+		message.addAttachment("key2", "89".getBytes());
 		
 		ActionSaveTp saveTp = new ActionSaveTp(tpPersistence);
-		saveTp.initialize(rule, new Message("sender", "", "", attach));
+		saveTp.initialize(rule, message);
 		saveTp.execute();
 		
 		Assert.assertEquals("75.05", tpPersistence.getCodigoMateriaToSave());
@@ -39,8 +39,9 @@ public class ActionSaveTpTestCase {
 		
 		Assert.assertNotNull(attachToSave.get("key1"));
 		Assert.assertNotNull(attachToSave.get("key2"));
-		Assert.assertEquals(attach.get("key1"), attachToSave.get("key1"));
-		Assert.assertEquals(attach.get("key2"), attachToSave.get("key2"));
+		
+		Assert.assertEquals(message.getAttachments().get("key1"), attachToSave.get("key1"));
+		Assert.assertEquals(message.getAttachments().get("key2"), attachToSave.get("key2"));
 		Assert.assertNull(attachToSave.get("key3"));
 	}
 }
