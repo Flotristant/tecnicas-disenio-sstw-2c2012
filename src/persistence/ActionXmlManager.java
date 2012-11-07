@@ -36,17 +36,23 @@ public class ActionXmlManager implements IXmlManager<ActionRule> {
 		String classname = actionElement.getAttribute("name");
 		@SuppressWarnings("unchecked")
 		Class<? extends ActionRule> c = (Class<? extends ActionRule>) Class.forName(classname);
-		Constructor<? extends ActionRule> cons = c.getConstructor();
-		ActionRule action = cons.newInstance();
+		Constructor<? extends ActionRule> cons = null;
+		// lo siguiente falla: no usa contructores vacios
+		try {
+			cons = c.getConstructor();
+			ActionRule action = cons.newInstance();
+		} catch (Exception e) {
+			
+		}
 		// devolver action
 		
 		switch (actionElement.getAttribute("name")) {
-		case "ActionAltaAlumno" : return new ActionAltaAlumno(new StudentPersistence());
-		case "ActionValidarEmail" : return new ActionValidarEmail(new MailPersistence());
-		case "ActionSaveTp" : return new ActionSaveTp(new TpPersistence());
-		case "ActionValidateGroup" : return new ActionValidateGroup();
-		case "ActionValidateSender" : return new ActionValidateSender(new MailPersistence());
-		case "ActionValidateStudentInGroup" : return new ActionValidateStudentInGroup(new StudentPersistence());
+		case "model.ActionAltaAlumno" : return new ActionAltaAlumno(new StudentPersistence());
+		case "model.ActionValidarEmail" : return new ActionValidarEmail(new MailPersistence());
+		case "model.ActionSaveTp" : return new ActionSaveTp(new TpPersistence());
+		case "model.ActionValidateGroup" : return new ActionValidateGroup();
+		case "model.ActionValidateSender" : return new ActionValidateSender(new MailPersistence());
+		case "model.ActionValidateStudentInGroup" : return new ActionValidateStudentInGroup(new StudentPersistence());
 		}
 		return null;
 	}

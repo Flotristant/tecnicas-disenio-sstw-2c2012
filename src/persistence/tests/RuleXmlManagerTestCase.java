@@ -63,9 +63,9 @@ public class RuleXmlManagerTestCase {
 	@Test
 	public void testShouldGenerateARuleFromXml() throws Exception
 	{
-		String xml = "<rule name='RuleAltaMateria' pattern='pattern1'>" +
-				"<action name='ActionAltaAlumno'/><action name='ActionSaveTp'/>" +
-				"<action name='ActionValidarEmail'/></rule>";
+		String xml = "<rule name='model.RuleAltaMateria' pattern='pattern1'>" +
+				"<action name='model.ActionAltaAlumno'/><action name='model.ActionSaveTp'/>" +
+				"<action name='model.ActionValidarEmail'/></rule>";
 		
 		Document document = TestUtilities.loadXMLFromString(xml);
 		
