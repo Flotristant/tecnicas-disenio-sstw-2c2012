@@ -29,7 +29,8 @@ public class ActionSaveTpTestCase {
 	
 	@Test
 	public void testShouldPassWhenSaveTp() {
-		this.rule = new RuleAltaMateria("ruleAltaMateria");
+		this.rule = new RuleAltaMateria();
+		this.rule.setPattern("ruleAltaMateria");
 		this.rule.setCodigoMateria("75.05");
 		this.rule.setTpNumber("8");
 		

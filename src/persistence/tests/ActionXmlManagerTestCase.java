@@ -1,12 +1,11 @@
 package persistence.tests;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import junit.framework.Assert;
 import model.ActionAltaAlumno;
 import model.ActionRule;
+import model.factories.mocks.ActionRuleFactoryMock;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -15,6 +14,13 @@ import persistence.ActionXmlManager;
 import persistence.mocks.StudentPersistenceMock;
 
 public class ActionXmlManagerTestCase {
+	private ActionRuleFactoryMock actionRuleFactory;
+	
+	@Before
+	public void setUp() {
+		this.actionRuleFactory = new ActionRuleFactoryMock();
+	}
+	
 	
 	@Test
 	public void testShouldGenerateAnXmlElementFromRule() throws Exception
@@ -23,7 +29,7 @@ public class ActionXmlManagerTestCase {
 		
 		Document document = TestUtilities.createDocument();
 		
-		ActionXmlManager xmlManager = new ActionXmlManager();
+		ActionXmlManager xmlManager = new ActionXmlManager(this.actionRuleFactory);
 		
 		Element element = xmlManager.getElementFromItem(action, document);
 		
@@ -38,7 +44,7 @@ public class ActionXmlManagerTestCase {
 		
 		Document document = TestUtilities.loadXMLFromString(xml);
 		
-		ActionXmlManager xmlManager = new ActionXmlManager();
+		ActionXmlManager xmlManager = new ActionXmlManager(this.actionRuleFactory);
 		
 		Element actionElement = (Element) document.getElementsByTagName("action").item(0);
 		

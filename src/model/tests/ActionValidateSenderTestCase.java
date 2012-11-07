@@ -23,7 +23,7 @@ public class ActionValidateSenderTestCase {
 	
 	@Test
 	public void testShouldReturnTrueWhenValidateEmail() {
-		this.validatorEmail.initialize(new RuleAltaGrupo("rule1") , new Message("francisco", "", "subject", "body"));
+		this.validatorEmail.initialize(new RuleAltaGrupo() , new Message("francisco", "", "subject", "body"));
 		
 		Assert.assertTrue(this.validatorEmail.execute());
 		
@@ -32,7 +32,7 @@ public class ActionValidateSenderTestCase {
 	
 	@Test
 	public void testShouldFailIfMailIsNotInDatabase() {
-		this.validatorEmail.initialize(new RuleAltaGrupo("rule1") , new Message("caty", "", "subject", "body"));
+		this.validatorEmail.initialize(new RuleAltaGrupo() , new Message("caty", "", "subject", "body"));
 		
 		Assert.assertFalse(this.validatorEmail.execute());
 	}

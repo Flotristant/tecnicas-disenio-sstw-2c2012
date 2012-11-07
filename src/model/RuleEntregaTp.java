@@ -4,8 +4,8 @@ import java.util.regex.Matcher;
 
 public class RuleEntregaTp extends Rule {
 
-	public RuleEntregaTp(String stringRule) {
-		super(stringRule);
+	public RuleEntregaTp() {
+		super();
 	}
 
 	@Override
