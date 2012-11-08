@@ -1,5 +1,7 @@
 package persistence;
 
+import java.util.ArrayList;
+
 import model.ActionRule;
 import model.Rule;
 import model.factories.IActionRuleFactory;
@@ -10,7 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
-public class RuleXmlManager implements IXmlManager<Rule> {
+public class RuleXmlManager implements IXmlManager<Iterable<Rule>> {
 
 	private IActionRuleFactory actionRuleFactory;
 	private IRuleFactory ruleFactory;
@@ -21,7 +23,27 @@ public class RuleXmlManager implements IXmlManager<Rule> {
 	}
 	
 	@Override
-	public Element getElementFromItem(Rule item, Document document) {
+	public Element getElementFromItem(Iterable<Rule> item, Document document) {
+		Element ruleElement = document.createElement("rules");
+		
+		for (Rule rule : item) {
+			ruleElement.appendChild(this.getElementFromItem(rule, document));
+		}
+		return ruleElement;
+	}
+	
+	@Override
+	public Iterable<Rule> getItemFromXmlElement(Element ruleElement) throws Exception {
+		ArrayList<Rule> rules = new ArrayList<Rule>();
+		
+		for (int i = 0; i < ruleElement.getChildNodes().getLength(); i++) {
+			rules.add(this.getRuleFromXmlElement((Element) ruleElement.getChildNodes().item(i)));
+		}
+		
+		return rules;
+	}
+	
+	private Element getElementFromItem(Rule item, Document document) {
 		
 		Element ruleElement = document.createElement("rule");
 		ruleElement.setAttribute("name", item.getClass().getSimpleName());
@@ -35,18 +57,9 @@ public class RuleXmlManager implements IXmlManager<Rule> {
 		return ruleElement;
 	}
 
-	@Override
-	public Rule getItemFromXmlElement(Element ruleElement) throws Exception {
+	private Rule getRuleFromXmlElement(Element ruleElement) throws Exception {
 		Rule rule = this.ruleFactory.create(ruleElement.getAttribute("name"));
 		rule.setPattern(ruleElement.getAttribute("pattern"));
-		
-//		switch (ruleElement.getAttribute("name")) {
-//		case "RuleAltaGrupo" : rule = new RuleAltaGrupo(ruleElement.getAttribute("pattern"));
-//		case "RuleAltaMateria" : rule = new RuleAltaMateria(ruleElement.getAttribute("pattern"));
-//		case "RuleConsutltaTema" : rule = new RuleConsultaTema(ruleElement.getAttribute("pattern"));
-//		case "RuleEntregaTp" : rule = new RuleEntregaTp(ruleElement.getAttribute("pattern"));
-//		case "RuleSpam" : rule = new RuleSpam(ruleElement.getAttribute("pattern"));
-//		}
 		
 		for (int i = 0; i < ruleElement.getChildNodes().getLength(); i++) {
 			Node actionNode = ruleElement.getChildNodes().item(i);

@@ -25,13 +25,6 @@ public class ActionXmlManager implements IXmlManager<ActionRule> {
 
 	@Override
 	public ActionRule getItemFromXmlElement(Element actionElement) throws Exception {
-//		switch (actionElement.getAttribute("name")) {
-//		case "ActionAltaAlumno" : return new ActionAltaAlumno(new StudentPersistence());
-//		case "ActionValidarEmail" : return new ActionValidateSender(new MailPersistence());
-//		case "ActionSaveTp" : return new ActionSaveTp(new TpPersistence());
-//		case "ActionValidateSender" : return new ActionValidateSender(new MailPersistence());
-//		case "ActionValidateStudentInGroup" : return new ActionValidateStudentInGroup(new StudentPersistence());
-//		}
 		return this.actionRuleFactory.create(actionElement.getAttribute("name"));
 	}
 }

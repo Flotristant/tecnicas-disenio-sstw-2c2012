@@ -10,6 +10,8 @@ public class RuleFactoryMock implements IRuleFactory {
 	public Rule create(String name) {
 		if (name.equals("RuleAltaMateria"))
 			return new RuleAltaMateria();
+		if (name.equals("RuleAltaGrupo"))
+			return new RuleAltaMateria();
 		return null;
 	}
 
