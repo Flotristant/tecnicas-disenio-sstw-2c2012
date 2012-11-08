@@ -34,9 +34,12 @@ public class ActionSaveTpTestCase {
 		this.rule.setCodigoMateria("75.05");
 		this.rule.setTpNumber("8");
 		
+		HashMap<String, String> attachment = new HashMap<String, String>();
+		attachment.put("key1", "88");
+		attachment.put("key2", "89");
+		
 		Message message = new Message("sender", "to", "subject", "body");
-		message.addAttachment("key1", "88".getBytes());
-		message.addAttachment("key2", "89".getBytes());
+		message.addAttachments(attachment);
 		
 		this.saveTp.initialize(this.rule, message);
 		this.saveTp.execute();
@@ -45,7 +48,7 @@ public class ActionSaveTpTestCase {
 		Assert.assertEquals("sender", this.tpPersistence.getSenderToSave());
 		Assert.assertEquals(Integer.valueOf(8), this.tpPersistence.getTpNumberToSave());
 		
-		HashMap<String,byte[]> attachToSave = (HashMap<String, byte[]>) this.tpPersistence.getAttachmentsToSave();
+		HashMap<String, String> attachToSave = (HashMap<String, String>) this.tpPersistence.getAttachmentsToSave();
 		
 		Assert.assertNotNull(attachToSave.get("key1"));
 		Assert.assertNotNull(attachToSave.get("key2"));

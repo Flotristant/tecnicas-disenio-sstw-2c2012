@@ -10,7 +10,7 @@ public class ActionSaveTp extends ActionRule {
 	private String codigoMateria;
 	private String sender;
 	private Integer tpNumber;
-	private Map<String, byte[]> attachments;
+	private Map<String, String> attachments;
 
 	public ActionSaveTp(ITpPersistence tpPersistence) {
 		this.tpPersistence = tpPersistence;

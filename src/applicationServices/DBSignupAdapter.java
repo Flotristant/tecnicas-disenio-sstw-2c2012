@@ -6,7 +6,7 @@ import java.util.*;
 import services.SQLiteAccessor;
 import services.SQLiteAccessor.QueryHandler;
 
-public class DBSignupAdapter implements SignupAdapter {
+public class DBSignupAdapter implements ISignupAdapter {
 	private SQLiteAccessor db;
 	
 	public DBSignupAdapter(String dbname, boolean cleardb) throws Exception {

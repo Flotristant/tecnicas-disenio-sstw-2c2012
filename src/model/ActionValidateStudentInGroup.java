@@ -7,7 +7,7 @@ public class ActionValidateStudentInGroup extends ActionRule {
 	
 	private IStudentPersistence studentPersistence;
 	private String codigoMateria;
-	private Map<String, byte[]> attachment;
+	private Map<String, String> attachment;
 
 	public ActionValidateStudentInGroup(IStudentPersistence studentPersistence) {
 		this.studentPersistence = studentPersistence;
@@ -19,6 +19,7 @@ public class ActionValidateStudentInGroup extends ActionRule {
 	}
 	
 	private boolean validateStudentsInGroup() {
+		if (this.attachment == null) return false;
 		if (this.attachment.keySet().size() != 1) return false;
 		
 		String body = new String(this.attachment.get(this.attachment.keySet().toArray()[0]));

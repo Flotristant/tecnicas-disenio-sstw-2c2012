@@ -9,11 +9,11 @@ public class TpPersistenceMock implements ITpPersistence {
 	private String codigoMateria;
 	private String sender;
 	private Integer tpNumber;
-	private Map<String, byte[]> attachments;
+	private Map<String, String> attachments;
 
 	@Override
 	public void saveTp(String codigoMateria, String sender, Integer tpNumber,
-			Map<String, byte[]> attachments) {
+			Map<String, String> attachments) {
 		this.codigoMateria = codigoMateria;
 		this.sender = sender;
 		this.tpNumber = tpNumber;
@@ -24,7 +24,7 @@ public class TpPersistenceMock implements ITpPersistence {
 		return this.codigoMateria;
 	}
 
-	public Map<String, byte[]> getAttachmentsToSave() {
+	public Map<String, String> getAttachmentsToSave() {
 		return this.attachments;
 	}
 

@@ -1,5 +1,7 @@
 package model.tests;
 
+import java.util.HashMap;
+
 import junit.framework.Assert;
 
 import model.ActionValidateStudentInGroup;
@@ -18,6 +20,7 @@ public class ActionValidateStudentInGroupTestCase {
 	private StudentPersistenceMock studentPersistence;
 	private Rule rule;
 	private Message message;
+	private HashMap<String, String> attach;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -25,6 +28,7 @@ public class ActionValidateStudentInGroupTestCase {
 		this.rule.setCodigoMateria("7502");
 		this.studentPersistence = new StudentPersistenceMock();
 		this.message = new Message("", "", "", "");
+		attach = new HashMap<String, String>();
 	}
 	
 	@Test
@@ -37,8 +41,10 @@ public class ActionValidateStudentInGroupTestCase {
 	
 	@Test
 	public void testShouldNotPassWhenMoreThanOneAttach() {
-		this.message.addAttachment("padrones", "".getBytes());
-		this.message.addAttachment("padrones2", "".getBytes());
+		this.attach.put("padrones", "");
+		this.attach.put("padrones2", "");
+		
+		this.message.addAttachments(this.attach);
 
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
@@ -48,7 +54,8 @@ public class ActionValidateStudentInGroupTestCase {
 	
 	@Test
 	public void testShouldNotPassWhenAttachsContentIsNotPadrons() {
-		this.message.addAttachment("padrones", "h91227".getBytes());
+		this.attach.put("padrones", "h91227");
+		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
@@ -58,7 +65,8 @@ public class ActionValidateStudentInGroupTestCase {
 	
 	@Test
 	public void testShouldNotPassWhenStudentBelongsInOtherGroup() {
-		this.message.addAttachment("padrones", "91227 90778 90000 91111".getBytes());
+		this.attach.put("padrones", "91227 90778 90000 91111");
+		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
@@ -68,7 +76,8 @@ public class ActionValidateStudentInGroupTestCase {
 	
 	@Test
 	public void testShouldNotPassWhenStudentIsNotInCurrentSemester() {
-		this.message.addAttachment("padrones", "91227 90778 90001 10000".getBytes());
+		this.attach.put("padrones", "91227 90778 90001 10000");
+		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
@@ -83,7 +92,8 @@ public class ActionValidateStudentInGroupTestCase {
 	
 	@Test
 	public void testShouldSaveStudentsCorrectlyInGroup() {
-		this.message.addAttachment("padrones", "91227 90778 91001 91229".getBytes());
+		this.attach.put("padrones", "91227 90778 91001 91229");
+		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
