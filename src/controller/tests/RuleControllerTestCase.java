@@ -1,17 +1,40 @@
 package controller.tests;
 
+import java.util.ArrayList;
+
 import junit.framework.Assert;
 
+import model.factories.mocks.ActionRuleFactoryMock;
+import model.factories.mocks.RuleFactoryMock;
+
+import org.junit.Before;
 import org.junit.Test;
 
+import persistence.RuleXmlManager;
+import persistence.XmlFileManager;
+
 import controller.RuleController;
+import controller.tests.mocks.XmlFileManagerMock;
+import controller.tests.mocks.XmlManagerMock;
 
 
 
 public class RuleControllerTestCase {
 
-//	@Test
-//	public void testShouldPatternRuleReturnNullWhenIncommingTextNotMatches()
+	private XmlFileManagerMock xmlFileManager;
+
+	private XmlManagerMock ruleXmlManager;
+	
+	@Before
+	public void setUp() throws Exception {
+		this.xmlFileManager = new XmlFileManagerMock();
+		this.ruleXmlManager = new XmlManagerMock(); 
+	}
+	@Test
+	public void testShouldCreateEveryRules() {
+		RuleController controller = this.createController();
+		
+	}
 //	{
 //		PatternRule pattern = new PatternRule();
 //
@@ -53,4 +76,8 @@ public class RuleControllerTestCase {
 //
 //		Assert.assertTrue(pattern.searchPattern("[ALTA-GRUPO]") instanceof RuleAltaGrupo);
 //	}
+	
+	private RuleController createController(){
+		return new RuleController(this.xmlFileManager, this.ruleXmlManager);
+	}
 }
