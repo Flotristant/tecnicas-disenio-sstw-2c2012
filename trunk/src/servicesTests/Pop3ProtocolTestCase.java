@@ -80,7 +80,7 @@ public class Pop3ProtocolTestCase {
 	public void testPopConectionValid() {
 		 Pop3Protocol pop = null;
 		 String pathActual = System.getProperty("user.dir");
-		 pathActual = pathActual+"/trunk/testFiles/testFilesInBox/";
+		 pathActual = pathActual+"/testFiles/testFilesInBox/";
 		 try {
 			 pop = new Pop3Protocol("pruebatecnicas@gmail.com", "mailprueba", "995", "pop.gmail.com",pathActual);
 		}

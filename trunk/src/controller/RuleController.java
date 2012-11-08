@@ -22,6 +22,7 @@ public class RuleController implements IRuleController{
 	public RuleController(IXmlFileManager xmlFileManager, IXmlManager<Iterable<Rule>> ruleXmlManager) {
 		this.xmlFileManager = xmlFileManager;
 		this.ruleXmlManager = ruleXmlManager;
+		this.rules = new ArrayList<Rule>();
 		try {
 			this.loadRules();
 		} catch (Exception e) {
