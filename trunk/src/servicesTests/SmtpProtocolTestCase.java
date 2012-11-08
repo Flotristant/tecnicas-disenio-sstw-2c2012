@@ -2,7 +2,9 @@ package servicesTests;
 
 import static org.junit.Assert.fail;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -109,8 +111,10 @@ public class SmtpProtocolTestCase {
 	public void testSendMessageWithFileValid() {
 		 model.Message m = new model.Message("pruebatecnicas@gmail.com","pruebatecnicas@hotmail.com",
 				 "subject","body");
-		 m.addAttachment("archivo.txt", "123 , esto es un adjunto".getBytes());
-		 m.addAttachment("archivo2", "jijijij3d3433dn3idneidndsded34535435345".getBytes());
+		 HashMap<String, String> hm=  new HashMap<String, String>();
+		 hm.put("Main.cpp","/home/gustavo/txt/");
+		 hm.put("screenshot.glade", "/home/gustavo/txt/");
+		 m.addAttachments(hm);
 		 List<model.Message> listm = new ArrayList<model.Message>();
 		 listm.add(m);
 		 SmtpProtocol smtp = null;
@@ -149,6 +153,9 @@ public class SmtpProtocolTestCase {
 		 catch (AddressException e1) {
 			 fail("Direccion invalida");
 		 }
+		 catch (IOException e2) {
+			 fail("Problema con el manejo de los adjuntos");
+		 }
 	}
 	
 	
@@ -171,6 +178,9 @@ public class SmtpProtocolTestCase {
 		} 	
 		 catch (AddressException e1) {
 			 fail("Direccion invalida");
+		 }
+		 catch (IOException e2) {
+			 fail("Problema con el manejo de los adjuntos");
 		 }
 	}
 	

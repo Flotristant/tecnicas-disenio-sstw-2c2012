@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Message {
 	private String subject, body;
-	private Map<String, String> attachments;
+	private HashMap<String, String> attachments;
 	private String sender;
 	private List<String> to;
 	private List<String> cc;
@@ -67,7 +67,7 @@ public class Message {
 		this.attachments = attach;
 	}
 	
-	public Map<String, String> getAttachments() {
+	public HashMap<String, String> getAttachments() {
 		return this.attachments;
 	}
 

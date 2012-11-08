@@ -1,4 +1,5 @@
 package services;
+import java.io.IOException;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -12,5 +13,5 @@ public abstract class SenderProtocol extends ProtocolMail {
 		super(user, pass, port, host);
 	}
 
-	public abstract void send(List<model.Message> messages) throws AddressException, MessagingException;
+	public abstract void send(List<model.Message> messages) throws AddressException, MessagingException, IOException;
 }
