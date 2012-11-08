@@ -113,7 +113,7 @@ public class SmtpProtocolTestCase {
 				 "subject","body");
 		 
 		 String pathActual = System.getProperty("user.dir");
-		 pathActual = pathActual+"/trunk/testFiles/";
+		 pathActual = pathActual+"/testFiles/";
 		 HashMap<String, String> hm=  new HashMap<String, String>();
 		 hm.put("Main.cpp",pathActual);
 		 hm.put("screenshot.glade", pathActual);
