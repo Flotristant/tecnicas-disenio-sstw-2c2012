@@ -79,8 +79,10 @@ public class Pop3ProtocolTestCase {
 	@Test 
 	public void testPopConectionValid() {
 		 Pop3Protocol pop = null;
+		 String pathActual = System.getProperty("user.dir");
+		 pathActual = pathActual+"/trunk/testFiles/testFilesInBox/";
 		 try {
-			 pop = new Pop3Protocol("pruebatecnicas@gmail.com", "mailprueba", "995", "pop.gmail.com","/home/gustavo/Escritorio/");
+			 pop = new Pop3Protocol("pruebatecnicas@gmail.com", "mailprueba", "995", "pop.gmail.com",pathActual);
 		}
 		 catch (Exception e) {
 			 fail("Pop mal formado");
@@ -124,7 +126,7 @@ public class Pop3ProtocolTestCase {
 	
 	
 	@Test(expected= MessagingException.class)
-	public void testSendMessageInvalidIdentification() throws MessagingException {
+	public void testReceiveMessageInvalidIdentification() throws MessagingException {
 		
 		 Pop3Protocol pop = null;
 		 try {
