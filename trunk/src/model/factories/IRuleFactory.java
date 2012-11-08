@@ -1,9 +1,9 @@
 package model.factories;
 
-import model.Rule;
+import model.IRule;
 
 public interface IRuleFactory {
 	
-	public Rule create(String attribute);
+	public IRule create(String attribute);
 	
 }

@@ -2,7 +2,7 @@ package model.factories;
 
 import org.picocontainer.MutablePicoContainer;
 
-import model.Rule;
+import model.IRule;
 
 public class RuleFactory implements IRuleFactory {
 
@@ -13,8 +13,8 @@ public class RuleFactory implements IRuleFactory {
 	}
 	
 	@Override
-	public Rule create(String name) {
-		return (Rule) this.container.getComponent(Rule.class + name);
+	public IRule create(String name) {
+		return (IRule) this.container.getComponent(IRule.class + name);
 	}
 
 }

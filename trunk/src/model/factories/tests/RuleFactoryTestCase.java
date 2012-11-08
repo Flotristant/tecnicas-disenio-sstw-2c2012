@@ -2,7 +2,7 @@ package model.factories.tests;
 
 import junit.framework.Assert;
 
-import model.Rule;
+import model.IRule;
 import model.factories.RuleFactory;
 import model.factories.tests.mock.RuleAltaGrupoMock;
 
@@ -23,7 +23,7 @@ private PicoContainerMock container;
 	@Test
 	public void testShouldUseContainerToResolveController(){
 		RuleAltaGrupoMock rule = new RuleAltaGrupoMock();
-		this.container.addComponent(Rule.class + "", rule);
+		this.container.addComponent(IRule.class + "", rule);
 		
 		RuleFactory factory = this.createRuleFactory();
 		Assert.assertSame(rule,factory.create(""));

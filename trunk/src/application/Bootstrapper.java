@@ -7,7 +7,12 @@ import model.ActionRule;
 import model.ActionSaveTp;
 import model.ActionValidateSender;
 import model.ActionValidateStudentInGroup;
-import model.Rule;
+import model.IRule;
+import model.RuleAltaGrupo;
+import model.RuleAltaMateria;
+import model.RuleConsultaTema;
+import model.RuleEntregaTp;
+import model.RuleSpam;
 import model.factories.ActionRuleFactory;
 import model.factories.IActionRuleFactory;
 import model.factories.IRuleFactory;
@@ -21,8 +26,12 @@ import controller.RuleController;
 import controller.factories.IRuleControllerFactory;
 import controller.factories.RuleControllerFactory;
 
+import persistence.IMailPersistence;
 import persistence.IStudentPersistence;
+import persistence.ITpPersistence;
+import persistence.MailPersistence;
 import persistence.StudentPersistence;
+import persistence.TpPersistence;
 
 public class Bootstrapper {
 	
@@ -43,12 +52,18 @@ public class Bootstrapper {
 					.as(CACHE).addComponent(IRuleControllerFactory.class, RuleControllerFactory.class)
 					.as(CACHE).addComponent(IRuleController.class, RuleController.class)
 					.as(CACHE).addComponent(IRuleFactory.class, RuleFactory.class)
-					.addComponent(Rule.class)
+					.as(CACHE).addComponent(IRule.class + "RuleAltaGrupo", RuleAltaGrupo.class)
+					.as(CACHE).addComponent(IRule.class + "RuleAltaMateria", RuleAltaMateria.class)
+					.as(CACHE).addComponent(IRule.class + "RuleConsultaTema", RuleConsultaTema.class)
+					.as(CACHE).addComponent(IRule.class + "RuleEntregaTp", RuleEntregaTp.class)
+					.as(CACHE).addComponent(IRule.class + "RuleSpam", RuleSpam.class)
 					.as(CACHE).addComponent(IActionRuleFactory.class, ActionRuleFactory.class)
 					.addComponent(ActionRule.class + "ActionAltaAlumno", ActionAltaAlumno.class)
 					.as(CACHE).addComponent(IStudentPersistence.class, StudentPersistence.class)
 					.addComponent(ActionRule.class + "ActionSaveTp", ActionSaveTp.class)
+					.as(CACHE).addComponent(ITpPersistence.class, TpPersistence.class)
 					.addComponent(ActionRule.class + "ActionValidateSender", ActionValidateSender.class)
+					.as(CACHE).addComponent(IMailPersistence.class, MailPersistence.class)
 					.addComponent(ActionRule.class + "ActionValidateStudentInGroup", ActionValidateStudentInGroup.class);
 	}
 

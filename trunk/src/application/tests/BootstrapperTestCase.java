@@ -1,5 +1,6 @@
 package application.tests;
 
+import model.ActionAltaAlumno;
 import model.ActionRule;
 
 import org.junit.Assert;
@@ -41,11 +42,9 @@ public class BootstrapperTestCase {
 		
 		bootstrapper.run();
 		
-		Assert.assertEquals(11, this.container.getMappings().size());
+		Assert.assertEquals(17, this.container.getMappings().size());
 		Assert.assertSame(this.container, this.container.getMappings().get(MutablePicoContainer.class));
-		
-		// despues sacar
-		Assert.assertNotNull(this.container.getComponent(ActionRule.class + "ActionAltaAlumno"));
+		Assert.assertSame(ActionAltaAlumno.class, this.container.getMappings().get(ActionRule.class + "ActionAltaAlumno"));
 	}
 	
 	private TestableBootstrapper createBootstrapper(){
