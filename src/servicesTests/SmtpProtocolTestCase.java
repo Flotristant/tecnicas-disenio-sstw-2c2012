@@ -113,7 +113,7 @@ public class SmtpProtocolTestCase {
 				 "subject","body");
 		 
 		 String pathActual = System.getProperty("user.dir");
-		 pathActual = pathActual+"/testFiles/";
+		 pathActual = pathActual+"/trunk/testFiles/testFilesOutBox/";
 		 HashMap<String, String> hm=  new HashMap<String, String>();
 		 hm.put("Main.cpp",pathActual);
 		 hm.put("screenshot.glade", pathActual);
@@ -133,9 +133,14 @@ public class SmtpProtocolTestCase {
 		//	smtp.debugOn();
 			smtp.send(listm);
 		} 	
-		 catch (Exception e1) {
-			 fail("Mail no enviado");
-		 }
+		 catch (AddressException e1) {
+			 fail("Error en la traduccion de la internet address");			 
+		 } catch (MessagingException e) {
+			 fail ("Error con la conexion con el host");
+		} catch (IOException e) {
+			fail ("Error con la manipulacion de los adjuntos");
+		}
+
 	}
 	
 	@Test(expected= MessagingException.class)
