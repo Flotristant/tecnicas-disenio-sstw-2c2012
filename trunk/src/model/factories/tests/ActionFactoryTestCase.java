@@ -31,6 +31,4 @@ private PicoContainerMock container;
 	public ActionRuleFactory createActionFactory(){
 		return new ActionRuleFactory(this.container);
 	}
-
-
 }

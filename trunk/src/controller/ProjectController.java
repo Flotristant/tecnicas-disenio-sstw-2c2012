@@ -1,34 +1,22 @@
 package controller;
 
-import java.util.ArrayList;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-
 import controller.factories.IRuleControllerFactory;
 
 import persistence.IXmlFileManager;
-import persistence.IXmlManager;
-import model.Rule;
-import model.factories.IRuleFactory;
 
 public class ProjectController {
 
 	private IRuleControllerFactory ruleControllerFactory;
 	private IXmlFileManager xmlFileManager;
-	private ArrayList<Rule> rules;
+	private IRuleController ruleController;
 
 	public ProjectController(IXmlFileManager xmlFileManager, IRuleControllerFactory ruleControllerFactory) {
 		this.xmlFileManager = xmlFileManager;
 		this.ruleControllerFactory = ruleControllerFactory;
-		this.rules = new ArrayList<Rule>();
+		this.initializeControllers();
 	}
 	
-	
-	
-	
-	public ArrayList<Rule> getRules() {
-		return rules;
+	private void initializeControllers() {
+		this.ruleController = this.ruleControllerFactory.create();
 	}
 }
