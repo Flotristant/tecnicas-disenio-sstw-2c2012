@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import services.SQLiteAccessor;
 import services.SQLiteAccessor.QueryHandler;
 
-public class DBTPAdapter implements TPAdapter {
+public class DBTPAdapter implements ITPAdapter {
 	private SQLiteAccessor db;
 	
 	public DBTPAdapter(String dbname, boolean cleardb) throws Exception {

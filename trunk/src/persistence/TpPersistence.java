@@ -2,13 +2,19 @@ package persistence;
 
 import java.util.Map;
 
-public class TpPersistence implements ITpPersistence {
+import services.SQLiteAccessor;
 
+public class TpPersistence implements ITpPersistence {
+	
+	private SQLiteAccessor db;
+	
 	@Override
 	public void saveTp(String codigoMateria, String sender, Integer tpNumber,
-			Map<String, byte[]> attachments) {
-		// TODO guardar tp en BD y guardar attachments en path
+			Map<String, String> attachments) {
+		
+//			db.update(String.format("INSERT INTO TP (Subject, StudentNr, TPNr) VALUES (%d, %d, %d)", subject, studentnr, TPnr));
+		}
 
-	}
 
 }
+

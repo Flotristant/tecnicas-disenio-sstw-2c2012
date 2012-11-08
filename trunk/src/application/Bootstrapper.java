@@ -7,7 +7,6 @@ import model.ActionRule;
 import model.ActionSaveTp;
 import model.ActionValidateSender;
 import model.ActionValidateStudentInGroup;
-import model.IRule;
 import model.Rule;
 import model.factories.ActionRuleFactory;
 import model.factories.IActionRuleFactory;
