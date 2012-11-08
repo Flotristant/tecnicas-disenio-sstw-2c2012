@@ -1,0 +1,44 @@
+<?xml ?>
+<raiz>
+    <generador_ids principio="6" />
+    <mapa_cursos>
+        <curso id_curso="1" nombre="Curso 1" clave="%" id_instructor="instructor" descripcion="Descricion" periodo="ANUAL" privado="true">
+            <lista_alumnos cantidad="0.000000" />
+            <mapa_clases>
+                <clase id_clase="2" nombre="Clase 1" id_instructor="" id_curso_perteneciente="1" fecha="9/5/2011-0:0" descripcion="No tiene" clave="" clase_privada="true" disponibilidad_online="true">
+                    <lista_inscriptos cantidad="0.000000" />
+                    <mapa_archivos />
+                </clase>
+                <clase id_clase="3" nombre="Clase 2" id_instructor="" id_curso_perteneciente="1" fecha="9/5/2011-2:0" descripcion="No tiene 2" clave="" clase_privada="true" disponibilidad_online="true">
+                    <lista_inscriptos cantidad="0.000000" />
+                    <mapa_archivos />
+                </clase>
+            </mapa_clases>
+        </curso>
+        <curso id_curso="4" nombre="Curso 2" clave="%" id_instructor="instructor" descripcion="Descricion no tiene" periodo="ANUAL" privado="true">
+            <lista_alumnos cantidad="0.000000" />
+            <mapa_clases>
+                <clase id_clase="5" nombre="Clase 2" id_instructor="" id_curso_perteneciente="4" fecha="9/5/2011-3:0" descripcion="No tiene 2" clave="" clase_privada="true" disponibilidad_online="true">
+                    <lista_inscriptos cantidad="0.000000" />
+                    <mapa_archivos />
+                </clase>
+            </mapa_clases>
+        </curso>
+    </mapa_cursos>
+    <mapa_clases />
+    <mapa_usuarios>
+        <usuario id_usuario="alumno" nombre_completo="pepito" pass="5678" tipo="alumno">
+            <lista_clases_inscripto cantidad="0.000000" />
+            <lista_cursos_inscripto cantidad="0.000000" />
+        </usuario>
+        <usuario id_usuario="instructor" nombre_completo="pepe" pass="1234" tipo="instructor">
+            <lista_clases_creadas cantidad="0.000000" />
+            <lista_cursos_creados cantidad="2.000000">
+                <hijo valor="1" />
+                <hijo valor="4" />
+            </lista_cursos_creados>
+            <lista_clases_inscripto cantidad="0.000000" />
+            <lista_cursos_inscripto cantidad="0.000000" />
+        </usuario>
+    </mapa_usuarios>
+</raiz>

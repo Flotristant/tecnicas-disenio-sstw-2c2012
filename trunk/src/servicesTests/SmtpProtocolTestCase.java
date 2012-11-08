@@ -111,9 +111,14 @@ public class SmtpProtocolTestCase {
 	public void testSendMessageWithFileValid() {
 		 model.Message m = new model.Message("pruebatecnicas@gmail.com","pruebatecnicas@hotmail.com",
 				 "subject","body");
+		 
+		 String pathActual = System.getProperty("user.dir");
+		 pathActual = pathActual+"/trunk/testFiles/";
 		 HashMap<String, String> hm=  new HashMap<String, String>();
-		 hm.put("Main.cpp","/home/gustavo/txt/");
-		 hm.put("screenshot.glade", "/home/gustavo/txt/");
+		 hm.put("Main.cpp",pathActual);
+		 hm.put("screenshot.glade", pathActual);
+		 hm.put("Semana02.pdf",pathActual);
+		 hm.put("modelo.xml", pathActual);
 		 m.addAttachments(hm);
 		 List<model.Message> listm = new ArrayList<model.Message>();
 		 listm.add(m);
