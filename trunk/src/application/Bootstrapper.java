@@ -16,6 +16,11 @@ import model.factories.RuleFactory;
 import org.picocontainer.DefaultPicoContainer;
 import org.picocontainer.MutablePicoContainer;
 
+import controller.IRuleController;
+import controller.RuleController;
+import controller.factories.IRuleControllerFactory;
+import controller.factories.RuleControllerFactory;
+
 import persistence.IStudentPersistence;
 import persistence.StudentPersistence;
 
@@ -35,6 +40,8 @@ public class Bootstrapper {
 	private void configureContainer() {
 		this.container
 					.as(CACHE).addComponent(MutablePicoContainer.class, this.container)
+					.as(CACHE).addComponent(IRuleControllerFactory.class, RuleControllerFactory.class)
+					.as(CACHE).addComponent(IRuleController.class, RuleController.class)
 					.as(CACHE).addComponent(IRuleFactory.class, RuleFactory.class)
 					.addComponent(Rule.class)
 					.as(CACHE).addComponent(IActionRuleFactory.class, ActionRuleFactory.class)

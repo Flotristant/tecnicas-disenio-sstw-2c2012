@@ -41,7 +41,7 @@ public class BootstrapperTestCase {
 		
 		bootstrapper.run();
 		
-		Assert.assertEquals(9, this.container.getMappings().size());
+		Assert.assertEquals(11, this.container.getMappings().size());
 		Assert.assertSame(this.container, this.container.getMappings().get(MutablePicoContainer.class));
 		
 		// despues sacar

@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
-import controller.PatternRule;
+import controller.RuleController;
 
 
 
