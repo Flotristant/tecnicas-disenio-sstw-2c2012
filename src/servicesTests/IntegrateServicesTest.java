@@ -7,10 +7,14 @@ import services.Pop3Protocol;
 import services.SmtpProtocol;
 import static org.junit.Assert.*;
 import org.junit.Test;
+
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import junit.framework.Assert;
 
 
 
@@ -23,17 +27,26 @@ public class IntegrateServicesTest {
 	/* Envio un mail con adjuntos a un mail y luego abro el mismo
 	 * verificando que lo que se envio es igual a lo que se recibe
 	 */
+	
+	private void vaciarDirectorioIncoming(String pathIncoming) {
+		File directory = new File(pathIncoming);
+		File[] files = directory.listFiles();
+		for(File file : files) {
+			file.delete();
+		}
+	}
+	
 	@Test
 	public void integrateTest()  {
 		
 		 model.Message m = new model.Message("pruebatecnicas@gmail.com","pruebatecnicas@hotmail.com",
 				 "subject","body");
 		 
-		 String pathActual = System.getProperty("user.dir");
-		 pathActual = pathActual+"/trunk/testFiles/testFilesOutBox/";
+		 String pathOutcoming = System.getProperty("user.dir");
+		 pathOutcoming = pathOutcoming+"/trunk/testFiles/testFilesOutBox/";
 		 HashMap<String, String> hm=  new HashMap<String, String>();
-		 hm.put("Semana02.pdf",pathActual);
-		 hm.put("modelo.xml", pathActual);
+		 hm.put("Semana02.pdf",pathOutcoming);
+		 hm.put("modelo.xml", pathOutcoming);
 		 m.addAttachments(hm);
 		 List<model.Message> listm = new ArrayList<model.Message>();
 		 listm.add(m);
@@ -57,10 +70,11 @@ public class IntegrateServicesTest {
 		}
 		
 		 Pop3Protocol pop = null;
-		 String pathActual2 = System.getProperty("user.dir");
-		 pathActual2 = pathActual2 +"/trunk/testFiles/testFilesInBox/";
+		 String pathIncoming = System.getProperty("user.dir");
+		 pathIncoming = pathIncoming +"/trunk/testFiles/testFilesInBox/";
+		 this.vaciarDirectorioIncoming(pathIncoming);
 		 try {
-			 pop = new Pop3Protocol("pruebatecnicas@hotmail.com", "Mailprueba01", "995", "pop3.live.com",pathActual2);
+			 pop = new Pop3Protocol("pruebatecnicas@hotmail.com", "Mailprueba01", "995", "pop3.live.com",pathIncoming);
 		}
 		 catch (Exception e) {
 			 fail("Pop mal formado");
@@ -77,7 +91,10 @@ public class IntegrateServicesTest {
 			fail("Conexion invalidad");
 		}
 	
-		
+		File adj1 = new File(pathIncoming+"Semana02.pdf");
+		Assert.assertTrue(adj1.isFile());
+		File adj2 = new File(pathIncoming+"modelo.xml");
+		Assert.assertTrue(adj2.isFile());
 		
 		
 		
