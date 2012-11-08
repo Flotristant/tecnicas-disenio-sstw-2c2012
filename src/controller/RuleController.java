@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -9,7 +8,7 @@ import org.w3c.dom.Element;
 import persistence.IXmlFileManager;
 import persistence.IXmlManager;
 
-import model.ActionRule;
+import model.IRule;
 import model.Message;
 import model.Rule;
 
@@ -17,29 +16,23 @@ public class RuleController implements IRuleController{
 	
 	private IXmlFileManager xmlFileManager;
 	private IXmlManager<Iterable<Rule>> ruleXmlManager;
-	private ArrayList<Rule> rules;
+	private ArrayList<IRule> rules;
 
 	public RuleController(IXmlFileManager xmlFileManager, IXmlManager<Iterable<Rule>> ruleXmlManager) {
 		this.xmlFileManager = xmlFileManager;
 		this.ruleXmlManager = ruleXmlManager;
-		this.rules = new ArrayList<Rule>();
+		this.rules = new ArrayList<IRule>();
 		try {
 			this.loadRules();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
 	public void processMessage(Message message) {
-		for (Rule rule : this.rules) {
-			Pattern pattern = Pattern.compile(rule.getPattern());
-			if (pattern.matcher(message.getSubject()).matches()) 
-				for (ActionRule action : rule.getActions()) {
-					action.initialize(rule, message);
-					if(!action.execute()) break; //mas adelante tendria que ser otra cosa...
-				}
+		for (IRule rule : this.rules) {
+			rule.execute(message);
 		}
 	}
 	

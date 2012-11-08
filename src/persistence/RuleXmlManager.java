@@ -3,7 +3,7 @@ package persistence;
 import java.util.ArrayList;
 
 import model.ActionRule;
-import model.Rule;
+import model.IRule;
 import model.factories.IActionRuleFactory;
 import model.factories.IRuleFactory;
 
@@ -12,7 +12,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 
-public class RuleXmlManager implements IXmlManager<Iterable<Rule>> {
+public class RuleXmlManager implements IXmlManager<Iterable<IRule>> {
 
 	private IActionRuleFactory actionRuleFactory;
 	private IRuleFactory ruleFactory;
@@ -23,18 +23,18 @@ public class RuleXmlManager implements IXmlManager<Iterable<Rule>> {
 	}
 	
 	@Override
-	public Element getElementFromItem(Iterable<Rule> item, Document document) {
+	public Element getElementFromItem(Iterable<IRule> item, Document document) {
 		Element ruleElement = document.createElement("rules");
 		
-		for (Rule rule : item) {
+		for (IRule rule : item) {
 			ruleElement.appendChild(this.getElementFromItem(rule, document));
 		}
 		return ruleElement;
 	}
 	
 	@Override
-	public Iterable<Rule> getItemFromXmlElement(Element ruleElement) throws Exception {
-		ArrayList<Rule> rules = new ArrayList<Rule>();
+	public Iterable<IRule> getItemFromXmlElement(Element ruleElement) throws Exception {
+		ArrayList<IRule> rules = new ArrayList<IRule>();
 		
 		for (int i = 0; i < ruleElement.getChildNodes().getLength(); i++) {
 			rules.add(this.getRuleFromXmlElement((Element) ruleElement.getChildNodes().item(i)));
@@ -43,7 +43,7 @@ public class RuleXmlManager implements IXmlManager<Iterable<Rule>> {
 		return rules;
 	}
 	
-	private Element getElementFromItem(Rule item, Document document) {
+	private Element getElementFromItem(IRule item, Document document) {
 		
 		Element ruleElement = document.createElement("rule");
 		ruleElement.setAttribute("name", item.getClass().getSimpleName());
@@ -57,8 +57,8 @@ public class RuleXmlManager implements IXmlManager<Iterable<Rule>> {
 		return ruleElement;
 	}
 
-	private Rule getRuleFromXmlElement(Element ruleElement) throws Exception {
-		Rule rule = this.ruleFactory.create(ruleElement.getAttribute("name"));
+	private IRule getRuleFromXmlElement(Element ruleElement) throws Exception {
+		IRule rule = this.ruleFactory.create(ruleElement.getAttribute("name"));
 		rule.setPattern(ruleElement.getAttribute("pattern"));
 		
 		for (int i = 0; i < ruleElement.getChildNodes().getLength(); i++) {

@@ -8,6 +8,7 @@ import model.ActionAltaAlumno;
 import model.ActionRule;
 import model.ActionSaveTp;
 import model.ActionValidateSender;
+import model.IRule;
 import model.Rule;
 import model.RuleAltaMateria;
 import model.factories.mocks.ActionRuleFactoryMock;
@@ -49,9 +50,9 @@ public class RuleXmlManagerTestCase {
 	{
 		Rule rule = new RuleAltaMateria();
 		rule.setPattern("pattern1");
-		rule.addAction(action1);
-		rule.addAction(action2);
-		ArrayList<Rule> rules = new ArrayList<Rule>();
+		rule.addAction(this.action1);
+		rule.addAction(this.action2);
+		ArrayList<IRule> rules = new ArrayList<IRule>();
 		rules.add(rule);
 		
 		Document document = TestUtilities.createDocument();
@@ -74,7 +75,7 @@ public class RuleXmlManagerTestCase {
 	{
 		String xml = "<rules><rule name='RuleAltaMateria' pattern='pattern1'>" +
 				"<action name='ActionAltaAlumno'/><action name='ActionSaveTp'/>" +
-				"<action name='ActionValidarEmail'/></rule></rules>";
+				"<action name='ActionValidateSender'/></rule></rules>";
 		
 		Document document = TestUtilities.loadXMLFromString(xml);
 		
@@ -82,9 +83,9 @@ public class RuleXmlManagerTestCase {
 		
 		Element ruleElement = (Element) document.getElementsByTagName("rules").item(0);
 		
-		Iterable<Rule> rules = xmlManager.getItemFromXmlElement(ruleElement);
+		Iterable<IRule> rules = xmlManager.getItemFromXmlElement(ruleElement);
 		
-		Rule rule = ((ArrayList<Rule>) rules).get(0);
+		IRule rule = ((ArrayList<IRule>) rules).get(0);
 		
 		Assert.assertEquals("pattern1", rule.getPattern());
 		

@@ -34,6 +34,7 @@ public abstract class Rule implements IRule {
 		this.padron = padron;
 	}
 
+	@Override
 	public String getPattern() {
 		return this.pattern;
 	}
@@ -53,10 +54,12 @@ public abstract class Rule implements IRule {
 
 	protected abstract void searchComponentsInSubject(Matcher matcher);
 	
+	@Override
 	public Iterable<ActionRule> getActions() {
 		return collectionActions;
 	}
 
+	@Override
 	public void addAction(ActionRule action) {
 		this.collectionActions.add(action);
 	}
@@ -85,6 +88,7 @@ public abstract class Rule implements IRule {
 		this.name = name;
 	}
 
+	@Override
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
 	}
