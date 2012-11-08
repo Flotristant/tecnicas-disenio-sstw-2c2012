@@ -8,7 +8,7 @@ import controller.RuleController;
 
 
 
-public class PatternRuleTestCase {
+public class RuleControllerTestCase {
 
 //	@Test
 //	public void testShouldPatternRuleReturnNullWhenIncommingTextNotMatches()

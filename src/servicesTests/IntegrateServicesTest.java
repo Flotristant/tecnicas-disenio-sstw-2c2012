@@ -43,7 +43,7 @@ public class IntegrateServicesTest {
 				 "subject","body");
 		 
 		 String pathOutcoming = System.getProperty("user.dir");
-		 pathOutcoming = pathOutcoming+"/trunk/testFiles/testFilesOutBox/";
+		 pathOutcoming = pathOutcoming+"/testFiles/testFilesOutBox/";
 		 HashMap<String, String> hm=  new HashMap<String, String>();
 		 hm.put("Semana02.pdf",pathOutcoming);
 		 hm.put("modelo.xml", pathOutcoming);
@@ -71,7 +71,7 @@ public class IntegrateServicesTest {
 		
 		 Pop3Protocol pop = null;
 		 String pathIncoming = System.getProperty("user.dir");
-		 pathIncoming = pathIncoming +"/trunk/testFiles/testFilesInBox/";
+		 pathIncoming = pathIncoming +"/testFiles/testFilesInBox/";
 		 this.vaciarDirectorioIncoming(pathIncoming);
 		 try {
 			 pop = new Pop3Protocol("pruebatecnicas@hotmail.com", "Mailprueba01", "995", "pop3.live.com",pathIncoming);

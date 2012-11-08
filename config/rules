@@ -1,1 +1,1 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><rules><rule name="RuleAltaMateria" pattern="pattern1"/><rule name="RuleAltaGrupo" pattern="pattern2"/></rules>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><rules><rule name="RuleAltaGrupo" pattern="pattern1"/><rule name="RuleAltaMateria" pattern="pattern2"/><rule name="RuleConsultaTema" pattern="pattern2"/><rule name="RuleEntregaTp" pattern="pattern2"/><rule name="RuleSpam" pattern="pattern2"/></rules>
