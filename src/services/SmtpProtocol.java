@@ -1,13 +1,12 @@
 package services;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
 
-import javax.activation.DataHandler;
-import javax.activation.DataSource;
 import javax.mail.*;
 import javax.mail.internet.*;
-import javax.mail.util.ByteArrayDataSource;
 
 import services.exceptions.InvalidPortFormatException;
 import services.exceptions.InvalidUserFormatException;
@@ -47,7 +46,7 @@ public class SmtpProtocol extends SenderProtocol {
 		this.session.setDebug(true);
 	}
 	@Override
-	public void send(List<model.Message> messages) throws AddressException, MessagingException {
+	public void send(List<model.Message> messages) throws AddressException, MessagingException, IOException {
 		
 		if (messages != null ) {
 			Iterator<model.Message> it= messages.iterator();
@@ -81,23 +80,31 @@ public class SmtpProtocol extends SenderProtocol {
 				mimemessage.setSubject(message.getSubject());
 
 		
-				// create the message part 
-				MimeBodyPart messageBodyPart = new MimeBodyPart();
-				messageBodyPart.setText(message.getBody());
-
-				Multipart multipart = new MimeMultipart();
-				multipart.addBodyPart(messageBodyPart);
-	    
-				for (String filename : message.getAttachments().keySet()) {
-					messageBodyPart = new MimeBodyPart();
-					DataSource source = new ByteArrayDataSource(message.getAttachment(filename), "application/octet-stream");
-					messageBodyPart.setDataHandler(new DataHandler(source));
-					messageBodyPart.setFileName(filename);
+				if (message.isWithAttachments()) {
+					Multipart multipart = new MimeMultipart();
+		
+					// create the message part 
+					MimeBodyPart messageBodyPart = new MimeBodyPart();
+					messageBodyPart.setText(message.getBody());
+					
 					multipart.addBodyPart(messageBodyPart);
-				}
 
-				// Put parts in message
-				mimemessage.setContent(multipart);
+					HashMap<String, String> fileAtch = message.getAttachments();
+					
+					for (String filename : fileAtch.keySet()) {
+						String incomingFolder = fileAtch.get(filename);
+						MimeBodyPart attachment = new MimeBodyPart(); 
+						String fullPath = incomingFolder+filename;
+						attachment.attachFile(fullPath);
+						multipart.addBodyPart(attachment);
+					}
+					mimemessage.setContent(multipart);
+					
+				}
+				
+				else {
+					mimemessage.setText(message.getBody());
+				}
 			
 				Transport t = this.session.getTransport("smtp");
 				t.connect(this.user, this.pass);
