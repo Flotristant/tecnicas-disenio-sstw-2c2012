@@ -75,7 +75,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 						}
 					} else {//atach
 						MimeBodyPart mbp = (MimeBodyPart)p;
-						mbp.saveFile(this.path_attc + p.getFileName());
+						mbp.saveFile(this.path_attc + filename);
 						attachs.put(filename, this.path_attc);
 					}
 				}
