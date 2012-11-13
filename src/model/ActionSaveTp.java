@@ -18,7 +18,7 @@ public class ActionSaveTp extends ActionRule {
 	
 	@Override
 	public void execute() throws Exception {
-		this.tpPersistence.saveTp(this.codigoMateria, this.sender, this.tpNumber);
+		this.tpPersistence.saveTp(this.codigoMateria, this.sender, this.tpNumber, this.attachments);
 	}
 
 	@Override

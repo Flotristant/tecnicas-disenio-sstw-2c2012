@@ -11,7 +11,7 @@ import model.RuleAltaGrupo;
 
 import org.junit.Test;
 
-import persistence.mocks.DBTpPersistenceMock;
+import persistence.mocks.TpPersistenceMock;
 import persistence.mocks.StudentPersistenceMock;
 
 public class RuleTestCase {
@@ -26,7 +26,7 @@ public class RuleTestCase {
 	@Test
 	public void testShouldSaveCorrectlyVariousActions() {
 		ActionAltaAlumno action1 = new ActionAltaAlumno(new StudentPersistenceMock()); 
-		ActionSaveTp action2 = new ActionSaveTp(new DBTpPersistenceMock());
+		ActionSaveTp action2 = new ActionSaveTp(new TpPersistenceMock());
 		
 		Rule rule = new RuleAltaGrupo();
 		rule.addAction(action1);
