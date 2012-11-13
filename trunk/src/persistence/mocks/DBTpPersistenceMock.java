@@ -4,7 +4,7 @@ import java.util.Map;
 
 import persistence.ITpPersistence;
 
-public class TpPersistenceMock implements ITpPersistence {
+public class DBTpPersistenceMock implements ITpPersistence {
 
 	private String codigoMateria;
 	private String sender;
@@ -34,6 +34,13 @@ public class TpPersistenceMock implements ITpPersistence {
 
 	public String getSenderToSave() {
 		return this.sender;
+	}
+
+	@Override
+	public boolean isTPDelivered(String codigoMateria, String sender,
+			Integer tpNumber) throws Exception {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

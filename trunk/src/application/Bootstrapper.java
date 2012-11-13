@@ -26,12 +26,12 @@ import controller.RuleController;
 import controller.factories.IRuleControllerFactory;
 import controller.factories.RuleControllerFactory;
 
+import persistence.DBTpPersistence;
 import persistence.IMailPersistence;
 import persistence.IStudentPersistence;
 import persistence.ITpPersistence;
 import persistence.MailPersistence;
 import persistence.StudentPersistence;
-import persistence.TpPersistence;
 
 public class Bootstrapper {
 	
@@ -61,7 +61,7 @@ public class Bootstrapper {
 					.addComponent(ActionRule.class + "ActionAltaAlumno", ActionAltaAlumno.class)
 					.as(CACHE).addComponent(IStudentPersistence.class, StudentPersistence.class)
 					.addComponent(ActionRule.class + "ActionSaveTp", ActionSaveTp.class)
-					.as(CACHE).addComponent(ITpPersistence.class, TpPersistence.class)
+					.as(CACHE).addComponent(ITpPersistence.class, DBTpPersistence.class)
 					.addComponent(ActionRule.class + "ActionValidateSender", ActionValidateSender.class)
 					.as(CACHE).addComponent(IMailPersistence.class, MailPersistence.class)
 					.addComponent(ActionRule.class + "ActionValidateStudentInGroup", ActionValidateStudentInGroup.class);

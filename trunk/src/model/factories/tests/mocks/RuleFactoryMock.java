@@ -1,4 +1,4 @@
-package model.factories.mocks;
+package model.factories.tests.mocks;
 
 import model.Rule;
 import model.RuleAltaGrupo;
