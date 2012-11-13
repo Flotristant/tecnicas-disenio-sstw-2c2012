@@ -12,18 +12,17 @@ import model.RuleAltaMateria;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistence.mocks.TpPersistenceMock;
-
+import persistence.mocks.DBTpPersistenceMock;
 
 public class ActionSaveTpTestCase {
 
 	private Rule rule;
 	private ActionSaveTp saveTp;
-	private TpPersistenceMock tpPersistence;
+	private DBTpPersistenceMock tpPersistence;
 
 	@Before
 	public void setUp() throws Exception {
-		this.tpPersistence = new TpPersistenceMock();
+		this.tpPersistence = new DBTpPersistenceMock();
 		this.saveTp = new ActionSaveTp(this.tpPersistence);
 	}
 	

@@ -3,7 +3,7 @@ package model.factories.tests;
 import junit.framework.Assert;
 import model.ActionRule;
 import model.factories.ActionRuleFactory;
-import model.factories.tests.mock.ActionAltaGrupoMock;
+import model.factories.tests.mocks.ActionAltaGrupoMock;
 
 import org.junit.Before;
 import org.junit.Test;
