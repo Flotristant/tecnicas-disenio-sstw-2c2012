@@ -22,19 +22,19 @@ public class ActionValidateSenderTestCase {
 	}
 	
 	@Test
-	public void testShouldReturnTrueWhenValidateEmail() {
+	public void testShouldReturnTrueWhenValidateEmail() throws Exception {
 		this.validatorEmail.initialize(new RuleAltaGrupo() , new Message("francisco", "", "subject", "body"));
 		
-		Assert.assertTrue(this.validatorEmail.execute());
+		this.validatorEmail.execute();
 		
 		Assert.assertEquals("francisco", this.mailPersistence.getDirSender());
 	}
 	
-	@Test
-	public void testShouldFailIfMailIsNotInDatabase() {
+	@Test (expected = Exception.class)
+	public void testShouldFailIfMailIsNotInDatabase() throws Exception {
 		this.validatorEmail.initialize(new RuleAltaGrupo() , new Message("caty", "", "subject", "body"));
 		
-		Assert.assertFalse(this.validatorEmail.execute());
+		this.validatorEmail.execute();
 	}
 	
 }

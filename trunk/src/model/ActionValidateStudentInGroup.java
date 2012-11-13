@@ -14,13 +14,13 @@ public class ActionValidateStudentInGroup extends ActionRule {
 	}
 
 	@Override
-	public boolean execute() {
-		return validateStudentsInGroup();
+	public void execute() throws Exception {
+		validateStudentsInGroup();
 	}
 	
-	private boolean validateStudentsInGroup() {
-		if (this.attachment == null) return false;
-		if (this.attachment.keySet().size() != 1) return false;
+	private void validateStudentsInGroup() throws Exception {
+		if (this.attachment == null) throw new Exception("Message has no attachment");
+		if (this.attachment.keySet().size() != 1) throw new Exception("Message has too much attachments");
 		
 		String body = new String(this.attachment.get(this.attachment.keySet().toArray()[0]));
 		
@@ -32,13 +32,12 @@ public class ActionValidateStudentInGroup extends ActionRule {
 				Integer.valueOf(padrones[i]);
 			}
 			catch(NumberFormatException e) {
-				return false;
+				throw new Exception("Attachment hasn't only numeric registers");
 			}
 		for (int i = 0; i < padrones.length; i++) {
-			if (!this.studentPersistence.validateStudentInCuatrimestre(this.codigoMateria, padrones[i])) return false;
-			if (!this.studentPersistence.validateStudentInGroup(this.codigoMateria, padrones[i])) return false;
+			if (!this.studentPersistence.validateStudentInCuatrimestre(this.codigoMateria, padrones[i])) throw new Exception("Student doesn't belong to this course");
+			if (!this.studentPersistence.validateStudentInGroup(this.codigoMateria, padrones[i])) throw new Exception("Student already belong to another group");
 		}
-		return true;
 	}
 
 	@Override

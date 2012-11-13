@@ -6,9 +6,8 @@ import model.Rule;
 public class ActionAltaGrupoMock extends ActionRule{
 
 	@Override
-	public boolean execute() {
+	public void execute() {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

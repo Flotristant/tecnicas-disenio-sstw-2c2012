@@ -1,44 +1,50 @@
 package applicationServices;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-
-import services.SQLiteAccessor;
-import services.SQLiteAccessor.QueryHandler;
+import java.sql.Statement;
 
 public class DBTPAdapter implements ITPAdapter {
-	private SQLiteAccessor db;
 	
 	public DBTPAdapter(String dbname, boolean cleardb) throws Exception {
-		db = new SQLiteAccessor(dbname);
-		if (cleardb) {
-			db.execute("DROP TABLE IF EXISTS TP;");
-		}
-		db.execute("CREATE TABLE IF NOT EXISTS TP (Subject int, StudentNr int, TPNr int);");
+		Class.forName("org.sqlite.JDBC");
+        Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db"); 
+        Statement stat = conn.createStatement(); 
+        stat.executeUpdate("CREATE TABLE IF NOT EXISTS TP (Subject, StudentNr, TPNr)");
+        stat.close();
+        conn.close();
+
 	}
 	
-	public void close() throws Exception {
-		db.close();
-	}
-
 	@Override
 	public void setTPDelivered(int subject, int studentnr, int TPnr)
 			throws Exception {
-		db.update(String.format("INSERT INTO TP (Subject, StudentNr, TPNr) VALUES (%d, %d, %d)", subject, studentnr, TPnr));
+		 Class.forName("org.sqlite.JDBC");
+         Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db"); 
+         Statement stat = conn.createStatement(); 
+         stat.executeUpdate(String.format("INSERT INTO TP (Subject, StudentNr, TPNr) VALUES (%d, %d, %d)", subject, studentnr, TPnr));
+         stat.close();
+         conn.close(); 
 	}
 
 	@Override
 	public boolean isTPDelivered(int subject, int studentnr, int TPnr)
 			throws Exception {
-		String sql = String.format("SELECT * FROM TP WHERE Subject=%d and StudentNr=%d and TPNr=%d", subject, studentnr, TPnr);
-		System.out.println(sql);
-		QueryHandler q = db.query(sql);
-		ResultSet rs = q.getResultSet();
+		Class.forName("org.sqlite.JDBC");
+		Connection conn = DriverManager.getConnection("jdbc:sqlite:test.db"); 
+		Statement stat = conn.createStatement(); 
+		ResultSet rs = stat.executeQuery(String.format("SELECT * FROM TP WHERE Subject=%d and StudentNr=%d and TPNr=%d", subject, studentnr, TPnr));
+		
 		int count = 0;
 		rs.next();
 		while (!rs.isAfterLast()) {
 			count++;
 			rs.next();
 		}
+		rs.close();
+		stat.close();
+        conn.close(); 
 		return count == 1;
 	}
 }

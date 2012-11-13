@@ -2,11 +2,8 @@ package applicationServicesTests;
 
 import static org.junit.Assert.*;
 
-import java.util.List;
-
 import org.junit.Test;
 
-import applicationServices.DBSignupAdapter;
 import applicationServices.DBTPAdapter;
 
 
