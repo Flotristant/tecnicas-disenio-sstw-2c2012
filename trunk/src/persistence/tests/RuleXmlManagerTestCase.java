@@ -23,7 +23,7 @@ import org.w3c.dom.NodeList;
 import persistence.RuleXmlManager;
 import persistence.mocks.MailPersistenceMock;
 import persistence.mocks.StudentPersistenceMock;
-import persistence.mocks.DBTpPersistenceMock;
+import persistence.mocks.TpPersistenceMock;
 
 
 public class RuleXmlManagerTestCase {
@@ -38,7 +38,7 @@ public class RuleXmlManagerTestCase {
 	@Before
 	public void setUp() throws Exception {
 		this.action1 = new ActionAltaAlumno(new StudentPersistenceMock());
-		this.action2 = new ActionSaveTp(new DBTpPersistenceMock());
+		this.action2 = new ActionSaveTp(new TpPersistenceMock());
 		this.action3 = new ActionValidateSender(new MailPersistenceMock());
 		this.actionList = new ArrayList<ActionRule>();
 		this.actionRuleFactory = new ActionRuleFactoryMock();

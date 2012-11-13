@@ -4,7 +4,7 @@ import java.util.Map;
 
 import persistence.ITpPersistence;
 
-public class DBTpPersistenceMock implements ITpPersistence {
+public class TpPersistenceMock implements ITpPersistence{
 
 	private String codigoMateria;
 	private String sender;
@@ -12,10 +12,11 @@ public class DBTpPersistenceMock implements ITpPersistence {
 	private Map<String, String> attachments;
 
 	@Override
-	public void saveTp(String codigoMateria, String sender, Integer tpNumber) {
+	public void saveTp(String codigoMateria, String sender, Integer tpNumber, Map<String, String> attachments) {
 		this.codigoMateria = codigoMateria;
 		this.sender = sender;
 		this.tpNumber = tpNumber;
+		this.attachments = attachments;
 	}
 
 	public String getCodigoMateriaToSave() {
@@ -34,11 +35,9 @@ public class DBTpPersistenceMock implements ITpPersistence {
 		return this.sender;
 	}
 
-	@Override
 	public boolean isTPDelivered(String codigoMateria, String sender,
 			Integer tpNumber) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
 }

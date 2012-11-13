@@ -17,7 +17,7 @@ public class DBTpPersistenceTestCase {
 		DBTpPersistence db;
 
 		db = new DBTpPersistence();
-		db.saveTp("7510", "caty@hola", 1);
+		db.saveTpInDB("7510", 90117, 1, null);
 		
 		Assert.assertTrue(db.isTPDelivered("7510", "caty@hola", 1));
 		Assert.assertFalse(db.isTPDelivered("7510", "20", 30));
