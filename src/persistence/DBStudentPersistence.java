@@ -1,6 +1,6 @@
 package persistence;
 
-public class StudentPersistence implements IStudentPersistence {
+public class DBStudentPersistence implements IStudentPersistence {
 
 	@Override
 	public void saveStudent(String codigoMateria, String padron, String name,
