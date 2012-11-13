@@ -12,12 +12,10 @@ public class DBTpPersistenceMock implements ITpPersistence {
 	private Map<String, String> attachments;
 
 	@Override
-	public void saveTp(String codigoMateria, String sender, Integer tpNumber,
-			Map<String, String> attachments) {
+	public void saveTp(String codigoMateria, String sender, Integer tpNumber) {
 		this.codigoMateria = codigoMateria;
 		this.sender = sender;
 		this.tpNumber = tpNumber;
-		this.attachments = attachments;
 	}
 
 	public String getCodigoMateriaToSave() {
@@ -41,12 +39,6 @@ public class DBTpPersistenceMock implements ITpPersistence {
 			Integer tpNumber) throws Exception {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public void initialize(String dbname, boolean cleardb) throws Exception {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

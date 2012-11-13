@@ -1,6 +1,6 @@
 package persistence;
 
-public class MailPersistence implements IMailPersistence {
+public class DBMailPersistence implements IMailPersistence {
 
 	@Override
 	public boolean existsMail(String direccionEmail) {

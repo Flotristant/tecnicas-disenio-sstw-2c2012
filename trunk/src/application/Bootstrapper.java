@@ -30,8 +30,8 @@ import persistence.DBTpPersistence;
 import persistence.IMailPersistence;
 import persistence.IStudentPersistence;
 import persistence.ITpPersistence;
-import persistence.MailPersistence;
-import persistence.StudentPersistence;
+import persistence.DBMailPersistence;
+import persistence.DBStudentPersistence;
 
 public class Bootstrapper {
 	
@@ -59,11 +59,11 @@ public class Bootstrapper {
 					.as(CACHE).addComponent(IRule.class + "RuleSpam", RuleSpam.class)
 					.as(CACHE).addComponent(IActionRuleFactory.class, ActionRuleFactory.class)
 					.addComponent(ActionRule.class + "ActionAltaAlumno", ActionAltaAlumno.class)
-					.as(CACHE).addComponent(IStudentPersistence.class, StudentPersistence.class)
+					.as(CACHE).addComponent(IStudentPersistence.class, DBStudentPersistence.class)
 					.addComponent(ActionRule.class + "ActionSaveTp", ActionSaveTp.class)
 					.as(CACHE).addComponent(ITpPersistence.class, DBTpPersistence.class)
 					.addComponent(ActionRule.class + "ActionValidateSender", ActionValidateSender.class)
-					.as(CACHE).addComponent(IMailPersistence.class, MailPersistence.class)
+					.as(CACHE).addComponent(IMailPersistence.class, DBMailPersistence.class)
 					.addComponent(ActionRule.class + "ActionValidateStudentInGroup", ActionValidateStudentInGroup.class);
 	}
 

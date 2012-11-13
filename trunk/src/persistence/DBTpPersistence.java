@@ -1,71 +1,81 @@
 package persistence;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.util.Map;
-
-import applicationServices.ITPAdapter;
-
-import services.SQLiteAccessor;
-import services.SQLiteAccessor.QueryHandler;
+import java.sql.Statement;
 
 public class DBTpPersistence implements ITpPersistence {
 	
-	private SQLiteAccessor db;
+	private Connection conn;
+	private Statement statement;
+	private String pathTp;
 	
 	public DBTpPersistence() {
 		
 	}
-	
-	public void close() throws Exception {
-		db.close();
-	}
-	
-	/** no se si esta bien este coso por ahi hay que sacarlo
-	 * 
-	 */
-	@Override
-	public void initialize(String dbname, boolean cleardb) throws Exception {
-		this.db = new SQLiteAccessor(dbname);
-		if (cleardb) {
-			this.db.execute("DROP TABLE IF EXISTS TP;");
-		}
-		this.db.execute("CREATE TABLE IF NOT EXISTS TP (CodigoMateria text, Padron int, TpNumber int, PathAttachments text);");
+
+
+	private void initialize(String dbName) throws Exception {
+		this.pathTp = dbName + "/Tps";
+		
+		Class.forName("org.sqlite.JDBC");
+        this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",dbName)); 
+        this.statement = this.conn.createStatement(); 
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TP (Padron int, TpNumber int, PathTp text, PRIMARY KEY(Padron, TpNumber), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
+        
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS ALUMNO (Padron int PRIMARY KEY, Sender text, GroupNr int);");
 	}
 	
 	@Override
-	public void saveTp(String codigoMateria, String sender, Integer tpNumber,
-			Map<String, String> attachments) {
-			//TODO ver que path mandar, si mandar un path o que !!!!
-			String pathAttachments = ""; 
-			try {
-				//buscar padron en base a sender
-				db.update(String.format("INSERT INTO TP (CodigoMateria, Padron, TpNumber, PathAttachments) VALUES ")); //(%s, %d, %d, %s)", codigoMateria, padron,tpNumber,pathAttachments));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+	public void saveTp(String codigoMateria, String sender, Integer tpNumber) throws Exception {
+			
+		initialize(codigoMateria);
+		//despues sacar
+        this.statement.executeUpdate(String.format("INSERT INTO ALUMNO (Padron, Sender, GroupNr) VALUES (%d, '%s', %d)", 90117, "caty@hola", null));
+
+		
+		ResultSet rs = this.statement.executeQuery(String.format("SELECT GroupNr FROM ALUMNO WHERE Sender='%s' AND GroupNr IS NOT NULL", sender));
+		ResultSet rs2;
+		if(!rs.next()){
+			rs2 = this.statement.executeQuery(String.format("SELECT Padron FROM ALUMNO WHERE Sender='%s'", sender));
 		}
+		else{
+			rs2 = this.statement.executeQuery(String.format("SELECT Padron FROM ALUMNO WHERE GroupNr = '%s'", rs.getString("GroupNr")));
+		}
+		while (rs2.next()){
+			int padron = rs.getInt("padron");
+			String pathTp = this.pathTp + "/" + tpNumber.toString() + "/" + padron;
+			this.statement.executeUpdate(String.format("INSERT INTO TP (Padron, TpNumber, PathTp) VALUES (%d, %d, '%s')", padron, tpNumber, pathTp));
+		}
+		rs.close();
+		rs2.close();
+		this.statement.close();
+		this.conn.close();
+	}
 
 	@Override
 	public boolean isTPDelivered(String codigoMateria, String sender, Integer tpNumber)
 			throws Exception {
-		//buscar padron int padron = 
-		String sql = String.format("SELECT padron FROM Alumno WHERE Sender = %d", sender);
-		System.out.println(sql);
-		QueryHandler q = db.query(sql);
-		ResultSet rs = q.getResultSet();
-		int padron = rs.getInt(0);
+		initialize(codigoMateria);
+		String sql = String.format("SELECT padron FROM Alumno WHERE Sender = '%s'", sender);
+		ResultSet rs = this.statement.executeQuery(sql);
+		if(!rs.next()) return false;
 		
-		sql = String.format("SELECT * FROM TP WHERE CodigoMateria=%s and Padron=%d and TpNumber=%d", codigoMateria, padron, tpNumber);
-		System.out.println(sql);
-		q = db.query(sql);
-		rs = q.getResultSet();
+		int padron = rs.getInt("padron");
+		sql = String.format("SELECT * FROM TP WHERE Padron=%d and TpNumber=%d", padron, tpNumber);
+		rs = this.statement.executeQuery(sql);
 		int count = 0;
 		rs.next();
 		while (!rs.isAfterLast()) {
 			count++;
 			rs.next();
 		}
+		rs.close();
+		this.statement.close();
+		this.conn.close();
+		
 		return count == 1;
 	}
+	
 }

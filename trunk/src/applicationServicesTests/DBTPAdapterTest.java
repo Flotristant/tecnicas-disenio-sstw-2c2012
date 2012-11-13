@@ -2,6 +2,8 @@ package applicationServicesTests;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+
 import org.junit.Test;
 
 import applicationServices.DBTPAdapter;
@@ -25,6 +27,9 @@ public class DBTPAdapterTest {
 			e.printStackTrace();
 			fail("Excepcion no detectada");
 		}
+		
+		File fichero = new File("test.db");
+		fichero.delete();
 	}
 
 }
