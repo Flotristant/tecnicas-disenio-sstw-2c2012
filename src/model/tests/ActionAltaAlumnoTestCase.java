@@ -10,7 +10,7 @@ import model.RuleAltaMateria;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistence.mocks.StudentPersistenceMock;
+import persistence.tests.mocks.StudentPersistenceMock;
 
 
 public class ActionAltaAlumnoTestCase {

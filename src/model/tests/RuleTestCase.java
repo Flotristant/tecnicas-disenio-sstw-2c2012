@@ -11,8 +11,8 @@ import model.RuleAltaGrupo;
 
 import org.junit.Test;
 
-import persistence.mocks.TpPersistenceMock;
-import persistence.mocks.StudentPersistenceMock;
+import persistence.tests.mocks.TpPersistenceMock;
+import persistence.tests.mocks.StudentPersistenceMock;
 
 public class RuleTestCase {
 	

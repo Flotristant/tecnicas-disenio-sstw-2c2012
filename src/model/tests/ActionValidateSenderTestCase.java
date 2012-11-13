@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistence.mocks.MailPersistenceMock;
+import persistence.tests.mocks.MailPersistenceMock;
 
 public class ActionValidateSenderTestCase {
 
