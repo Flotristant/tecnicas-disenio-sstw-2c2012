@@ -11,8 +11,9 @@ public class ActionValidateSender extends ActionRule {
 	}
 
 	@Override
-	public boolean execute() {
-		return validateSender();
+	public void execute() throws Exception {
+		if (!validateSender())
+			throw new Exception("Sender doesn't belong to this course");
 	}
 	
 	private boolean validateSender() {

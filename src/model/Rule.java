@@ -44,11 +44,17 @@ public abstract class Rule implements IRule {
 		String subject = message.getSubject();
 		Pattern pattern = Pattern.compile(this.pattern);
 		Matcher matcher = pattern.matcher(subject);
-		if (matcher.matches())
+		if (matcher.matches()) {
 			searchComponentsInSubject(matcher);
-		for (ActionRule action : this.collectionActions) {
-			action.initialize(this, message);
-			action.execute();
+			for (ActionRule action : this.collectionActions) {
+				action.initialize(this, message);
+				try {
+					action.execute();
+				} catch (Exception e) {
+					
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 

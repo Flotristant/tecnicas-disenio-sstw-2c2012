@@ -17,9 +17,8 @@ public class ActionSaveTp extends ActionRule {
 	}
 	
 	@Override
-	public boolean execute() {
+	public void execute() {
 		this.tpPersistence.saveTp(this.codigoMateria, this.sender, this.tpNumber, this.attachments);
-		return true;
 	}
 
 	@Override

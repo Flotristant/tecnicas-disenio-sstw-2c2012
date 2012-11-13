@@ -15,9 +15,8 @@ public class ActionAltaAlumno extends ActionRule {
 	}
 
 	@Override
-	public boolean execute() {
+	public void execute() {
 		this.studentPersistence.saveStudent(codigo, padron, name, sender);
-		return true;
 	}
 
 	@Override

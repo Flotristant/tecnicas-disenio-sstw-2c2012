@@ -2,8 +2,6 @@ package model.tests;
 
 import java.util.HashMap;
 
-import junit.framework.Assert;
-
 import model.ActionValidateStudentInGroup;
 import model.Message;
 import model.Rule;
@@ -31,16 +29,16 @@ public class ActionValidateStudentInGroupTestCase {
 		attach = new HashMap<String, String>();
 	}
 	
-	@Test
-	public void testShouldNotPassWhenValidateStudentInGroupWhithNoAttach() {
+	@Test (expected = Exception.class)
+	public void testShouldNotPassWhenValidateStudentInGroupWhithNoAttach() throws Exception {
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 
-		Assert.assertFalse(validateStudentInGroup.execute());
+		validateStudentInGroup.execute();
 	}
 	
-	@Test
-	public void testShouldNotPassWhenMoreThanOneAttach() {
+	@Test (expected = Exception.class)
+	public void testShouldNotPassWhenMoreThanOneAttach() throws Exception {
 		this.attach.put("padrones", "");
 		this.attach.put("padrones2", "");
 		
@@ -49,56 +47,51 @@ public class ActionValidateStudentInGroupTestCase {
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
-		Assert.assertFalse(validateStudentInGroup.execute());
+		validateStudentInGroup.execute();
 	}
 	
-	@Test
-	public void testShouldNotPassWhenAttachsContentIsNotPadrons() {
+	@Test (expected = Exception.class)
+	public void testShouldNotPassWhenAttachsContentIsNotPadrons() throws Exception {
 		this.attach.put("padrones", "h91227");
 		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
-		Assert.assertFalse(validateStudentInGroup.execute());
+		validateStudentInGroup.execute();
 	}
 	
-	@Test
-	public void testShouldNotPassWhenStudentBelongsInOtherGroup() {
+	@Test (expected = Exception.class)
+	public void testShouldNotPassWhenStudentBelongsInOtherGroup() throws Exception {
 		this.attach.put("padrones", "91227 90778 90000 91111");
 		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
-		Assert.assertFalse(validateStudentInGroup.execute());
+		validateStudentInGroup.execute();
 	}
 	
-	@Test
-	public void testShouldNotPassWhenStudentIsNotInCurrentSemester() {
+	@Test (expected = Exception.class)
+	public void testShouldNotPassWhenStudentIsNotInCurrentSemester() throws Exception {
 		this.attach.put("padrones", "91227 90778 90001 10000");
 		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
-		Assert.assertFalse(validateStudentInGroup.execute());
+		validateStudentInGroup.execute();
 	}
 		
 	@Test
-	public void testShouldNotPassWhenStudentsAreDuplicatedInAttachment() {
-		// TODO
-	}
-	
-	@Test
-	public void testShouldSaveStudentsCorrectlyInGroup() {
+	public void testShouldSaveStudentsCorrectlyInGroup() throws Exception {
 		this.attach.put("padrones", "91227 90778 91001 91229");
 		this.message.addAttachments(this.attach);
 		
 		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
-		Assert.assertTrue(validateStudentInGroup.execute());
+		validateStudentInGroup.execute();
 	}
 	
 }
