@@ -12,7 +12,7 @@ import model.RuleAltaMateria;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistence.mocks.TpPersistenceMock;
+import persistence.tests.mocks.TpPersistenceMock;
 
 public class ActionSaveTpTestCase {
 

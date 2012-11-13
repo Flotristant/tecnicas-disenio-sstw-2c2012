@@ -10,7 +10,7 @@ import model.RuleAltaGrupo;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistence.mocks.StudentPersistenceMock;
+import persistence.tests.mocks.StudentPersistenceMock;
 
 
 public class ActionValidateStudentInGroupTestCase {

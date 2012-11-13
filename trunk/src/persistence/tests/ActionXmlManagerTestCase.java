@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import persistence.ActionXmlManager;
-import persistence.mocks.StudentPersistenceMock;
+import persistence.tests.mocks.StudentPersistenceMock;
 
 public class ActionXmlManagerTestCase {
 	private ActionRuleFactoryMock actionRuleFactory;

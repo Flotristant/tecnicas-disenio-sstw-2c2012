@@ -21,9 +21,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import persistence.RuleXmlManager;
-import persistence.mocks.MailPersistenceMock;
-import persistence.mocks.StudentPersistenceMock;
-import persistence.mocks.TpPersistenceMock;
+import persistence.tests.mocks.MailPersistenceMock;
+import persistence.tests.mocks.StudentPersistenceMock;
+import persistence.tests.mocks.TpPersistenceMock;
 
 
 public class RuleXmlManagerTestCase {
