@@ -1,4 +1,4 @@
-package model.factories.tests.mock;
+package model.factories.tests.mocks;
 
 import model.ActionRule;
 import model.Rule;
