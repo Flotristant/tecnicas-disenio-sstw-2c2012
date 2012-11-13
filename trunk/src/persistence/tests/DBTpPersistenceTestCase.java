@@ -1,15 +1,13 @@
 package persistence.tests;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
+
+import junit.framework.Assert;
 
 import org.junit.After;
 import org.junit.Test;
 
 import persistence.DBTpPersistence;
-
-import applicationServices.DBTPAdapter;
 
 public class DBTpPersistenceTestCase {
 	
@@ -20,12 +18,9 @@ public class DBTpPersistenceTestCase {
 
 		db = new DBTpPersistence();
 		db.saveTp("7510", "caty@hola", 1);
-		if (!db.isTPDelivered("7510", "caty@hola", 1)) {
-			fail("No se registro TP entregado correctamente.");
-		}
-		if (db.isTPDelivered("100", "20", 30)) {
-			fail("Se detecta incorrectamente un tp entregado.");
-		}
+		
+		Assert.assertTrue(db.isTPDelivered("7510", "caty@hola", 1));
+		Assert.assertFalse(db.isTPDelivered("7510", "20", 30));
 	}
 	
 	@After

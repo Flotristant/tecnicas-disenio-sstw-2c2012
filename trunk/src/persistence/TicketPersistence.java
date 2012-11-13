@@ -2,22 +2,22 @@ package persistence;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 
 import model.Message;
-
+//TODO tests de esta cosa
 public class TicketPersistence implements ITicketPersistence {
 
 	private Connection conn;
 	private Statement statement;
-	private String pathTp;
+	private String pathAttach;
 	
-	private void initialize(String dbName) throws Exception {
-		this.pathTp = dbName + "/Tps";
+	private void initialize(String codigoMateria) throws Exception {
+		this.pathAttach = codigoMateria + "/Tickets/attachments/";
 		
 		Class.forName("org.sqlite.JDBC");
-        this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",dbName)); 
+        this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",codigoMateria)); 
         this.statement = this.conn.createStatement(); 
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TICKETPUBLICO (Titulo text  PRIMARY KEY, Estado text, AyudanteAsignado text, Body text, PathAttach text);");
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TICKETPRIVADO (Titulo text, Estado text, AyudanteAsignado text, Body text, PathAttach text, Sender text, PRIMARY KEY(Titulo, Sender));");
@@ -28,14 +28,9 @@ public class TicketPersistence implements ITicketPersistence {
 	
 	@Override
 	public Message getUnassignedTickets(String codigoMateria) throws Exception{
-//		initialize(codigoMateria);
-//		ResultSet rs = this.statement.executeQuery("SELECT titulo FROM TICKET WHERE Estado = 'SIN ASIGNAR'");
-//		if(!rs.next()) return null;
-//		
-//		rs.close();
-//		this.statement.close();
-//		this.conn.close();
-//		
+		initialize(codigoMateria);
+		//TODO ver si se hace o no
+		closeStatementAndConnection();
 		return null;
 		
 	}
@@ -43,25 +38,41 @@ public class TicketPersistence implements ITicketPersistence {
 	@Override
 	public void createTicket(Message message, boolean publica, String codigoMateria, String tema, String pathAttach) throws Exception {
 		initialize(codigoMateria);
-		if(publica){
-			this.statement.executeUpdate(String.format("INSERT INTO TICKETPUBLICO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s','%s')", tema, message.getBody(), pathAttach));	
-		}
-		else {
-			this.statement.executeUpdate(String.format("INSERT INTO TICKETPRIVADO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s', '%s', '%s')", tema, message.getBody(), pathAttach, message.getSender()));	
-		}
+		if (publica)
+			this.statement.executeUpdate(String.format("INSERT INTO TICKETPUBLICO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s','%s')", tema, 
+					message.getBody(), this.pathAttach + pathAttach));	
+		else 
+			this.statement.executeUpdate(String.format("INSERT INTO TICKETPRIVADO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s', '%s', '%s')", 
+					tema, message.getBody(), this.pathAttach + pathAttach, message.getSender()));	
+		closeStatementAndConnection();
+	}
+
+	@Override
+	public void assignTicket(String codigoMateria, String nameAyudante, String titulo, Message message, boolean publica) throws Exception {
+		initialize(codigoMateria);
+		if (publica)
+			this.statement.executeUpdate(String.format("UPDATE TICKETPUBLICO SET Estado='ASIGNADO', " +
+					"AyudanteAsignado='%s' WHERE Titulo='%s'", nameAyudante, titulo));	
+		else 
+			this.statement.executeUpdate(String.format("UPDATE TICKETPRIVADO SET Estado='ASIGNADO', " +
+					"AyudanteAsignado='%s' WHERE Titulo='%s' AND Sender='%d'", nameAyudante, titulo, message.getSender()));
 		
+		closeStatementAndConnection();
+	}
+
+	@Override
+	public void associateMessageToTicket(String codigoMateria, String titulo, Message message, boolean publica) throws Exception{
+		initialize(codigoMateria);
+		if (publica)
+			this.statement.executeUpdate(String.format("INSERT INTO ANSWERPUBLICO VALUES (null, '%s', '%s');", message.getBody(), titulo));	
+		else 
+			this.statement.executeUpdate(String.format("INSERT INTO ANSWERPRIVADO VALUES (null, '%s', '%s', '%s');", message.getBody(), titulo, message.getSender()));
+		
+		closeStatementAndConnection();
+	}
+
+	private void closeStatementAndConnection() throws SQLException {
 		this.statement.close();
 		this.conn.close();
 	}
-
-	@Override
-	public void assignTicket(Message message, boolean publica, String codigoMateria) {
-		
-	}
-
-	@Override
-	public void associateMessageToTicket(Message message, boolean publica, String codigoMateria){
-		
-	}
-
 }
