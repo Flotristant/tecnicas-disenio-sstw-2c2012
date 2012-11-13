@@ -8,8 +8,8 @@ public interface ITicketPersistence {
 	
 	public void createTicket(Message message, boolean publica, String codigoMateria, String tema, String pathAttach) throws Exception;
 	
-	public void assignTicket(Message message, boolean publica, String codigoMateria);
+	public void assignTicket(String codigoMateria, String nameAyudante, String titulo, Message message, boolean publica) throws Exception;
 	
-	public void associateMessageToTicket(Message message, boolean publica, String codigoMateria);
+	public void associateMessageToTicket(String codigoMateria, String titulo, Message message, boolean publica) throws Exception;
 	
 }
