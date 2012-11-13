@@ -3,7 +3,7 @@ package persistence.tests;
 import junit.framework.Assert;
 import model.ActionAltaAlumno;
 import model.ActionRule;
-import model.factories.mocks.ActionRuleFactoryMock;
+import model.factories.tests.mocks.ActionRuleFactoryMock;
 
 import org.junit.Before;
 import org.junit.Test;

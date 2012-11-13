@@ -8,6 +8,8 @@ public interface ITpPersistence {
 			Map<String, String> attachments);
 
 	boolean isTPDelivered(String codigoMateria, String sender, Integer tpNumber)
-			throws Exception; 
+			throws Exception;
+
+	void initialize(String dbname, boolean cleardb) throws Exception; 
 
 }

@@ -11,8 +11,8 @@ import model.ActionValidateSender;
 import model.IRule;
 import model.Rule;
 import model.RuleAltaMateria;
-import model.factories.mocks.ActionRuleFactoryMock;
-import model.factories.mocks.RuleFactoryMock;
+import model.factories.tests.mocks.ActionRuleFactoryMock;
+import model.factories.tests.mocks.RuleFactoryMock;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +23,7 @@ import org.w3c.dom.NodeList;
 import persistence.RuleXmlManager;
 import persistence.mocks.MailPersistenceMock;
 import persistence.mocks.StudentPersistenceMock;
-import persistence.mocks.TpPersistenceMock;
+import persistence.mocks.DBTpPersistenceMock;
 
 
 public class RuleXmlManagerTestCase {
@@ -38,7 +38,7 @@ public class RuleXmlManagerTestCase {
 	@Before
 	public void setUp() throws Exception {
 		this.action1 = new ActionAltaAlumno(new StudentPersistenceMock());
-		this.action2 = new ActionSaveTp(new TpPersistenceMock());
+		this.action2 = new ActionSaveTp(new DBTpPersistenceMock());
 		this.action3 = new ActionValidateSender(new MailPersistenceMock());
 		this.actionList = new ArrayList<ActionRule>();
 		this.actionRuleFactory = new ActionRuleFactoryMock();

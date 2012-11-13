@@ -4,7 +4,7 @@ import junit.framework.Assert;
 
 import model.IRule;
 import model.factories.RuleFactory;
-import model.factories.tests.mock.RuleAltaGrupoMock;
+import model.factories.tests.mocks.RuleAltaGrupoMock;
 
 import org.junit.Before;
 import org.junit.Test;

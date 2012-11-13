@@ -12,16 +12,24 @@ public class DBTpPersistence implements ITpPersistence {
 	
 	private SQLiteAccessor db;
 	
-	public DBTpPersistence(String dbname, boolean cleardb) throws Exception {
-		db = new SQLiteAccessor(dbname);
-		if (cleardb) {
-			db.execute("DROP TABLE IF EXISTS TP;");
-		}
-		db.execute("CREATE TABLE IF NOT EXISTS TP (CodigoMateria text, Padron int, TpNumber int, PathAttachments text);");
+	public DBTpPersistence() {
+		
 	}
 	
 	public void close() throws Exception {
 		db.close();
+	}
+	
+	/** no se si esta bien este coso por ahi hay que sacarlo
+	 * 
+	 */
+	@Override
+	public void initialize(String dbname, boolean cleardb) throws Exception {
+		this.db = new SQLiteAccessor(dbname);
+		if (cleardb) {
+			this.db.execute("DROP TABLE IF EXISTS TP;");
+		}
+		this.db.execute("CREATE TABLE IF NOT EXISTS TP (CodigoMateria text, Padron int, TpNumber int, PathAttachments text);");
 	}
 	
 	@Override

@@ -43,4 +43,10 @@ public class DBTpPersistenceMock implements ITpPersistence {
 		return false;
 	}
 
+	@Override
+	public void initialize(String dbname, boolean cleardb) throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
