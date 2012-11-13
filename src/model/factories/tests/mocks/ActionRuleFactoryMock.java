@@ -1,8 +1,8 @@
-package model.factories.mocks;
+package model.factories.tests.mocks;
 
+import persistence.DBTpPersistence;
 import persistence.MailPersistence;
 import persistence.StudentPersistence;
-import persistence.TpPersistence;
 import model.ActionAltaAlumno;
 import model.ActionRule;
 import model.ActionSaveTp;
@@ -16,7 +16,7 @@ public class ActionRuleFactoryMock implements IActionRuleFactory{
 	public ActionRule create(String attribute) {
 		switch (attribute) {
 		case "ActionAltaAlumno" : return new ActionAltaAlumno(new StudentPersistence());
-		case "ActionSaveTp" : return new ActionSaveTp(new TpPersistence());
+		case "ActionSaveTp" : return new ActionSaveTp(new DBTpPersistence());
 		case "ActionValidateSender" : return new ActionValidateSender(new MailPersistence());
 		case "ActionValidateStudentInGroup" : return new ActionValidateStudentInGroup(new StudentPersistence());
 		}
