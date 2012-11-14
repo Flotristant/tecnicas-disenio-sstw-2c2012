@@ -60,17 +60,13 @@ public class SmtpProtocol extends SenderProtocol {
 				mimemessage.setFrom(new InternetAddress(message.getSender()));
 
 				// A quien va dirigido
-				List<String> to= message.getTo();
-				Iterator<String> ite = to.iterator();
-				while (ite.hasNext()) {
-					String str= ite.next();
-					mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(str));
-				}
+				String to= message.getTo();
+				mimemessage.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 		
 				
 				if (message.getToCC() != null ) {
 					List<String> toCC = message.getToCC();
-					ite = toCC.iterator();
+					Iterator<String> ite = toCC.iterator();
 					while (ite.hasNext()) {
 						String str= ite.next();
 						mimemessage.addRecipient(Message.RecipientType.CC, new InternetAddress(str));

@@ -6,7 +6,7 @@ public class Message {
 	private String subject, body;
 	private HashMap<String, String> attachments;
 	private String sender;
-	private List<String> to;
+	private String to;
 	private List<String> cc;
 	private List<String> bcc;
 	
@@ -30,12 +30,12 @@ public class Message {
 		this.sender = from;
 	}
 	
-	public List<String> getTo() {
+	public String getTo() {
 		return to;
 	}
 
 	private void setTo(String to) {
-		this.to = this.splitDirs(to);
+		this.to = to;
 	}
 
 	public String getSubject() {

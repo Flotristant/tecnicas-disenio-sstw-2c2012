@@ -96,47 +96,6 @@ public class IntegrateServicesTest {
 		File adj2 = new File(pathIncoming+"modelo.xml");
 		Assert.assertTrue(adj2.isFile());
 		
-		
-		
-//		ClassAccount account=null;
-//		try {
-//			account = new ClassAccount("Tecnicas", 
-//					 "Materia de programacion", "70-02", "/home/gustavo/Escritorio");
-//		} catch (InvalidPathDirectoryException e2) {
-//		}
-//		
-//		SmtpProtocol s=null;
-//		try {
-//			s = new SmtpProtocol("pruebatecnicas@gmail.com", "mailprueba", "587", "smtp.gmail.com");
-//		} catch (InvalidPortFormatException e2) {
-//		} catch (InvalidUserFormatException e2) {
-//		}
-//		
-//		Pop3Protocol r=null;
-//		try {
-//			r = new Pop3Protocol("pruebatecnicas@gmail.com", "mailprueba", "995", "pop.gmail.com","");
-//		} catch (InvalidPortFormatException e2) {
-//		} catch (InvalidUserFormatException e2) {
-//		}
-//		
-//		Email em=null;
-//		try {
-//			em = new Email(s,r);
-//		} catch (InvalidAssociatedProtocolsException e1) {
-//
-//		}
-//
-//		
-//		 account.addEmail(em);
-//		 
-//		 try {
-//			account.processAccount();
-//		} catch (MessagingException e) {
-//			fail( "Error al manipular la clase messaging .");
-//		} 
-//		catch (IOException e) {
-//			fail("Error failed or interrumpted i/o operation..");
-//			}
 	}
 }
 
