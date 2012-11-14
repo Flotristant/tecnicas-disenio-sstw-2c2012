@@ -14,25 +14,18 @@ public class MessageTestCase {
 		
 		model.Message m = new model.Message("from@gmail.com","to@hotmail.com","subject","body");
 		Assert.assertEquals("from@gmail.com",m.getSender());
+		Assert.assertEquals("to@hotmail.com", m.getTo());
 		Assert.assertEquals("subject",m.getSubject());
 		Assert.assertEquals("body",m.getBody());
-		
-		List<String> dirTo = m.getTo();
-		Assert.assertEquals(1,dirTo.size());
-		Assert.assertTrue(dirTo.contains("to@hotmail.com"));
 				
 	}
 	
 	@Test
 	public void testSplitDirs() {
 		
-		model.Message m2 = new model.Message("from@gmail.com","to@hotmail.com, to@yahoo.com, to@gmail.com","subject","body");
+		model.Message m2 = new model.Message("from@gmail.com","to@hotmail.com","subject","body");
 		
-		List<String >dirTo = m2.getTo();
-		Assert.assertEquals(3,dirTo.size());
-		Assert.assertTrue(dirTo.contains("to@gmail.com"));
-		Assert.assertTrue(dirTo.contains("to@yahoo.com"));
-		Assert.assertTrue(dirTo.contains("to@hotmail.com"));
+		List<String >dirTo = null;
 		
 		m2.addBCC("bcc@gmail.com,bcc@yahoo.com,bcc@hotmail.com");
 		dirTo = m2.getToBCC();

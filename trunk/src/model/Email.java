@@ -1,12 +1,13 @@
 package model;
 import java.io.IOException;
-import java.util.*;
+import java.util.List;
+
 import javax.mail.MessagingException;
 
 import model.exceptions.InvalidAssociatedProtocolsException;
 import services.SenderProtocol;
 import services.ReceiverProtocol;
-
+import controller.ProjectController;;
 
 public class Email {
 	private String user, pass;
@@ -35,10 +36,9 @@ public class Email {
 		this.receiver=receiver;
 	}
 
-	public void processMail(String working_path) throws MessagingException, IOException {
-		MessageProcessor mp = new MessageProcessor();
+	public void processMail(ProjectController controller, String working_path) throws MessagingException, IOException {
 		List<model.Message> incomingMessages = this.receiver.receive();
-		List<model.Message> answerMessages = mp.process(incomingMessages);
+		List<model.Message> answerMessages = controller.processIncoming(incomingMessages);
 		this.sender.send(answerMessages);
 	}
 

@@ -1,5 +1,6 @@
 package model;
 import java.io.File;
+import controller.ProjectController;
 import java.io.IOException;
 import java.util.*;
 
@@ -48,11 +49,11 @@ public class ClassAccount {
 		}
 	}
 	
-	public void processAccount() throws MessagingException, IOException {
+	public void processAccount(ProjectController controller) throws MessagingException, IOException {
 		Iterator<Email> it = this.account_email.iterator();
 		while (it.hasNext()) {
 			Email e= it.next();
-			e.processMail(this.path_attach);			
+			e.processMail(controller, this.path_attach);			
 		}
 	}
 
