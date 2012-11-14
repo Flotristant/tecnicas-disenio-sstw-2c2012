@@ -21,30 +21,36 @@ public class TpPersistence implements ITpPersistence {
 			Map<String, String> attachments) throws Exception {
 		
 		String pathToSave;
-		
 		for (Integer padron : this.dataBaseTp.getPadronesFromGroupOfTheSender(codigoMateria, sender)) {
-			pathToSave = codigoMateria + "/TPs/" + tpNumber + padron + "/";
+			pathToSave = "./" + codigoMateria + "/TPs/" + padron + "/" + tpNumber + "/";
+			File dirs = new File(pathToSave);
+			if (!dirs.mkdir())
+				dirs.mkdirs();
 			for (String key : attachments.keySet()) {
 				String path = attachments.get(key);
 				
 				try {
 					File inFile = new File(path + key);
 					File outFile = new File(pathToSave + key);
-
+					outFile.createNewFile();
+					
 					FileInputStream in = new FileInputStream(inFile);
 					FileOutputStream out = new FileOutputStream(outFile);
 
 					int byteOfData;
 					while( (byteOfData = in.read() ) != -1)
 						out.write(byteOfData);
-
+					
 					in.close();
 					out.close();
+					inFile.delete();
 				} catch(IOException e) {
-					System.err.println("Hubo un error de entrada/salida!!!");
+					e.printStackTrace();
+					System.err.println("Hubo un error de entrada/salida");
 				}
 			}
 			this.dataBaseTp.saveTpInDB(codigoMateria, padron, tpNumber, pathToSave);
+			
 		}
 	}
 }

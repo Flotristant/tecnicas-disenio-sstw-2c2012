@@ -64,7 +64,7 @@ public class DBTpPersistenceTestCase {
 	public void setDown() throws Exception {
 		this.statement.close();
 		this.conn.close();
-		File fichero = new File("7510.db");
+		File fichero = new File(this.codigoMateria + ".db");
 		fichero.delete();
 	}
 
