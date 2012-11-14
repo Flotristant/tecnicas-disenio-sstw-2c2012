@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
 import javax.mail.*;
+import javax.mail.Flags.Flag;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 
@@ -12,6 +13,7 @@ import services.exceptions.InvalidPortFormatException;
 import services.exceptions.InvalidUserFormatException;
 
 
+import com.sun.mail.imap.protocol.FLAGS;
 import com.sun.mail.pop3.POP3SSLStore;
 
 
@@ -56,6 +58,7 @@ public class Pop3Protocol extends ReceiverProtocol {
 		
 		for (Message m : mensajes) {
 			// solo soportamos mensajes de texto plano
+
 			HashMap<String, String> attachs = new HashMap<String, String>();
 			String body = "--empty--";
 			if (m.isMimeType("text/*")) {
@@ -95,8 +98,8 @@ public class Pop3Protocol extends ReceiverProtocol {
 			modelmessage.addAttachments(attachs);
 					
 			res.add(modelmessage);
+			m.setFlag(Flag.DELETED, true);
 		}
-		
 		folder.close(true);
 		store.close();		
 		return res;
