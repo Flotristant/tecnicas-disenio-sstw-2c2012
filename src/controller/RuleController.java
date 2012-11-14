@@ -11,6 +11,7 @@ import persistence.IXmlManager;
 import model.IRule;
 import model.Message;
 import model.Rule;
+import model.listeners.IResponseMailEventListener;
 
 public class RuleController implements IRuleController{
 	
@@ -46,5 +47,10 @@ public class RuleController implements IRuleController{
 		for (Rule rule : rules)
 			this.rules.add(rule);
 	}
-	
+
+	@Override
+	public void addSuscriber(IResponseMailEventListener listener) {
+		for (IRule rule : this.rules)
+			rule.addSubscriber(listener);
+	}
 }

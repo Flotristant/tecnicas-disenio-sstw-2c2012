@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Map;
 
 import persistence.ITpPersistence;
+import persistence.exceptions.PersistenceException;
 
 public class TpPersistence implements ITpPersistence {
 	
@@ -18,39 +19,43 @@ public class TpPersistence implements ITpPersistence {
 	}
 	@Override
 	public void saveTp(String codigoMateria, String sender, Integer tpNumber,
-			Map<String, String> attachments) throws Exception {
+			Map<String, String> attachments) throws PersistenceException {
 		
 		String pathToSave;
-		for (Integer padron : this.dataBaseTp.getPadronesFromGroupOfTheSender(codigoMateria, sender)) {
-			pathToSave = "./" + codigoMateria + "/TPs/" + padron + "/" + tpNumber + "/";
-			File dirs = new File(pathToSave);
-			if (!dirs.mkdir())
-				dirs.mkdirs();
-			for (String key : attachments.keySet()) {
-				String path = attachments.get(key);
-				
-				try {
-					File inFile = new File(path + key);
-					File outFile = new File(pathToSave + key);
-					outFile.createNewFile();
+		try {
+			for (Integer padron : this.dataBaseTp.getPadronesFromGroupOfTheSender(codigoMateria, sender)) {
+				pathToSave = "./" + codigoMateria + "/TPs/" + padron + "/" + tpNumber + "/";
+				File dirs = new File(pathToSave);
+				if (!dirs.mkdir())
+					dirs.mkdirs();
+				for (String key : attachments.keySet()) {
+					String path = attachments.get(key);
 					
-					FileInputStream in = new FileInputStream(inFile);
-					FileOutputStream out = new FileOutputStream(outFile);
-
-					int byteOfData;
-					while( (byteOfData = in.read() ) != -1)
-						out.write(byteOfData);
-					
-					in.close();
-					out.close();
-					inFile.delete();
-				} catch(IOException e) {
-					e.printStackTrace();
-					System.err.println("Hubo un error de entrada/salida");
+					try {
+						File inFile = new File(path + key);
+						File outFile = new File(pathToSave + key);
+						outFile.createNewFile();
+						
+						FileInputStream in = new FileInputStream(inFile);
+						FileOutputStream out = new FileOutputStream(outFile);
+	
+						int byteOfData;
+						while( (byteOfData = in.read() ) != -1)
+							out.write(byteOfData);
+						
+						in.close();
+						out.close();
+						inFile.delete();
+					} catch(IOException e) {
+						e.printStackTrace();
+						System.err.println("Hubo un error de entrada/salida");
+					}
 				}
+				this.dataBaseTp.saveTpInDB(codigoMateria, padron, tpNumber, pathToSave);
+				
 			}
-			this.dataBaseTp.saveTpInDB(codigoMateria, padron, tpNumber, pathToSave);
-			
+		} catch(Exception e) {
+			throw new PersistenceException();
 		}
 	}
 }

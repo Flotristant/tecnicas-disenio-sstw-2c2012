@@ -1,8 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import model.listeners.IResponseMailEventListener;
+
+import persistence.exceptions.PersistenceException;
 
 public abstract class Rule implements IRule {
 
@@ -13,9 +18,11 @@ public abstract class Rule implements IRule {
 	private String codigoMateria;
 	private String padron;
 	private String name;
+	 private List<IResponseMailEventListener> listeners;
 	
 	public Rule() {
 		this.collectionActions = new ArrayList<ActionRule>();
+		this.listeners = new ArrayList<IResponseMailEventListener>();
 	}
 	
 	public void setTypeOfQuery(String typeOfQuery) {
@@ -50,9 +57,13 @@ public abstract class Rule implements IRule {
 				action.initialize(this, message);
 				try {
 					action.execute();
-				} catch (Exception e) {
-					
-					e.printStackTrace();
+				} 
+				catch (PersistenceException pe) {
+					//rollback
+				}
+				catch (Exception e) {
+					for(IResponseMailEventListener listener : this.listeners)
+						listener.handleCreatedEvent(message.getSender(), e.getMessage(), message.getBody(), message.getAttachments());
 				}
 			}
 		}
@@ -97,5 +108,10 @@ public abstract class Rule implements IRule {
 	@Override
 	public void setPattern(String pattern) {
 		this.pattern = pattern;
+	}
+	
+	@Override
+	public void addSubscriber(IResponseMailEventListener listener) {
+		this.listeners.add(listener);
 	}
 }

@@ -10,6 +10,7 @@ import model.RuleAltaMateria;
 import org.junit.Before;
 import org.junit.Test;
 
+import persistence.exceptions.PersistenceException;
 import persistence.tests.mocks.StudentPersistenceMock;
 
 
@@ -25,7 +26,7 @@ public class ActionAltaAlumnoTestCase {
 	}
 	
 	@Test
-	public void testShouldAltaAlumnoPassWhenCreateAnStudent() {
+	public void testShouldAltaAlumnoPassWhenCreateAnStudent() throws PersistenceException {
 		Rule rule = new RuleAltaMateria();
 		rule.setPattern("ruleAltaMateria");
 		rule.setCodigoMateria("7502");

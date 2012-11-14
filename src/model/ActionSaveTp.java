@@ -3,6 +3,7 @@ package model;
 import java.util.Map;
 
 import persistence.ITpPersistence;
+import persistence.exceptions.PersistenceException;
 
 public class ActionSaveTp extends ActionRule {
 
@@ -17,7 +18,7 @@ public class ActionSaveTp extends ActionRule {
 	}
 	
 	@Override
-	public void execute() throws Exception {
+	public void execute() throws PersistenceException {
 		this.tpPersistence.saveTp(this.codigoMateria, this.sender, this.tpNumber, this.attachments);
 	}
 
