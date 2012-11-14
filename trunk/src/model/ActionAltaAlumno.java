@@ -1,6 +1,7 @@
 package model;
 
 import persistence.IStudentPersistence;
+import persistence.exceptions.PersistenceException;
 
 public class ActionAltaAlumno extends ActionRule {
 	
@@ -15,7 +16,7 @@ public class ActionAltaAlumno extends ActionRule {
 	}
 
 	@Override
-	public void execute() {
+	public void execute() throws PersistenceException {
 		this.studentPersistence.saveStudent(codigo, padron, name, sender);
 	}
 

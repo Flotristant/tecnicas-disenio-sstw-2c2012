@@ -1,5 +1,7 @@
 package model;
 
+import model.listeners.IResponseMailEventListener;
+
 public interface IRule {
 	
 	public void execute(Message message);
@@ -11,4 +13,6 @@ public interface IRule {
 	public String getPattern();
 
 	public Iterable<ActionRule> getActions();
+	
+	public void addSubscriber(IResponseMailEventListener listener);
 }

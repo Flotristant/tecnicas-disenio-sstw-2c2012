@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import persistence.exceptions.PersistenceException;
+
 import model.Message;
 //TODO tests de esta cosa
 public class TicketPersistence implements ITicketPersistence {
@@ -27,48 +29,64 @@ public class TicketPersistence implements ITicketPersistence {
 	}
 	
 	@Override
-	public Message getUnassignedTickets(String codigoMateria) throws Exception{
+	public Message getUnassignedTickets(String codigoMateria) throws PersistenceException{
+		try {
 		initialize(codigoMateria);
 		//TODO ver si se hace o no
 		closeStatementAndConnection();
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
 		return null;
 		
 	}
 
 	@Override
-	public void createTicket(Message message, boolean publica, String codigoMateria, String tema, String pathAttach) throws Exception {
-		initialize(codigoMateria);
-		if (publica)
-			this.statement.executeUpdate(String.format("INSERT INTO TICKETPUBLICO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s','%s')", tema, 
-					message.getBody(), this.pathAttach + pathAttach));	
-		else 
-			this.statement.executeUpdate(String.format("INSERT INTO TICKETPRIVADO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s', '%s', '%s')", 
-					tema, message.getBody(), this.pathAttach + pathAttach, message.getSender()));	
-		closeStatementAndConnection();
+	public void createTicket(Message message, boolean publica, String codigoMateria, String tema, String pathAttach) throws PersistenceException {
+		try {
+			initialize(codigoMateria);
+			if (publica)
+				this.statement.executeUpdate(String.format("INSERT INTO TICKETPUBLICO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s','%s')", tema, 
+						message.getBody(), this.pathAttach + pathAttach));	
+			else 
+				this.statement.executeUpdate(String.format("INSERT INTO TICKETPRIVADO VALUES ('%s', 'SIN ASIGNAR', NULL, '%s', '%s', '%s')", 
+						tema, message.getBody(), this.pathAttach + pathAttach, message.getSender()));	
+			closeStatementAndConnection();
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
 	}
 
 	@Override
-	public void assignTicket(String codigoMateria, String nameAyudante, String titulo, Message message, boolean publica) throws Exception {
-		initialize(codigoMateria);
-		if (publica)
-			this.statement.executeUpdate(String.format("UPDATE TICKETPUBLICO SET Estado='ASIGNADO', " +
-					"AyudanteAsignado='%s' WHERE Titulo='%s'", nameAyudante, titulo));	
-		else 
-			this.statement.executeUpdate(String.format("UPDATE TICKETPRIVADO SET Estado='ASIGNADO', " +
-					"AyudanteAsignado='%s' WHERE Titulo='%s' AND Sender='%d'", nameAyudante, titulo, message.getSender()));
-		
-		closeStatementAndConnection();
+	public void assignTicket(String codigoMateria, String nameAyudante, String titulo, Message message, boolean publica) throws PersistenceException {
+		try {
+			initialize(codigoMateria);
+			if (publica)
+				this.statement.executeUpdate(String.format("UPDATE TICKETPUBLICO SET Estado='ASIGNADO', " +
+						"AyudanteAsignado='%s' WHERE Titulo='%s'", nameAyudante, titulo));	
+			else 
+				this.statement.executeUpdate(String.format("UPDATE TICKETPRIVADO SET Estado='ASIGNADO', " +
+						"AyudanteAsignado='%s' WHERE Titulo='%s' AND Sender='%d'", nameAyudante, titulo, message.getSender()));
+			
+			closeStatementAndConnection();
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
 	}
 
 	@Override
-	public void associateMessageToTicket(String codigoMateria, String titulo, Message message, boolean publica) throws Exception{
-		initialize(codigoMateria);
-		if (publica)
-			this.statement.executeUpdate(String.format("INSERT INTO ANSWERPUBLICO VALUES (null, '%s', '%s');", message.getBody(), titulo));	
-		else 
-			this.statement.executeUpdate(String.format("INSERT INTO ANSWERPRIVADO VALUES (null, '%s', '%s', '%s');", message.getBody(), titulo, message.getSender()));
-		
-		closeStatementAndConnection();
+	public void associateMessageToTicket(String codigoMateria, String titulo, Message message, boolean publica) throws PersistenceException{
+		try {
+			initialize(codigoMateria);
+			if (publica)
+				this.statement.executeUpdate(String.format("INSERT INTO ANSWERPUBLICO VALUES (null, '%s', '%s');", message.getBody(), titulo));	
+			else 
+				this.statement.executeUpdate(String.format("INSERT INTO ANSWERPRIVADO VALUES (null, '%s', '%s', '%s');", message.getBody(), titulo, message.getSender()));
+			
+			closeStatementAndConnection();
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
 	}
 
 	private void closeStatementAndConnection() throws SQLException {

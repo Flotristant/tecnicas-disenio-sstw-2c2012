@@ -1,6 +1,7 @@
 package model;
 
 import persistence.IMailPersistence;
+import persistence.exceptions.PersistenceException;
 
 public class ActionValidateSender extends ActionRule {
 
@@ -16,7 +17,7 @@ public class ActionValidateSender extends ActionRule {
 			throw new Exception("Sender doesn't belong to this course");
 	}
 	
-	private boolean validateSender() {
+	private boolean validateSender() throws PersistenceException {
 		return mailPersistence.existsMail(this.message.getSender());
 	}
 
