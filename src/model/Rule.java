@@ -64,6 +64,7 @@ public abstract class Rule implements IRule {
 				catch (Exception e) {
 					for(IResponseMailEventListener listener : this.listeners)
 						listener.handleCreatedEvent(message, e.getMessage());
+					break;
 				}
 			}
 		}

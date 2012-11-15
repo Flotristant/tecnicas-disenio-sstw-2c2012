@@ -7,7 +7,7 @@ import controller.ProjectController;
 import controller.tests.mocks.RuleControllerFactoryMock;
 import controller.tests.mocks.XmlFileManagerMock;
 
-public class ProjectControllerTestCase {
+public class ProjectControllerTestCase{
 
 	private RuleControllerFactoryMock ruleControllerFactory;
 

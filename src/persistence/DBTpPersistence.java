@@ -1,62 +1,36 @@
 package persistence;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 
-public class DBTpPersistence {
-	
-	private Connection conn;
-	private Statement statement;
-	
-	public DBTpPersistence() {
-	}
-
-
-	private void initialize(String codigoMateria) throws Exception {
-		Class.forName("org.sqlite.JDBC");
-        this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",codigoMateria)); 
-        this.statement = this.conn.createStatement(); 
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TP (Padron int, TpNumber int, PathTp text, PRIMARY KEY(Padron, TpNumber), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS ALUMNO (Padron int PRIMARY KEY, Sender text, GroupNr int);");
-	}
+public class DBTpPersistence extends DBPersistence {
 	
 	public void saveTpInDB(String codigoMateria, Integer padron, Integer tpNumber, String pathTp) throws Exception {
-		initialize(codigoMateria);
+		this.initialize(codigoMateria);
         
         this.statement.executeUpdate(String.format("INSERT INTO TP (Padron, TpNumber, PathTp) VALUES (%d, %d, '%s')", padron, tpNumber, pathTp));
 		
-		closeStatementAndConnection();
+        this.closeStatementAndConnection();
 	}
 	
 	public Iterable<Integer> getPadronesFromGroupOfTheSender(String codigoMateria, String sender) throws Exception {
-		initialize(codigoMateria);
+		this.initialize(codigoMateria);
 		
-		ResultSet rs = this.statement.executeQuery(String.format("SELECT GroupNr FROM ALUMNO WHERE Sender='%s' AND GroupNr IS NOT NULL", sender));
-		ResultSet rs2;
-		if(!rs.next()){
-			rs2 = this.statement.executeQuery(String.format("SELECT Padron FROM ALUMNO WHERE Sender='%s'", sender));
-		}
-		else{
-			rs2 = this.statement.executeQuery(String.format("SELECT Padron FROM ALUMNO WHERE GroupNr = '%s'", rs.getString("GroupNr")));
-		}
+		ResultSet rs = this.statement.executeQuery(String.format("SELECT A1.Padron FROM ALUMNO A1 WHERE A1.Sender='%s'" +
+				" OR Padron IN (SELECT Padron FROM GROUPALUMNO WHERE GroupNr IN (SELECT GA.GroupNr FROM GROUPALUMNO GA, " +
+				"ALUMNO A WHERE A.Sender='%s' AND A.Padron = GA.Padron));", sender, sender));
 		
 		ArrayList<Integer> padrones = new ArrayList<Integer>();
-		while (rs2.next()){
+		while (rs.next())
 			padrones.add(rs.getInt("padron"));
-		}
 		rs.close();
-		rs2.close();
-		closeStatementAndConnection();
+		this.closeStatementAndConnection();
 		return padrones;
 	}
 
 	public boolean isTPDelivered(String codigoMateria, String sender, Integer tpNumber)
 			throws Exception {
-		initialize(codigoMateria);
+		this.initialize(codigoMateria);
 		String sql = String.format("SELECT padron FROM Alumno WHERE Sender = '%s'", sender);
 		ResultSet rs = this.statement.executeQuery(sql);
 		if(!rs.next()) return false;
@@ -70,15 +44,9 @@ public class DBTpPersistence {
 			count++;
 			rs.next();
 		}
-		rs.close();
-		closeStatementAndConnection();
 		
+		rs.close();
+		this.closeStatementAndConnection();
 		return count == 1;
 	}
-	
-	private void closeStatementAndConnection() throws SQLException {
-		this.statement.close();
-		this.conn.close();
-	}
-	
 }
