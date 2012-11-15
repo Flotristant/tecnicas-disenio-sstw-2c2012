@@ -42,7 +42,7 @@ public class StudentPersistenceMock implements IStudentPersistence {
 		this.padron = padron;
 		this.codigoMateria = codigoMateria;
 		
-		if (padron.equals("10000"))
+		if (padron.equals(10000))
 			return false;
 		return true;
 	}
@@ -51,7 +51,7 @@ public class StudentPersistenceMock implements IStudentPersistence {
 	public boolean validateStudentInGroup(String codigoMateria, Integer padron) {
 		this.codigoMateria = codigoMateria;
 		this.padron = padron;
-		if (padron.equals("90000"))
+		if (padron.equals(90000))
 			return false;
 		return true;
 	}

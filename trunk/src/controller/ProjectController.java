@@ -3,23 +3,19 @@ package controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import model.Message;
 
 import controller.factories.IRuleControllerFactory;
 
-import persistence.IXmlFileManager;
 
 public class ProjectController implements IProjectController{
 
 	private IRuleControllerFactory ruleControllerFactory;
-	private IXmlFileManager xmlFileManager;
 	private IRuleController ruleController;
 	
 	private List<model.Message> anwserMessages;
 
-	public ProjectController(IXmlFileManager xmlFileManager, IRuleControllerFactory ruleControllerFactory) {
-		this.xmlFileManager = xmlFileManager;
+	public ProjectController(IRuleControllerFactory ruleControllerFactory) {
 		this.ruleControllerFactory = ruleControllerFactory;
 		this.initializeControllers();
 		this.anwserMessages = null;

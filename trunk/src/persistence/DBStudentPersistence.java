@@ -25,12 +25,11 @@ public class DBStudentPersistence extends DBPersistence implements IStudentPersi
 		try {
 			this.initialize(codigoMateria);
 			
-			ResultSet rs = this.statement.executeQuery(String.format("SELECT GroupNr FROM GROUPALUMNO WHERE Padron='%s';", padron));
+			ResultSet rs = this.statement.executeQuery(String.format("SELECT COUNT(*) FROM GROUPALUMNO WHERE Padron='%s';", padron));
 						
-			int count = 0;
-			while (rs.next()) {
-				count++;
-			}
+			rs.next();
+			Integer count = Integer.valueOf(rs.getString(1));
+			
 			rs.close();
 			this.closeStatementAndConnection();
 			return count == 0;
@@ -44,12 +43,11 @@ public class DBStudentPersistence extends DBPersistence implements IStudentPersi
 			Integer padron) throws PersistenceException {
 		try {
 			this.initialize(codigoMateria);
-			ResultSet rs = this.statement.executeQuery(String.format("SELECT Padron FROM ALUMNO WHERE Padron='%s';", padron));
+			ResultSet rs = this.statement.executeQuery(String.format("SELECT COUNT(*) FROM ALUMNO WHERE Padron='%s';", padron));
 			
-			int count = 0;
-			while (rs.next()) {
-				count++;
-			}
+			rs.next();
+			Integer count = Integer.valueOf(rs.getString(1));
+
 			rs.close();
 			this.closeStatementAndConnection();
 			return count == 1;
