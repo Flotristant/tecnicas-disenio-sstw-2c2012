@@ -4,7 +4,6 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
-import java.util.ArrayList;
 
 import junit.framework.Assert;
 
@@ -12,10 +11,11 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import persistence.DBTpPersistence;
+import persistence.DBStudentPersistence;
+import persistence.exceptions.PersistenceException;
 
-public class DBTpPersistenceTestCase {
-	
+public class DBStudentPersistenceTestCase {
+
 	private final String codigoMateria = "7510";
 	private final String sender = "caty@Hola";
 	private Connection conn;
@@ -36,49 +36,37 @@ public class DBTpPersistenceTestCase {
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS GROUPALUMNO (Padron int, GroupNr int, PRIMARY KEY(Padron, GroupNr), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
         this.statement.executeUpdate(String.format("INSERT INTO GROUPALUMNO (Padron, GroupNr) VALUES (%d, %d);", 91227, 1));
         this.statement.executeUpdate(String.format("INSERT INTO GROUPALUMNO (Padron, GroupNr) VALUES (%d, %d);", 91678, 1));
-        this.statement.executeUpdate(String.format("INSERT INTO GROUPALUMNO (Padron, GroupNr) VALUES (%d, %d);", 91000, 1));
 	}
 	
 	@Test
-	public void testShouldSaveTpCorrectly() throws Exception {
-		DBTpPersistence db = new DBTpPersistence();
-
-		db.saveTpInDB(this.codigoMateria, 90117, 1, null);
+	public void testShouldSaveStudentCorrectly() throws PersistenceException {
+		DBStudentPersistence db = new DBStudentPersistence();
 		
-		Assert.assertTrue(db.isTPDelivered(this.codigoMateria, this.sender, 1));
-		Assert.assertFalse(db.isTPDelivered(this.codigoMateria, "20", 30));
+		db.saveStudent(this.codigoMateria, 91111, "francisco", "francisco@francisco");
+		
+		Assert.assertTrue(db.validateStudentInCuatrimestre(codigoMateria, 91111));
 	}
 	
 	@Test
-	public void testShouldReturnTheStudentsThatHasntGroup() throws Exception{
-		DBTpPersistence db = new DBTpPersistence();
-		Iterable<Integer> it = db.getPadronesFromGroupOfTheSender(this.codigoMateria, this.sender);
+	public void testShouldRetriveTrueOrFalseWhenValidateStudentInGroup() throws PersistenceException {
+		DBStudentPersistence db = new DBStudentPersistence();
 		
-		ArrayList<Integer> padrones = new ArrayList<Integer>();
-		
-		for (Integer padron : it)
-			padrones.add(padron);
-			
-		Assert.assertEquals(1, padrones.size());
-		
-		Assert.assertEquals("90117", padrones.get(0).toString());
+		Assert.assertTrue(db.validateStudentInGroup(this.codigoMateria, 90117));
+		Assert.assertFalse(db.validateStudentInGroup(this.codigoMateria, 91227));
 	}
 	
 	@Test
-	public void testShouldReturnAllStudentsThatBelongsInSameGroupOfSender() throws Exception{
-		DBTpPersistence db = new DBTpPersistence();
-		Iterable<Integer> it = db.getPadronesFromGroupOfTheSender(this.codigoMateria, "caty@Hola1");
+	public void testShouldRetriveStudentFromTable() throws PersistenceException {
+		DBStudentPersistence db = new DBStudentPersistence();
 		
-		ArrayList<Integer> padrones = new ArrayList<Integer>();
+		Assert.assertTrue(db.validateStudentInCuatrimestre(codigoMateria, 90117));
+	}
+	
+	@Test
+	public void testShouldDontRetriveAnUnexistentStudentFromTable() throws PersistenceException {
+		DBStudentPersistence db = new DBStudentPersistence();
 		
-		for (Integer padron : it)
-			padrones.add(padron);
-			
-		Assert.assertEquals(3, padrones.size());
-		
-		Assert.assertEquals("91227", padrones.get(0).toString());
-		Assert.assertEquals("91678", padrones.get(1).toString());
-		Assert.assertEquals("91000", padrones.get(2).toString());
+		Assert.assertFalse(db.validateStudentInCuatrimestre(codigoMateria, 10000));
 	}
 	
 	@After

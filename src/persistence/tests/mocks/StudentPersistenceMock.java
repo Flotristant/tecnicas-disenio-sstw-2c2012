@@ -7,7 +7,7 @@ public class StudentPersistenceMock implements IStudentPersistence {
 	
 	
 	private String codigoMateria;
-	private String padron;
+	private Integer padron;
 	private String name;
 	private String sender;
 
@@ -19,7 +19,7 @@ public class StudentPersistenceMock implements IStudentPersistence {
 		return this.codigoMateria;
 	}
 
-	public String getPadronToSave() {
+	public Integer getPadronToSave() {
 		return this.padron;
 	}
 
@@ -28,7 +28,7 @@ public class StudentPersistenceMock implements IStudentPersistence {
 	}
 
 	@Override
-	public void saveStudent(String codigoMateria, String padron, String name,
+	public void saveStudent(String codigoMateria, Integer padron, String name,
 			String sender) {
 		this.codigoMateria = codigoMateria;
 		this.padron = padron;
@@ -38,7 +38,7 @@ public class StudentPersistenceMock implements IStudentPersistence {
 
 	@Override
 	public boolean validateStudentInCuatrimestre(String codigoMateria,
-			String padron) {
+			Integer padron) {
 		this.padron = padron;
 		this.codigoMateria = codigoMateria;
 		
@@ -48,7 +48,7 @@ public class StudentPersistenceMock implements IStudentPersistence {
 	}
 
 	@Override
-	public boolean validateStudentInGroup(String codigoMateria, String padron) {
+	public boolean validateStudentInGroup(String codigoMateria, Integer padron) {
 		this.codigoMateria = codigoMateria;
 		this.padron = padron;
 		if (padron.equals("90000"))

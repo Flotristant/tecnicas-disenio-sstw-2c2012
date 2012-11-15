@@ -35,8 +35,8 @@ public class ActionValidateStudentInGroup extends ActionRule {
 				throw new Exception("Attachment hasn't only numeric registers");
 			}
 		for (int i = 0; i < padrones.length; i++) {
-			if (!this.studentPersistence.validateStudentInCuatrimestre(this.codigoMateria, padrones[i])) throw new Exception("Student doesn't belong to this course");
-			if (!this.studentPersistence.validateStudentInGroup(this.codigoMateria, padrones[i])) throw new Exception("Student already belong to another group");
+			if (!this.studentPersistence.validateStudentInCuatrimestre(this.codigoMateria, Integer.valueOf(padrones[i]))) throw new Exception("Student doesn't belong to this course");
+			if (!this.studentPersistence.validateStudentInGroup(this.codigoMateria, Integer.valueOf(padrones[i]))) throw new Exception("Student already belong to another group");
 		}
 	}
 

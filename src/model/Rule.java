@@ -16,7 +16,7 @@ public abstract class Rule implements IRule {
 	private String typeOfQuery;
 	private String tpNumber;
 	private String codigoMateria;
-	private String padron;
+	private Integer padron;
 	private String name;
 	 private List<IResponseMailEventListener> listeners;
 	
@@ -37,7 +37,7 @@ public abstract class Rule implements IRule {
 		this.codigoMateria = codigoMateria;
 	}
 
-	public void setPadron(String padron) {
+	public void setPadron(Integer padron) {
 		this.padron = padron;
 	}
 
@@ -94,7 +94,7 @@ public abstract class Rule implements IRule {
 		return this.codigoMateria;
 	}
 
-	public String getPadron() {
+	public Integer getPadron() {
 		return this.padron;
 	}
 
