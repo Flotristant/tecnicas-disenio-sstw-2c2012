@@ -7,7 +7,7 @@ public class MailPersistenceMock implements IMailPersistence {
 	private String dirSender;
 
 	@Override
-	public boolean existsMail(String direccionEmail) {
+	public boolean existsMail(String codigoMateria, String direccionEmail) {
 		this.setDirSender(direccionEmail);
 		if (direccionEmail.equals("francisco"))
 			return true;

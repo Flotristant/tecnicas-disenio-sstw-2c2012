@@ -37,7 +37,7 @@ public class ActionAltaAlumnoTestCase {
 		this.altaAlumno.execute();
 		
 		Assert.assertEquals("7502", this.studentPersistence.getCodigoMateriaToSave());
-		Assert.assertEquals("91227", this.studentPersistence.getPadronToSave());
+		Assert.assertEquals(Integer.valueOf(91227), this.studentPersistence.getPadronToSave());
 		Assert.assertEquals("francisco", this.studentPersistence.getStudentToSave());
 		Assert.assertEquals("francisco@soler", this.studentPersistence.getSenderToSave());
 	}

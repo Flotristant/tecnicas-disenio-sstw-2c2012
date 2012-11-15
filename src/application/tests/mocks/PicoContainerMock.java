@@ -38,6 +38,7 @@ public class PicoContainerMock implements MutablePicoContainer{
 		return this.mappings.get(arg0);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public <T> T getComponent(Class<T> arg0) {
 		return (T)this.mappings.get(arg0);

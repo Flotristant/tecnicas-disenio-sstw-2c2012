@@ -12,10 +12,7 @@ import javax.mail.internet.MimeBodyPart;
 import services.exceptions.InvalidPortFormatException;
 import services.exceptions.InvalidUserFormatException;
 
-
-import com.sun.mail.imap.protocol.FLAGS;
 import com.sun.mail.pop3.POP3SSLStore;
-
 
 public class Pop3Protocol extends ReceiverProtocol {
 

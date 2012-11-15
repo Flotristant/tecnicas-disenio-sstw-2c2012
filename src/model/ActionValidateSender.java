@@ -18,7 +18,7 @@ public class ActionValidateSender extends ActionRule {
 	}
 	
 	private boolean validateSender() throws PersistenceException {
-		return mailPersistence.existsMail(this.message.getSender());
+		return mailPersistence.existsMail(null, this.message.getSender());
 	}
 
 	@Override
