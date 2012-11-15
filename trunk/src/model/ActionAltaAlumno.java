@@ -6,7 +6,7 @@ import persistence.exceptions.PersistenceException;
 public class ActionAltaAlumno extends ActionRule {
 	
 	private IStudentPersistence studentPersistence;
-	private String padron;
+	private Integer padron;
 	private String name;
 	private String codigo;
 	private String sender;

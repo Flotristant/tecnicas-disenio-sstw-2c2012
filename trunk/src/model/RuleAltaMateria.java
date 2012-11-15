@@ -11,7 +11,7 @@ public class RuleAltaMateria extends Rule {
 	@Override
 	protected void searchComponentsInSubject(Matcher matcher) {
 		super.setCodigoMateria(matcher.group(1));
-		super.setPadron(matcher.group(2));
+		super.setPadron(Integer.valueOf(matcher.group(2)));
 		super.setName(matcher.group(3));
 	}
 }
