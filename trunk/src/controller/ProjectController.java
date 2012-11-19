@@ -38,6 +38,10 @@ public class ProjectController implements IProjectController{
 			this.anwserMessages.add(answerMessage);
 	}
 	
+	public List<model.Message> getAnswerMessages() {
+		return this.anwserMessages;
+	}
+	
 	public List<model.Message> processIncoming(List<model.Message> messagesIncoming) {
 		Iterator<model.Message> it = messagesIncoming.iterator();
 		while (it.hasNext()) {
@@ -45,7 +49,7 @@ public class ProjectController implements IProjectController{
 			this.ruleController.processMessage(m);
 		}
 		
-		List<model.Message> returnMessages = this.anwserMessages;
+		List<model.Message> returnMessages = this.getAnswerMessages();
 		this.anwserMessages = null;
 		return returnMessages;		
 	}
