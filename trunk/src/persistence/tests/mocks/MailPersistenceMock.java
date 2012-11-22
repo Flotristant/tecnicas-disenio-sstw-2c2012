@@ -9,7 +9,7 @@ public class MailPersistenceMock implements IMailPersistence {
 	@Override
 	public boolean existsMail(String codigoMateria, String direccionEmail) {
 		this.setDirSender(direccionEmail);
-		if (direccionEmail.equals("francisco"))
+		if ((direccionEmail.equals("francisco")) || (direccionEmail.equals("from@hotmail.com")))
 			return true;
 		return false;
 	}
