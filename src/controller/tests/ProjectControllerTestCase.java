@@ -57,6 +57,15 @@ public class ProjectControllerTestCase{
 	}
 	
 	@Test
+	public void testProcessMessageAltaGrupo() {
+		MessagesGeneratorMock mock = new MessagesGeneratorMock();
+		List<model.Message> altaGrupoMessages = mock.getAltaGruposMessagesInValidos();
+		ProjectController p = new ProjectController(this.ruleControllerFactory);
+		List<model.Message> anwser = p.processIncoming(altaGrupoMessages);
+		Assert.assertEquals(altaGrupoMessages.size(),anwser.size());
+	}
+	
+	@Test
 	public void testHandlerProjectMessage() {
 		ProjectController p = new ProjectController(this.ruleControllerFactory);
 		model.Message m = new model.Message("from@gmail.com","to@hotmail.com","[ENTREGA-TP1]","Blablabla");
