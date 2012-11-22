@@ -1,9 +1,13 @@
 package controller.tests;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import junit.framework.Assert;
 
+import org.junit.After;
 import org.junit.Before;
 import controller.tests.mocks.*;
 import org.junit.Test;
@@ -19,6 +23,7 @@ public class ProjectControllerTestCase{
 	@Before
 	public void setUp() throws Exception {
 		this.ruleControllerFactory = new RuleControllerFactoryMock();
+		this.createAttachments("./testFiles/incoming/");
 	}
 	
 	@Test
@@ -58,11 +63,25 @@ public class ProjectControllerTestCase{
 	
 	@Test
 	public void testProcessMessageAltaGrupo() {
+		
 		MessagesGeneratorMock mock = new MessagesGeneratorMock();
-		List<model.Message> altaGrupoMessages = mock.getAltaGruposMessagesInValidos();
+		List<model.Message> altaGrupoMessages = mock.getAltaGruposMessagesWithFakeMail();
 		ProjectController p = new ProjectController(this.ruleControllerFactory);
 		List<model.Message> anwser = p.processIncoming(altaGrupoMessages);
-		Assert.assertEquals(altaGrupoMessages.size(),anwser.size());
+		Assert.assertEquals(1,anwser.size());
+		model.Message m = anwser.get(0);		
+		Assert.assertEquals(m.getSubject(), "Sender doesn't belong to this course");
+		
+		altaGrupoMessages = mock.getAltaGruposMessagesWithNoAttach();
+		anwser = p.processIncoming(altaGrupoMessages);
+		Assert.assertEquals(1,anwser.size());
+		m = anwser.get(0);		
+		Assert.assertEquals(m.getSubject(), "Message has no attachment");
+		
+		altaGrupoMessages = mock.getAltaGruposMessagesValidos("./testFiles/incoming/","attach1");
+		anwser = p.processIncoming(altaGrupoMessages);
+		Assert.assertEquals(0, anwser.size());
+		
 	}
 	
 	@Test
@@ -84,4 +103,35 @@ public class ProjectControllerTestCase{
 		Assert.assertEquals(anwser.isWithAttachments(), false);
 	}
 	
+	
+	private void createAttachments(String pathIncoming) throws IOException {
+		File dir = new File (pathIncoming);
+		dir.mkdir();
+		File directory = new File(pathIncoming + "attach1");
+		directory.createNewFile();
+		FileOutputStream out = new FileOutputStream(directory);
+		out.write("90100".getBytes());
+		out.close();
+//		directory = new File(pathIncoming + "attach2");
+//		directory.createNewFile();
+//		out = new FileOutputStream(directory);
+//		out.write("attach2".getBytes());
+//		out.close();
+	}
+	
+	private void deleteFichero(File dir) {
+		File[] ficheros = dir.listFiles();
+		for (int x = 0; x < ficheros.length; x++){
+			if (ficheros[x].isDirectory())
+				this.deleteFichero(ficheros[x]);
+			ficheros[x].delete();
+		}
+		dir.delete();
+	}
+	
+	@After
+	public void setDown() throws Exception {
+		File fichero = new File("./testFiles/incoming/");
+		this.deleteFichero(fichero);
+	}
 }
