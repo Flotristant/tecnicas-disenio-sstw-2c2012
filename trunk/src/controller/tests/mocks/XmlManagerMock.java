@@ -19,10 +19,10 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 
 	private Element element;
 	private ArrayList<Rule> rules;
-	private ActionRuleFactoryMock actionFactory;
+	private ControllerActionRuleFactoryMock actionFactory;
 
 	public XmlManagerMock() {
-		this.actionFactory = new ActionRuleFactoryMock();
+		this.actionFactory = new ControllerActionRuleFactoryMock();
 	}
 	
 	@Override
