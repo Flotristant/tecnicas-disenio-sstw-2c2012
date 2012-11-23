@@ -11,6 +11,7 @@ import org.junit.After;
 import org.junit.Before;
 import controller.tests.mocks.*;
 import org.junit.Test;
+import org.junit.internal.runners.statements.Fail;
 
 import controller.ProjectController;
 import controller.tests.mocks.RuleControllerFactoryMock;
@@ -64,6 +65,7 @@ public class ProjectControllerTestCase{
 	@Test
 	public void testProcessMessageAltaGrupo() {
 		
+		//Mail invalido
 		MessagesGeneratorMock mock = new MessagesGeneratorMock();
 		List<model.Message> altaGrupoMessages = mock.getAltaGruposMessagesWithFakeMail();
 		ProjectController p = new ProjectController(this.ruleControllerFactory);
@@ -72,17 +74,50 @@ public class ProjectControllerTestCase{
 		model.Message m = anwser.get(0);		
 		Assert.assertEquals(m.getSubject(), "Sender doesn't belong to this course");
 		
+		//Mail sin attach
 		altaGrupoMessages = mock.getAltaGruposMessagesWithNoAttach();
 		anwser = p.processIncoming(altaGrupoMessages);
 		Assert.assertEquals(1,anwser.size());
 		m = anwser.get(0);		
 		Assert.assertEquals(m.getSubject(), "Message has no attachment");
 		
-		altaGrupoMessages = mock.getAltaGruposMessagesValidos("./testFiles/incoming/","attach1");
+		//Mail con datos y atacch validos
+		String pathIncoming = System.getProperty("user.dir");
+		pathIncoming = pathIncoming+"/testFiles/incoming/";
+		altaGrupoMessages = mock.getAltaGruposMessagesValidos(pathIncoming,"attach1Valid");
 		anwser = p.processIncoming(altaGrupoMessages);
-		Assert.assertEquals(0, anwser.size());
+		Assert.assertEquals(anwser, null);
 		
-	}
+		//Mail con un attach con padron incorrecto
+		pathIncoming = System.getProperty("user.dir");
+		pathIncoming = pathIncoming+"/testFiles/incoming/";
+		altaGrupoMessages = mock.getAltaGruposMessagesValidos(pathIncoming,"attach2Invalid");
+		anwser = p.processIncoming(altaGrupoMessages);
+		Assert.assertEquals(anwser.size(), 1);
+		m = anwser.get(0);
+		Assert.assertEquals(m.getSubject(), "Student doesn't belong to this course");
+		
+		//Mail con el attach mal formado 
+		pathIncoming = System.getProperty("user.dir");
+		pathIncoming = pathIncoming+"/testFiles/incoming/";
+		altaGrupoMessages = mock.getAltaGruposMessagesValidos(pathIncoming,"attach3Invalid");
+		anwser = p.processIncoming(altaGrupoMessages);
+		Assert.assertEquals(anwser.size(), 1);
+		m = anwser.get(0);
+		Assert.assertEquals(m.getSubject(), "Attachment hasn't only numeric registers");
+
+		//Mail con un padron ya perteneciente a otro grupo
+		pathIncoming = System.getProperty("user.dir");
+		pathIncoming = pathIncoming+"/testFiles/incoming/";
+		altaGrupoMessages = mock.getAltaGruposMessagesValidos(pathIncoming,"attach4Invalid");
+		anwser = p.processIncoming(altaGrupoMessages);
+		Assert.assertEquals(anwser.size(), 1);
+		m = anwser.get(0);
+		Assert.assertEquals(m.getSubject(), "Student already belong to another group");
+		
+		
+		}
+		
 	
 	@Test
 	public void testHandlerProjectMessage() {
@@ -106,17 +141,28 @@ public class ProjectControllerTestCase{
 	
 	private void createAttachments(String pathIncoming) throws IOException {
 		File dir = new File (pathIncoming);
-		dir.mkdir();
-		File directory = new File(pathIncoming + "attach1");
-		directory.createNewFile();
-		FileOutputStream out = new FileOutputStream(directory);
-		out.write("90100".getBytes());
-		out.close();
-//		directory = new File(pathIncoming + "attach2");
-//		directory.createNewFile();
-//		out = new FileOutputStream(directory);
-//		out.write("attach2".getBytes());
-//		out.close();
+		if ( dir.mkdir()) {
+			File directory = new File(pathIncoming + "attach1Valid");
+			directory.createNewFile();
+			FileOutputStream out = new FileOutputStream(directory);
+			out.write("90100\n 90001\n 90200\n".getBytes());
+			out.close();
+			directory = new File(pathIncoming + "attach2Invalid");
+			directory.createNewFile();
+			out = new FileOutputStream(directory);
+			out.write("90100\n 88888\n 90200\n".getBytes());
+			out.close();
+			directory = new File(pathIncoming + "attach3Invalid");
+			directory.createNewFile();
+			out = new FileOutputStream(directory);
+			out.write("901d0\n 90001\n 90200\n".getBytes());
+			out.close();
+			directory = new File(pathIncoming + "attach4Invalid");
+			directory.createNewFile();
+			out = new FileOutputStream(directory);
+			out.write("90001\n 90300\n".getBytes());
+			out.close();
+		}
 	}
 	
 	private void deleteFichero(File dir) {

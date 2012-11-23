@@ -44,6 +44,11 @@ public class StudentPersistenceMock implements IStudentPersistence {
 		
 		if (padron.equals(10000))
 			return false;
+		if (padron.equals(88888))
+			return false;
+		if ((padron.equals(90001)) || padron.equals(90100) || padron.equals(90200) || padron.equals(90300)) {
+			return true;
+		}
 		return true;
 	}
 
@@ -52,6 +57,8 @@ public class StudentPersistenceMock implements IStudentPersistence {
 		this.codigoMateria = codigoMateria;
 		this.padron = padron;
 		if (padron.equals(90000))
+			return false;
+		if (padron.equals(90300))
 			return false;
 		return true;
 	}

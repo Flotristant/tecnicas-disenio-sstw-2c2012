@@ -46,7 +46,7 @@ public class MessagesGeneratorMock {
 		model.Message m = new model.Message("from@hotmail.com", "to@gmail.com", "[ALTA-GRUPO]", "");
 		//m.addAttachments(attach)
 		HashMap<String, String> hash = new HashMap<String,String>();
-		hash.put(path_attach, file_name);
+		hash.put(file_name, path_attach);
 		m.addAttachments(hash);
 		messages.add(m);
 		return messages;
