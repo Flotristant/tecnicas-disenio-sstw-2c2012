@@ -1,7 +1,16 @@
 package model;
 
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+
 import persistence.IStudentPersistence;
+import sun.misc.IOUtils;
 
 public class ActionValidateStudentInGroup extends ActionRule {
 	
@@ -11,6 +20,27 @@ public class ActionValidateStudentInGroup extends ActionRule {
 
 	public ActionValidateStudentInGroup(IStudentPersistence studentPersistence) {
 		this.studentPersistence = studentPersistence;
+	}
+	
+	private String[] getStudentsId() throws IOException {
+		Map.Entry<String, String> entry = this.attachment.entrySet().iterator().next();
+		String file_path = entry.getValue() + entry.getKey();
+		BufferedReader br = new BufferedReader(new FileReader(file_path));
+		String everything ="";
+		try {
+		     StringBuilder sb = new StringBuilder();
+		     String line = br.readLine();
+		     while (line != null) {
+		           sb.append(line);
+		           line = br.readLine();
+		     }
+		     everything = sb.toString();
+		    } 
+		finally {
+		    br.close();
+		}
+		String[] padrones = everything.split("\\s+");
+		return 	padrones;
 	}
 
 	@Override
@@ -22,9 +52,7 @@ public class ActionValidateStudentInGroup extends ActionRule {
 		if (this.attachment == null) throw new Exception("Message has no attachment");
 		if (this.attachment.keySet().size() != 1) throw new Exception("Message has too much attachments");
 		
-		String body = new String(this.attachment.get(this.attachment.keySet().toArray()[0]));
-		
-		String[] padrones = body.split(" |\n");
+		String[] padrones = this.getStudentsId();
 
 		//si hay algo no numérico rechazo todo el txt
 		for (int i = 0; i < padrones.length; i++)			
