@@ -14,9 +14,11 @@ public abstract class DBPersistence {
 		Class.forName("org.sqlite.JDBC");
         this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",codigoMateria)); 
         this.statement = this.conn.createStatement(); 
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TP (Padron int, TpNumber int, PathTp text, PRIMARY KEY(Padron, TpNumber), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS ALUMNO (Padron int PRIMARY KEY, Name text, Sender text);");
-        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS GROUPALUMNO (Padron int, GroupNr int, PRIMARY KEY(Padron, GroupNr), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TP (Padron INTEGER, TpNumber INTEGER, PathTp text, PRIMARY KEY(Padron, TpNumber), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS ALUMNO (Padron INTEGER PRIMARY KEY, Name text, Sender text);");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS GROUPALUMNO (Padron INTEGER, GroupNr INTEGER, PRIMARY KEY(Padron, GroupNr), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TICKET (Id INTEGER PRIMARY KEY AUTOINCREMENT, Tipo text, Titulo text, Estado text, MailAyudanteAsignado text, Body text, PathAttach text, Sender text);");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS ANSWER (Id INTEGER PRIMARY KEY AUTOINCREMENT, Contenido text, Id_Ticket INTEGER, FOREIGN KEY(Id_Ticket) REFERENCES TICKET(Id));");
 	}
 	
 	protected void closeStatementAndConnection() throws SQLException {
