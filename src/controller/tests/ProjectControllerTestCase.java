@@ -3,6 +3,7 @@ package controller.tests;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -20,10 +21,12 @@ import controller.tests.mocks.RuleControllerFactoryMock;
 public class ProjectControllerTestCase{
 
 	private RuleControllerFactoryMock ruleControllerFactory;
+	private RuleControllerFactoryTestSpamMock ruleControllerFactorySpamMock;
 
 	@Before
 	public void setUp() throws Exception {
 		this.ruleControllerFactory = new RuleControllerFactoryMock();
+		this.ruleControllerFactorySpamMock = new RuleControllerFactoryTestSpamMock();
 		this.createAttachments("./testFiles/incoming/");
 	}
 	
@@ -38,29 +41,51 @@ public class ProjectControllerTestCase{
 	
 	@Test
 	public void testProcessMessageSpam() {
-//		MessagesGeneratorMock mock = new MessagesGeneratorMock();
-//		List<model.Message> spamMessages = mock.getSpamMessages();
-//		ProjectController p = new ProjectController(this.ruleControllerFactory);
-//		List<model.Message> anwser = p.processIncoming(spamMessages);
-//		Assert.assertEquals(anwser.size(), spamMessages.size());
+		//Test que ve que el spam no machee con otra cosa
+		MessagesGeneratorMock mock = new MessagesGeneratorMock();
+		List<model.Message> spamMessages = mock.getSpamMessages();
+		ProjectController p = new ProjectController(this.ruleControllerFactorySpamMock);
+		List<model.Message> anwser = p.processIncoming(spamMessages);
+		Assert.assertEquals(anwser.size(), spamMessages.size());
+		Iterator<model.Message> it = anwser.iterator();
+		while(it.hasNext()) {
+			model.Message m = it.next();
+			Assert.assertEquals("Spam", m.getSubject());
+		}
 	}
 	
-//	@Test
-//	public void testProcessMessageAltaGrupos() {
-//		MessagesGeneratorMock mock = new MessagesGeneratorMock();
-//		List<model.Message> spamMessages = mock.getAltaGruposMessages();
-//		ProjectController p = new ProjectController(this.ruleControllerFactory);
-//		List<model.Message> anwser = p.processIncoming(spamMessages);
-//		Assert.assertEquals(anwser.size(), spamMessages.size());
-//	}
+
 	@Test
 	public void testProcessMessageAltaMateria() {
-//		MessagesGeneratorMock mock = new MessagesGeneratorMock();
-//		List<model.Message> altaMateriaMessages = mock.getAltaMateriaMessages();
-//		ProjectController p = new ProjectController(this.ruleControllerFactory);
-//		List<model.Message> anwser = p.processIncoming(altaMateriaMessages);
-//		Assert.assertEquals(anwser.size(), altaMateriaMessages.size());
+		MessagesGeneratorMock mock = new MessagesGeneratorMock();
+		List<model.Message> altaMateriaMessages = mock.getAltaMateriaMessagesValid();
+		ProjectController p = new ProjectController(this.ruleControllerFactory);
+		List<model.Message> anwser = p.processIncoming(altaMateriaMessages);
+		Assert.assertEquals(anwser, null);
 	}
+	
+	@Test 
+	public void testProcessMessageEntregaTp() {
+		
+		//Entrega de tp de un alumno que esta dado de alta
+		String pathIncoming = System.getProperty("user.dir");
+		pathIncoming = pathIncoming+"/testFiles/incoming/";
+		MessagesGeneratorMock mock = new MessagesGeneratorMock();
+		ProjectController p = new ProjectController(this.ruleControllerFactory);
+		List<model.Message> entregaTpMessages = mock.getEntregaTpMessagesValid(pathIncoming,"TP1");
+		List<model.Message>anwser = p.processIncoming(entregaTpMessages);
+		Assert.assertEquals(anwser, null);
+		
+		//Entrega de tp de un alumno que no esta dado de alta
+		pathIncoming = System.getProperty("user.dir");
+		pathIncoming = pathIncoming+"/testFiles/incoming/";
+		entregaTpMessages = mock.getEntregaTpMessagesInvalid(pathIncoming,"TP1");
+		anwser = p.processIncoming(entregaTpMessages);
+		Assert.assertEquals(anwser.size(), 1);
+		model.Message me = anwser.get(0);
+		Assert.assertEquals(me.getSubject(), "Sender doesn't belong to this course");
+	}
+	
 	
 	@Test
 	public void testProcessMessageAltaGrupo() {
@@ -171,6 +196,11 @@ public class ProjectControllerTestCase{
 			directory.createNewFile();
 			out = new FileOutputStream(directory);
 			out.write("90001\n 90300\n".getBytes());
+			out.close();
+			directory = new File(pathIncoming + "TP1");
+			directory.createNewFile();
+			out = new FileOutputStream(directory);
+			out.write("Este es un tp de Analisis de La informacion\n Casos de uso\n".getBytes());
 			out.close();
 		}
 	}
