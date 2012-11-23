@@ -1,14 +1,8 @@
 package controller.tests.mocks;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import org.junit.After;
-import org.junit.Before;
 
 import model.Message;
 
@@ -41,10 +35,9 @@ public class MessagesGeneratorMock {
 		return messages;
 	}
 	
-	public List<model.Message> getAltaGruposMessagesValidos(String path_attach, String file_name) {
+	public List<model.Message> getAltaGruposMessagesValid(String path_attach, String file_name) {
 		List<model.Message> messages = new ArrayList<Message>();
 		model.Message m = new model.Message("from@hotmail.com", "to@gmail.com", "[ALTA-GRUPO]", "");
-		//m.addAttachments(attach)
 		HashMap<String, String> hash = new HashMap<String,String>();
 		hash.put(file_name, path_attach);
 		m.addAttachments(hash);
@@ -64,6 +57,17 @@ public class MessagesGeneratorMock {
 		List<model.Message> messages = new ArrayList<Message>();
 		//Mail correcto pero sin attach
 		model.Message m = new model.Message("from@hotmail.com", "to@gmail.com", "[ALTA-GRUPO]", "");
+		messages.add(m);
+		return messages;
+	}
+	
+	public List<model.Message> getAltaGruposMessagesWithMoreThanOneAttach(String path_attach, String file_name) {
+		List<model.Message> messages = new ArrayList<Message>();
+		model.Message m = new model.Message("from@hotmail.com", "to@gmail.com", "[ALTA-GRUPO]", "");
+		HashMap<String, String> hash = new HashMap<String,String>();
+		hash.put(file_name, path_attach);
+		hash.put("otroAttach", "/home/blabla/");
+		m.addAttachments(hash);
 		messages.add(m);
 		return messages;
 	}
