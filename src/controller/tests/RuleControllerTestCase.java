@@ -27,13 +27,8 @@ public class RuleControllerTestCase {
 	public void testShouldGiveCorrectDocumentToXmlManagerWhenCreateController() {
 		this.createController();
 		
-		Assert.assertEquals(1, this.ruleXmlManager.getCreatedRules().size());
+		Assert.assertEquals(5, this.ruleXmlManager.getCreatedRules().size());
 		Assert.assertEquals(this.xmlFileManager.getAttrElement(), this.ruleXmlManager.getDocumentToSave().getAttribute("name"));
-	}
-	
-	@Test
-	public void testShould() {
-		
 	}
 	
 	private RuleController createController(){
