@@ -15,13 +15,13 @@ import org.w3c.dom.Element;
 
 import persistence.IXmlManager;
 
-public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
+public class XmlManagerTestSpamMock implements IXmlManager<Iterable<Rule>> {
 
 	private Element element;
 	private ArrayList<Rule> rules;
 	private ActionRuleFactoryMock actionFactory;
 
-	public XmlManagerMock() {
+	public XmlManagerTestSpamMock() {
 		this.actionFactory = new ActionRuleFactoryMock();
 	}
 	
@@ -63,6 +63,7 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 		
 			Rule rule5 = new RuleSpam();
 			rule5.setPattern(".*");
+			rule5.addAction(this.actionFactory.create("ActionSpamMock"));
 			
 			this.rules.add(rule5);
 		
