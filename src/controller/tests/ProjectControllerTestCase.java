@@ -12,15 +12,14 @@ import org.junit.After;
 import org.junit.Before;
 import controller.tests.mocks.*;
 import org.junit.Test;
-import org.junit.internal.runners.statements.Fail;
-
 import controller.ProjectController;
 import controller.tests.mocks.RuleControllerFactoryMock;
 
-@SuppressWarnings("unused")
 public class ProjectControllerTestCase{
 
 	private RuleControllerFactoryMock ruleControllerFactory;
+	
+	//Factory para probar solamente los mensajes de spam
 	private RuleControllerFactoryTestSpamMock ruleControllerFactorySpamMock;
 
 	@Before
@@ -30,6 +29,7 @@ public class ProjectControllerTestCase{
 		this.createAttachments("./testFiles/incoming/");
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void testShouldCreateControllerCorrectlyWithNoExceptions() {
 		ProjectController p = this.createController();
@@ -41,7 +41,8 @@ public class ProjectControllerTestCase{
 	
 	@Test
 	public void testProcessMessageSpam() {
-		//Test que ve que el spam no machee con otra cosa
+		
+		//Test que ve que solo machee con la regla spam
 		MessagesGeneratorMock mock = new MessagesGeneratorMock();
 		List<model.Message> spamMessages = mock.getSpamMessages();
 		ProjectController p = new ProjectController(this.ruleControllerFactorySpamMock);
@@ -57,6 +58,8 @@ public class ProjectControllerTestCase{
 
 	@Test
 	public void testProcessMessageAltaMateria() {
+		
+		//alta de usuario
 		MessagesGeneratorMock mock = new MessagesGeneratorMock();
 		List<model.Message> altaMateriaMessages = mock.getAltaMateriaMessagesValid();
 		ProjectController p = new ProjectController(this.ruleControllerFactory);
@@ -148,9 +151,7 @@ public class ProjectControllerTestCase{
 		Assert.assertEquals(anwser.size(), 1);
 		m = anwser.get(0);
 		Assert.assertEquals(m.getSubject(), "Message has too much attachments");
-		
-		
-		
+				
 		}
 		
 	
