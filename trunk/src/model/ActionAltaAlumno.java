@@ -1,7 +1,6 @@
 package model;
 
 import persistence.IStudentPersistence;
-import persistence.exceptions.PersistenceException;
 
 public class ActionAltaAlumno extends ActionRule {
 	
@@ -9,6 +8,7 @@ public class ActionAltaAlumno extends ActionRule {
 	private Integer padron;
 	private String name;
 	private String codigo;
+	private String codigoInSubject;
 	private String sender;
 
 	public ActionAltaAlumno(IStudentPersistence studentPersistence) {
@@ -16,8 +16,11 @@ public class ActionAltaAlumno extends ActionRule {
 	}
 
 	@Override
-	public void execute() throws PersistenceException {
-		this.studentPersistence.saveStudent(codigo, padron, name, sender);
+	public void execute() throws Exception {
+		if(codigo.equals(codigoInSubject))
+			this.studentPersistence.saveStudent(codigo, padron, name, sender);
+		else
+			throw new Exception("El código de la materia es incorrecto");
 	}
 
 	@Override
@@ -26,6 +29,7 @@ public class ActionAltaAlumno extends ActionRule {
 		this.name = rule.getName();
 		this.codigo = rule.getCodigoMateria();
 		this.sender = this.message.getSender();
+		this.codigoInSubject = rule.getCodigoMateriaInSubject();
 	}
 	
 }

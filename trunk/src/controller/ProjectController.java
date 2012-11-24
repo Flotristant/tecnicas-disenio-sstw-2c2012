@@ -3,6 +3,8 @@ package controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+
+import persistence.exceptions.PersistenceException;
 import model.Message;
 
 import controller.factories.IRuleControllerFactory;
@@ -42,7 +44,7 @@ public class ProjectController implements IProjectController{
 		return this.anwserMessages;
 	}
 	
-	public List<model.Message> processIncoming(List<model.Message> messagesIncoming) {
+	public List<model.Message> processIncoming(List<model.Message> messagesIncoming) throws PersistenceException {
 		Iterator<model.Message> it = messagesIncoming.iterator();
 		while (it.hasNext()) {
 			model.Message m = it.next();

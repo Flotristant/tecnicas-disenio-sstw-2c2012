@@ -2,10 +2,13 @@ package model;
 
 import java.util.regex.Matcher;
 
+import persistence.IMateriaPersistence;
+
 public class RuleConsultaTema extends Rule {
 
-	public RuleConsultaTema() {
-		super();
+	public RuleConsultaTema(IMateriaPersistence  materiaPersistence) throws Exception {
+		super(materiaPersistence);
+		this.setCodigoMateria(materiaPersistence.getCodigoMateria(null));
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.mail.MessagingException;
 
+import persistence.exceptions.PersistenceException;
+
 import model.exceptions.InvalidAssociatedProtocolsException;
 import services.SenderProtocol;
 import services.ReceiverProtocol;
@@ -36,7 +38,7 @@ public class Email {
 		this.receiver=receiver;
 	}
 
-	public void processMail(ProjectController controller, String working_path) throws MessagingException, IOException {
+	public void processMail(ProjectController controller, String working_path) throws MessagingException, IOException, PersistenceException {
 		List<model.Message> incomingMessages = this.receiver.receive();
 		List<model.Message> answerMessages = controller.processIncoming(incomingMessages);
 		this.sender.send(answerMessages);

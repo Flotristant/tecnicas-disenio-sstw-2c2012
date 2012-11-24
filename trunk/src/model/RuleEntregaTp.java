@@ -2,10 +2,13 @@ package model;
 
 import java.util.regex.Matcher;
 
+import persistence.IMateriaPersistence;
+
 public class RuleEntregaTp extends Rule {
 
-	public RuleEntregaTp() {
-		super();
+	public RuleEntregaTp(IMateriaPersistence  materiaPersistence) throws Exception {
+		super(materiaPersistence);
+		
 	}
 
 	@Override

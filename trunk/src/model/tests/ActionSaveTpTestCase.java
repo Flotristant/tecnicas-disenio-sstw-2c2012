@@ -12,6 +12,7 @@ import model.RuleAltaMateria;
 import org.junit.Before;
 import org.junit.Test;
 
+import persistence.tests.mocks.MateriaPersistenceMock;
 import persistence.tests.mocks.TpPersistenceMock;
 
 public class ActionSaveTpTestCase {
@@ -19,16 +20,18 @@ public class ActionSaveTpTestCase {
 	private Rule rule;
 	private ActionSaveTp saveTp;
 	private TpPersistenceMock tpPersistence;
+	private MateriaPersistenceMock materiaPersistence;
 
 	@Before
 	public void setUp() throws Exception {
 		this.tpPersistence = new TpPersistenceMock();
 		this.saveTp = new ActionSaveTp(this.tpPersistence);
+		this.materiaPersistence = new MateriaPersistenceMock();
 	}
 	
 	@Test
 	public void testShouldPassWhenSaveTp() throws Exception {
-		this.rule = new RuleAltaMateria();
+		this.rule = new RuleAltaMateria(materiaPersistence);
 		this.rule.setPattern("ruleAltaMateria");
 		this.rule.setCodigoMateria("75.05");
 		this.rule.setTpNumber("8");

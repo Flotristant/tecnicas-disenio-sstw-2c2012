@@ -12,6 +12,8 @@ import org.junit.After;
 import org.junit.Before;
 import controller.tests.mocks.*;
 import org.junit.Test;
+
+import persistence.exceptions.PersistenceException;
 import controller.ProjectController;
 import controller.tests.mocks.RuleControllerFactoryMock;
 
@@ -40,7 +42,7 @@ public class ProjectControllerTestCase{
 	}
 	
 	@Test
-	public void testProcessMessageSpam() {
+	public void testProcessMessageSpam() throws PersistenceException {
 		
 		//Test que ve que solo machee con la regla spam
 		MessagesGeneratorMock mock = new MessagesGeneratorMock();
@@ -57,7 +59,7 @@ public class ProjectControllerTestCase{
 	
 
 	@Test
-	public void testProcessMessageAltaMateria() {
+	public void testProcessMessageAltaMateria() throws PersistenceException {
 		
 		//alta de usuario
 		MessagesGeneratorMock mock = new MessagesGeneratorMock();
@@ -68,7 +70,7 @@ public class ProjectControllerTestCase{
 	}
 	
 	@Test 
-	public void testProcessMessageEntregaTp() {
+	public void testProcessMessageEntregaTp() throws PersistenceException {
 		
 		//Entrega de tp de un alumno que esta dado de alta
 		String pathIncoming = System.getProperty("user.dir");
@@ -91,7 +93,7 @@ public class ProjectControllerTestCase{
 	
 	
 	@Test
-	public void testProcessMessageAltaGrupo() {
+	public void testProcessMessageAltaGrupo() throws PersistenceException {
 		
 		//Mail invalido
 		MessagesGeneratorMock mock = new MessagesGeneratorMock();

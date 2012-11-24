@@ -9,4 +9,9 @@ public interface IStudentPersistence {
 	boolean validateStudentInCuatrimestre(String codigoMateria, Integer padron) throws PersistenceException;
 
 	boolean validateStudentInGroup(String codigoMateria, Integer padron) throws PersistenceException;
+
+	int getNextGroupNumber(String codigoMateria) throws PersistenceException;
+
+	void saveStudentInGroup(String codigoMateria, Integer padron, int groupNumber) throws PersistenceException;
+
 }

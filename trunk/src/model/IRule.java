@@ -1,10 +1,11 @@
 package model;
 
+import persistence.exceptions.PersistenceException;
 import model.listeners.IResponseMailEventListener;
 
 public interface IRule {
 	
-	public void execute(Message message);
+	public void execute(Message message) throws PersistenceException;
 
 	public void setPattern(String pattern);
 

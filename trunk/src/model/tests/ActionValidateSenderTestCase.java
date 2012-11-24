@@ -9,21 +9,24 @@ import org.junit.Before;
 import org.junit.Test;
 
 import persistence.tests.mocks.MailPersistenceMock;
+import persistence.tests.mocks.MateriaPersistenceMock;
 
 public class ActionValidateSenderTestCase {
 
 	private ActionValidateSender validatorEmail;
 	private MailPersistenceMock mailPersistence;
+	private MateriaPersistenceMock materiaPersistence;
 
 	@Before
 	public void setUp() throws Exception {
 		this.mailPersistence = new MailPersistenceMock();
 		this.validatorEmail = new ActionValidateSender(mailPersistence);
+		this.materiaPersistence = new MateriaPersistenceMock();
 	}
 	
 	@Test
 	public void testShouldReturnTrueWhenValidateEmail() throws Exception {
-		this.validatorEmail.initialize(new RuleAltaGrupo() , new Message("francisco", "", "subject", "body"));
+		this.validatorEmail.initialize(new RuleAltaGrupo(materiaPersistence) , new Message("francisco", "", "subject", "body"));
 		
 		this.validatorEmail.execute();
 		
@@ -32,7 +35,7 @@ public class ActionValidateSenderTestCase {
 	
 	@Test (expected = Exception.class)
 	public void testShouldFailIfMailIsNotInDatabase() throws Exception {
-		this.validatorEmail.initialize(new RuleAltaGrupo() , new Message("caty", "", "subject", "body"));
+		this.validatorEmail.initialize(new RuleAltaGrupo(materiaPersistence) , new Message("caty", "", "subject", "body"));
 		
 		this.validatorEmail.execute();
 	}

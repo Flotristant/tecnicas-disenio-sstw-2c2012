@@ -9,6 +9,8 @@ import model.factories.tests.mocks.RuleAltaGrupoMock;
 import org.junit.Before;
 import org.junit.Test;
 
+import persistence.tests.mocks.MateriaPersistenceMock;
+
 import application.tests.mocks.PicoContainerMock;
 
 public class RuleFactoryTestCase {
@@ -22,7 +24,7 @@ private PicoContainerMock container;
 	
 	@Test
 	public void testShouldUseContainerToResolveController(){
-		RuleAltaGrupoMock rule = new RuleAltaGrupoMock();
+		RuleAltaGrupoMock rule = new RuleAltaGrupoMock(new MateriaPersistenceMock());
 		this.container.addComponent(IRule.class + "", rule);
 		
 		RuleFactory factory = this.createRuleFactory();

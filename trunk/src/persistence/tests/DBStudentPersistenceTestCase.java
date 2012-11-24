@@ -20,9 +20,12 @@ public class DBStudentPersistenceTestCase {
 	private final String sender = "caty@Hola";
 	private Connection conn;
 	private Statement statement;
+	private DBStudentPersistence db;
 	
 	@Before
 	public void setUp() throws Exception {
+		this.db = new DBStudentPersistence();
+		
 		Class.forName("org.sqlite.JDBC");
 		this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db", this.codigoMateria)); 
         this.statement = this.conn.createStatement();
@@ -40,7 +43,6 @@ public class DBStudentPersistenceTestCase {
 	
 	@Test
 	public void testShouldSaveStudentCorrectly() throws PersistenceException {
-		DBStudentPersistence db = new DBStudentPersistence();
 		
 		db.saveStudent(this.codigoMateria, 91111, "francisco", "francisco@francisco");
 		
@@ -49,24 +51,38 @@ public class DBStudentPersistenceTestCase {
 	
 	@Test
 	public void testShouldRetriveTrueOrFalseWhenValidateStudentInGroup() throws PersistenceException {
-		DBStudentPersistence db = new DBStudentPersistence();
 		
-		Assert.assertTrue(db.validateStudentInGroup(this.codigoMateria, 90117));
-		Assert.assertFalse(db.validateStudentInGroup(this.codigoMateria, 91227));
+		Assert.assertTrue(db.validateStudentInGroup(this.codigoMateria, 91227));
+		Assert.assertFalse(db.validateStudentInGroup(this.codigoMateria, 90816));
 	}
 	
 	@Test
 	public void testShouldRetriveStudentFromTable() throws PersistenceException {
-		DBStudentPersistence db = new DBStudentPersistence();
-		
 		Assert.assertTrue(db.validateStudentInCuatrimestre(codigoMateria, 90117));
 	}
 	
 	@Test
 	public void testShouldDontRetriveAnUnexistentStudentFromTable() throws PersistenceException {
-		DBStudentPersistence db = new DBStudentPersistence();
-		
 		Assert.assertFalse(db.validateStudentInCuatrimestre(codigoMateria, 10000));
+	}
+	
+	@Test
+	public void testShouldSaveStudentInGroupCorrectly() throws PersistenceException{
+		db.saveStudentInGroup(codigoMateria, 90976, 2);
+		Assert.assertTrue(db.validateStudentInGroup(codigoMateria, 90976));
+		Assert.assertTrue(db.validateStudentInGroup(codigoMateria, 91678));
+		Assert.assertFalse(db.validateStudentInGroup(codigoMateria, 90945));
+	}
+	
+	@Test
+	public void testShouldGetCorrectlyTpNumber() throws PersistenceException{
+		Assert.assertEquals(db.getNextGroupNumber(codigoMateria), 2);
+		db.saveStudentInGroup(codigoMateria, 90976, 2);
+		Assert.assertEquals(db.getNextGroupNumber(codigoMateria), 3);
+		db.saveStudentInGroup(codigoMateria, 90946, 4);
+		db.saveStudentInGroup(codigoMateria, 90955, 2);
+		db.saveStudentInGroup(codigoMateria, 90954, 3);
+		Assert.assertEquals(db.getNextGroupNumber(codigoMateria), 5);
 	}
 	
 	@After
