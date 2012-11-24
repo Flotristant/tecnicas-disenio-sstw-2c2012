@@ -6,7 +6,7 @@ import model.ActionAltaAlumno;
 import model.ActionRule;
 import model.ActionSaveTp;
 import model.ActionValidateSender;
-import model.ActionValidateStudentInGroup;
+import model.ActionValidateAndSaveStudentInGroup;
 import model.IRule;
 import model.RuleAltaGrupo;
 import model.RuleAltaMateria;
@@ -64,7 +64,7 @@ public class Bootstrapper {
 					.as(CACHE).addComponent(ITpPersistence.class, DBTpPersistence.class)
 					.addComponent(ActionRule.class + "ActionValidateSender", ActionValidateSender.class)
 					.as(CACHE).addComponent(IMailPersistence.class, DBMailPersistence.class)
-					.addComponent(ActionRule.class + "ActionValidateStudentInGroup", ActionValidateStudentInGroup.class);
+					.addComponent(ActionRule.class + "ActionValidateStudentInGroup", ActionValidateAndSaveStudentInGroup.class);
 	}
 
 	public MutablePicoContainer createContainer() {

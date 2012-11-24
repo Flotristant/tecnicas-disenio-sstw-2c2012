@@ -25,4 +25,11 @@ public abstract class DBPersistence {
 		this.statement.close();
 		this.conn.close();
 	}
+	
+	protected void initializeDBMateria() throws SQLException, ClassNotFoundException{
+		Class.forName("org.sqlite.JDBC");
+        this.conn = DriverManager.getConnection("jdbc:sqlite:Materias.db"); 
+        this.statement = this.conn.createStatement(); 
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS MATERIAS (CodigoMateria INTEGER PRIMARY KEY, Email text)");
+	}
 }

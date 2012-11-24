@@ -7,6 +7,7 @@ import org.w3c.dom.Element;
 
 import persistence.IXmlFileManager;
 import persistence.IXmlManager;
+import persistence.exceptions.PersistenceException;
 
 import model.IRule;
 import model.Message;
@@ -31,7 +32,7 @@ public class RuleController implements IRuleController{
 	}
 	
 	@Override
-	public void processMessage(Message message) {
+	public void processMessage(Message message) throws PersistenceException {
 		for (IRule rule : this.rules) {
 			rule.execute(message);
 		}

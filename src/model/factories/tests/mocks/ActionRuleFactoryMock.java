@@ -9,7 +9,7 @@ import model.ActionRule;
 import model.ActionSaveTp;
 import model.ActionValidateCodeClass;
 import model.ActionValidateSender;
-import model.ActionValidateStudentInGroup;
+import model.ActionValidateAndSaveStudentInGroup;
 import model.factories.IActionRuleFactory;
 
 public class ActionRuleFactoryMock implements IActionRuleFactory{
@@ -26,8 +26,8 @@ public class ActionRuleFactoryMock implements IActionRuleFactory{
 		case "ActionValidateSender" : return new ActionValidateSender(new DBMailPersistence());
 		case "ActionValidateSenderWithMock" : return new ActionValidateSender(new MailPersistenceMock());
 		
-		case "ActionValidateStudentInGroup" : return new ActionValidateStudentInGroup(new DBStudentPersistence());
-		case "ActionValidateStudentInGroupWithMock" : return new ActionValidateStudentInGroup(new StudentPersistenceMock());
+		case "ActionValidateStudentInGroup" : return new ActionValidateAndSaveStudentInGroup(new DBStudentPersistence());
+		case "ActionValidateStudentInGroupWithMock" : return new ActionValidateAndSaveStudentInGroup(new StudentPersistenceMock());
 		case "ActionValidateCodeClassWithMock": return new ActionValidateCodeClass();
 		
 		case "ActionSpamMock": return new ActionSpamMock();

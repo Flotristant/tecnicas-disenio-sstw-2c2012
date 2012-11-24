@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import model.listeners.IResponseMailEventListener;
 
+import persistence.IMateriaPersistence;
 import persistence.exceptions.PersistenceException;
 
 public abstract class Rule implements IRule {
@@ -18,11 +19,14 @@ public abstract class Rule implements IRule {
 	private String codigoMateria;
 	private Integer padron;
 	private String name;
-	 private List<IResponseMailEventListener> listeners;
+	private List<IResponseMailEventListener> listeners;
+	private String codigoMateriaInSubject;
+	private IMateriaPersistence materiaPersistence;
 	
-	public Rule() {
+	public Rule(IMateriaPersistence materiaPersistence) {
 		this.collectionActions = new ArrayList<ActionRule>();
 		this.listeners = new ArrayList<IResponseMailEventListener>();
+		this.materiaPersistence = materiaPersistence;
 	}
 	
 	public void setTypeOfQuery(String typeOfQuery) {
@@ -47,7 +51,8 @@ public abstract class Rule implements IRule {
 	}
 	
 	@Override
-	public void execute(Message message) {
+	public void execute(Message message) throws PersistenceException {
+		this.setCodigoMateria(materiaPersistence.getCodigoMateria(message.getTo()));
 		String subject = message.getSubject();
 		Pattern pattern = Pattern.compile(this.pattern);
 		Matcher matcher = pattern.matcher(subject);
@@ -92,6 +97,14 @@ public abstract class Rule implements IRule {
 
 	public String getCodigoMateria() {
 		return this.codigoMateria;
+	}
+	
+	public void setCodigoMateriaInSubject(String codigoMateriaInSubject){
+		this.codigoMateriaInSubject = codigoMateriaInSubject;
+	}
+	
+	public String getCodigoMateriaInSubject(){
+		return this.codigoMateriaInSubject;
 	}
 
 	public Integer getPadron() {

@@ -6,6 +6,8 @@ import java.util.*;
 
 import javax.mail.MessagingException;
 
+import persistence.exceptions.PersistenceException;
+
 import model.exceptions.InvalidPathDirectoryException;
 public class ClassAccount {
 	private String name, description, code, path_attach;
@@ -49,7 +51,7 @@ public class ClassAccount {
 		}
 	}
 	
-	public void processAccount(ProjectController controller) throws MessagingException, IOException {
+	public void processAccount(ProjectController controller) throws MessagingException, IOException, PersistenceException {
 		Iterator<Email> it = this.account_email.iterator();
 		while (it.hasNext()) {
 			Email e= it.next();

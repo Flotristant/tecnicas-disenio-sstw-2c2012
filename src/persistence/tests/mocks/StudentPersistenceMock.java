@@ -1,6 +1,9 @@
 package persistence.tests.mocks;
 
+import java.util.ArrayList;
+
 import persistence.IStudentPersistence;
+import persistence.exceptions.PersistenceException;
 
 public class StudentPersistenceMock implements IStudentPersistence {
 
@@ -10,7 +13,11 @@ public class StudentPersistenceMock implements IStudentPersistence {
 	private Integer padron;
 	private String name;
 	private String sender;
+	private ArrayList<Integer> padronesGroup;
 
+	public StudentPersistenceMock(){
+		this.padronesGroup = new ArrayList<Integer>();
+	}
 	public String getStudentToSave() {
 		return this.name;
 	}
@@ -56,11 +63,35 @@ public class StudentPersistenceMock implements IStudentPersistence {
 	public boolean validateStudentInGroup(String codigoMateria, Integer padron) {
 		this.codigoMateria = codigoMateria;
 		this.padron = padron;
+		this.padronesGroup.add(padron);
 		if (padron.equals(90000))
-			return false;
+			return true;
 		if (padron.equals(90300))
-			return false;
-		return true;
+			return true;
+		return false;
 	}
+
+	public void clearPadrones(){
+		this.padronesGroup.clear();
+	}
+	
+	public ArrayList<Integer> getPadrones(){
+		return this.padronesGroup;
+	}
+	
+	@Override
+	public int getNextGroupNumber(String codigoMateria)
+			throws PersistenceException {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void saveStudentInGroup(String codigoMateria, Integer padron,
+			int groupNumber) throws PersistenceException {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

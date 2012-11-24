@@ -3,9 +3,12 @@ package model.tests;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
-import model.ActionValidateStudentInGroup;
+import junit.framework.Assert;
+
+import model.ActionValidateAndSaveStudentInGroup;
 import model.Message;
 import model.Rule;
 import model.RuleAltaGrupo;
@@ -14,20 +17,23 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import persistence.tests.mocks.MateriaPersistenceMock;
 import persistence.tests.mocks.StudentPersistenceMock;
 
 
-public class ActionValidateStudentInGroupTestCase {
+public class ActionValidateAndSaveStudentInGroupTestCase {
 
 	private StudentPersistenceMock studentPersistence;
 	private Rule rule;
 	private Message message;
 	private HashMap<String, String> attach;
 	private String pathIncoming;
+	private MateriaPersistenceMock materiaPersistence;
 	
 	@Before
 	public void setUp() throws Exception {
-		this.rule = new RuleAltaGrupo();
+		this.materiaPersistence = new MateriaPersistenceMock();
+		this.rule = new RuleAltaGrupo(materiaPersistence);
 		this.rule.setCodigoMateria("7502");
 		this.studentPersistence = new StudentPersistenceMock();
 		this.message = new Message("", "", "", "");
@@ -35,11 +41,12 @@ public class ActionValidateStudentInGroupTestCase {
 		this.createAttachments("./testFiles/incoming/");
 		this.pathIncoming = System.getProperty("user.dir");
 		this.pathIncoming = this.pathIncoming+"/testFiles/incoming/";
+		
 	}
 
 	@Test (expected = Exception.class)
 	public void testShouldNotPassWhenValidateStudentInGroupWhithNoAttach() throws Exception {
-		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
+		ActionValidateAndSaveStudentInGroup validateStudentInGroup = new ActionValidateAndSaveStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 
 		validateStudentInGroup.execute();
@@ -52,7 +59,7 @@ public class ActionValidateStudentInGroupTestCase {
 		
 		this.message.addAttachments(this.attach);
 
-		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
+		ActionValidateAndSaveStudentInGroup validateStudentInGroup = new ActionValidateAndSaveStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
 		validateStudentInGroup.execute();
@@ -65,7 +72,7 @@ public class ActionValidateStudentInGroupTestCase {
 		this.attach.put("attach1Invalid", this.pathIncoming);
 		this.message.addAttachments(this.attach);
 		
-		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
+		ActionValidateAndSaveStudentInGroup validateStudentInGroup = new ActionValidateAndSaveStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
 		validateStudentInGroup.execute();
@@ -78,7 +85,7 @@ public class ActionValidateStudentInGroupTestCase {
 		this.attach.put("attach2Invalid", this.pathIncoming);
 		this.message.addAttachments(this.attach);
 		
-		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
+		ActionValidateAndSaveStudentInGroup validateStudentInGroup = new ActionValidateAndSaveStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
 		validateStudentInGroup.execute();
@@ -91,7 +98,7 @@ public class ActionValidateStudentInGroupTestCase {
 		this.attach.put("attach3Invalid", this.pathIncoming);
 		this.message.addAttachments(this.attach);
 		
-		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
+		ActionValidateAndSaveStudentInGroup validateStudentInGroup = new ActionValidateAndSaveStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
 		
 		validateStudentInGroup.execute();
@@ -103,10 +110,18 @@ public class ActionValidateStudentInGroupTestCase {
 		this.attach.put("attachValid", this.pathIncoming);
 		this.message.addAttachments(this.attach);
 		
-		ActionValidateStudentInGroup validateStudentInGroup = new ActionValidateStudentInGroup(this.studentPersistence);
+		ActionValidateAndSaveStudentInGroup validateStudentInGroup = new ActionValidateAndSaveStudentInGroup(this.studentPersistence);
 		validateStudentInGroup.initialize(this.rule, this.message);
-		
+		this.studentPersistence.clearPadrones();
 		validateStudentInGroup.execute();
+		ArrayList<Integer> padrones = new ArrayList<Integer>();
+		padrones = this.studentPersistence.getPadrones();
+		
+		Assert.assertEquals(4,padrones.size());
+		Assert.assertEquals(Integer.valueOf(91227), padrones.get(0));
+		Assert.assertEquals(Integer.valueOf(90778), padrones.get(1));
+		Assert.assertEquals(Integer.valueOf(91001), padrones.get(2));
+		Assert.assertEquals(Integer.valueOf(91229), padrones.get(3));
 	}
 	
 	
@@ -135,6 +150,7 @@ public class ActionValidateStudentInGroupTestCase {
 			out.close();
 		}
 	}
+	
 	
 	private void deleteFichero(File dir) {
 		File[] ficheros = dir.listFiles();

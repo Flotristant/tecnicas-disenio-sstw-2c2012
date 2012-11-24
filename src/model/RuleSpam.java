@@ -2,12 +2,15 @@ package model;
 
 import java.util.regex.Matcher;
 
+import persistence.IMateriaPersistence;
+
 /*Regla que no matchea con nada
  */
 public class RuleSpam extends Rule{
 
-	public RuleSpam() {
-		super();
+	public RuleSpam(IMateriaPersistence  materiaPersistence) throws Exception {
+		super(materiaPersistence);
+		this.setCodigoMateria(materiaPersistence.getCodigoMateria(null));
 	}
 
 	@Override

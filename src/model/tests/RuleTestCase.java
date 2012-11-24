@@ -11,24 +11,28 @@ import model.RuleAltaGrupo;
 
 import org.junit.Test;
 
+import persistence.tests.mocks.MateriaPersistenceMock;
 import persistence.tests.mocks.TpPersistenceMock;
 import persistence.tests.mocks.StudentPersistenceMock;
 
 public class RuleTestCase {
+	private MateriaPersistenceMock materiaPersistence;
 	
 	@Test
-	public void testShouldFailRuleWithoutPattern() {
-		Rule rule = new RuleAltaGrupo();
+	public void testShouldFailRuleWithoutPattern() throws Exception {
+		this.materiaPersistence = new MateriaPersistenceMock();
+		Rule rule = new RuleAltaGrupo(this.materiaPersistence);
 		
 		Assert.assertNull(rule.getPattern());
 	}
 	
 	@Test
-	public void testShouldSaveCorrectlyVariousActions() {
+	public void testShouldSaveCorrectlyVariousActions() throws Exception {
+		this.materiaPersistence = new MateriaPersistenceMock();
 		ActionAltaAlumno action1 = new ActionAltaAlumno(new StudentPersistenceMock()); 
 		ActionSaveTp action2 = new ActionSaveTp(new TpPersistenceMock());
 		
-		Rule rule = new RuleAltaGrupo();
+		Rule rule = new RuleAltaGrupo(this.materiaPersistence);
 		rule.addAction(action1);
 		rule.addAction(action2);
 		

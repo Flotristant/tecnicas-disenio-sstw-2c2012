@@ -14,13 +14,15 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import persistence.IXmlManager;
+import persistence.tests.mocks.MateriaPersistenceMock;
 
 public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 
 	private Element element;
 	private ArrayList<Rule> rules;
 	private ActionRuleFactoryMock actionFactory;
-
+	private MateriaPersistenceMock materiaPersistence;
+	
 	public XmlManagerMock() {
 		this.actionFactory = new ActionRuleFactoryMock();
 	}
@@ -34,34 +36,35 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 	@Override
 	public Iterable<Rule> getItemFromXmlElement(Element element)
 			throws Exception {
+		this.materiaPersistence = new MateriaPersistenceMock();
 		this.element = element;
 		
 		this.rules = new ArrayList<Rule>();
 
-			Rule rule = new RuleAltaMateria();
+			Rule rule = new RuleAltaMateria(this.materiaPersistence);
 			rule.setPattern("\\[ALTA-MATERIA-([0-9]{4})\\] ([0-9]{5})-(.*)");
 			rule.addAction(this.actionFactory.create("ActionValidateCodeClassWithMock"));
 			rule.addAction(this.actionFactory.create("ActionAltaAlumnoWithMock"));
 			this.rules.add(rule);
 
-			Rule rule2 = new RuleAltaGrupo();
+			Rule rule2 = new RuleAltaGrupo(this.materiaPersistence);
 			rule2.setPattern("\\[ALTA-GRUPO\\]");
 			rule2.addAction(this.actionFactory.create("ActionValidateSenderWithMock"));
 			rule2.addAction(this.actionFactory.create("ActionValidateStudentInGroupWithMock"));
 			this.rules.add(rule2);
 
-			Rule rule3 = new RuleConsultaTema();
+			Rule rule3 = new RuleConsultaTema(this.materiaPersistence);
 			rule3.setPattern("\\[CONSULTA-((PUBLICA)|(PRIVADA))\\] .*");
 			rule3.addAction(this.actionFactory.create("ActionValidateSenderWithMock"));
 			this.rules.add(rule3);
 
-			Rule rule4 = new RuleEntregaTp();
+			Rule rule4 = new RuleEntregaTp(this.materiaPersistence);
 			rule4.setPattern("\\[ENTREGA-TP-([0-9]+)\\]");
 			rule4.addAction(this.actionFactory.create("ActionValidateSenderWithMock"));
 			rule4.addAction(this.actionFactory.create("ActionSaveTpWithMock"));
 			this.rules.add(rule4);
 		
-			Rule rule5 = new RuleSpam();
+			Rule rule5 = new RuleSpam(this.materiaPersistence);
 			rule5.setPattern(".*");
 			
 			this.rules.add(rule5);

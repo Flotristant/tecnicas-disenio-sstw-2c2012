@@ -22,6 +22,7 @@ import org.w3c.dom.NodeList;
 
 import persistence.RuleXmlManager;
 import persistence.tests.mocks.MailPersistenceMock;
+import persistence.tests.mocks.MateriaPersistenceMock;
 import persistence.tests.mocks.StudentPersistenceMock;
 import persistence.tests.mocks.TpPersistenceMock;
 
@@ -34,6 +35,7 @@ public class RuleXmlManagerTestCase {
 	private ArrayList<ActionRule> actionList;
 	private ActionRuleFactoryMock actionRuleFactory;
 	private RuleFactoryMock ruleFactory;
+	private MateriaPersistenceMock materiaPersistence;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -43,12 +45,13 @@ public class RuleXmlManagerTestCase {
 		this.actionList = new ArrayList<ActionRule>();
 		this.actionRuleFactory = new ActionRuleFactoryMock();
 		this.ruleFactory = new RuleFactoryMock();
+		this.materiaPersistence = new MateriaPersistenceMock();
 	}
 	
 	@Test
 	public void testShouldGenerateAnXmlElementFromRule() throws Exception
 	{
-		Rule rule = new RuleAltaMateria();
+		Rule rule = new RuleAltaMateria(this.materiaPersistence);
 		rule.setPattern("pattern1");
 		rule.addAction(this.action1);
 		rule.addAction(this.action2);
