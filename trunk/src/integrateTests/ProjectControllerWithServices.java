@@ -9,6 +9,8 @@ import java.util.List;
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
 
+import junit.framework.Assert;
+
 import model.*;
 import model.exceptions.InvalidAssociatedProtocolsException;
 import model.exceptions.InvalidPathDirectoryException;
@@ -76,7 +78,7 @@ public class ProjectControllerWithServices {
 	
 
 			 try {
-				sender.send(list);
+ 				sender.send(list);
 			} catch (AddressException e1) {
 				e1.printStackTrace();
 			} catch (MessagingException e1) {
@@ -97,6 +99,28 @@ public class ProjectControllerWithServices {
 		} catch (PersistenceException e1) {
 			fail("error de persistencia");
 		}
-		 
+//		 
+//		Pop3Protocol pop2 = null;
+//		 try {
+//			 pop2 = new Pop3Protocol("pruebatecnicas@hotmail.com", "Mailprueba01", "995", "pop3.live.com",pathIncoming);
+//		}
+//		 catch (Exception e2) {
+//			 fail("Pop mal formado");
+//		 }
+//		
+//		List<model.Message> respuesta = null;
+//		try {
+//			respuesta = pop2.receive();
+//		} catch (MessagingException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		} catch (IOException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		Assert.assertEquals(1, respuesta.size());
+//		model.Message m1= respuesta.get(0);
+//		Assert.assertEquals(m1.getSubject(), "Sender doesn't belong to this course‏");
+//		
 	}
 }
