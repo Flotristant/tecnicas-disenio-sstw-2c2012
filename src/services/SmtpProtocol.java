@@ -14,13 +14,17 @@ import services.exceptions.InvalidUserFormatException;
 public class SmtpProtocol extends SenderProtocol {
 	
 	private Session session;
+	private Properties props;
 	
 	public SmtpProtocol(String user, String pass, String port, String host) throws InvalidPortFormatException, InvalidUserFormatException {
 		super(user, pass, port, host);
 		
-		Properties props = new Properties();
+		props = new Properties();
 		props = System.getProperties();
-		
+				
+	}
+
+	private void inicializateProps() {
 		// Nombre del host de correo,
 		props.put("mail.smtp.host",this.host);
 
@@ -37,16 +41,22 @@ public class SmtpProtocol extends SenderProtocol {
 		if (this.pass != null) {
 			props.setProperty("mail.smtp.auth", "true");
 		}
-		
-		this.session = Session.getDefaultInstance(props);
-		//this.session.setDebug(true);
+		this.session = Session.getInstance(props);
 	}
-
+	
 	public void debugOn() {
 		this.session.setDebug(true);
 	}
+	
+	private void clearProps() {
+		this.session=null;
+		this.props.clear();
+	}
+	
 	@Override
 	public void send(List<model.Message> messages) throws AddressException, MessagingException, IOException {
+		
+		this.inicializateProps();
 		
 		if (messages != null ) {
 			Iterator<model.Message> it= messages.iterator();
@@ -101,14 +111,20 @@ public class SmtpProtocol extends SenderProtocol {
 				else {
 					mimemessage.setText(message.getBody());
 				}
-			
+				
 				Transport t = this.session.getTransport("smtp");
-				t.connect(this.user, this.pass);
-			
-				t.sendMessage(mimemessage, mimemessage.getAllRecipients());
-				t.close();
+				try {
+					
+					t.connect( this.user, this.pass);
+					t.sendMessage(mimemessage, mimemessage.getAllRecipients());
+				}
+				finally {
+					t.close();
+				}
+		
 			
 			}
 		}
+		this.clearProps();
 	}
 }

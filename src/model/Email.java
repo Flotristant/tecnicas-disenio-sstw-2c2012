@@ -41,7 +41,9 @@ public class Email {
 	public void processMail(ProjectController controller, String working_path) throws MessagingException, IOException, PersistenceException {
 		List<model.Message> incomingMessages = this.receiver.receive();
 		List<model.Message> answerMessages = controller.processIncoming(incomingMessages);
-		this.sender.send(answerMessages);
+		if(answerMessages != null ) {
+			this.sender.send(answerMessages);
+		}
 	}
 
 	public void setUser(String user) {
