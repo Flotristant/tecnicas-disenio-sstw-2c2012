@@ -12,8 +12,8 @@ public class Message {
 	
 	
 	public Message(String from, String to, String subject, String body) {
-		this.sender = from;
-		this.setTo(to);
+		this.sender = this.parseDir(from);
+		this.to= this.parseDir(to);
 		this.subject = subject;
 		this.body = body;
 		this.attachments = null;
@@ -21,6 +21,14 @@ public class Message {
 		this.bcc = null;
 	}
 	
+	private String parseDir(String from) {
+		if (from.contains("<")) {
+			int desde = from.indexOf("<")+ 1 ;
+			int hasta = from.indexOf(">");
+			from = from.substring(desde,hasta);
+		}
+		return from;
+	}
 	
 	public String getSender() {
 		return sender;
@@ -55,7 +63,7 @@ public class Message {
 	}
 	
 	public boolean isWithAttachments() {
-		if (this.attachments!= null) {
+		if (this.attachments != null) {
 			return true;
 		}
 		else {

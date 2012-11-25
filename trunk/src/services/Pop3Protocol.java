@@ -18,27 +18,34 @@ public class Pop3Protocol extends ReceiverProtocol {
 
 	private Session session;
 	private String path_attc;
+	private Properties pop3Props;
 	
 	public Pop3Protocol(String user, String pass, String port, String host, String path_attch) throws InvalidPortFormatException, InvalidUserFormatException {
 		super(user, pass, port, host);
 		
-        Properties pop3Props = new Properties();
-        
-        String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
-        
+       this.pop3Props = new Properties();
+
+        this.path_attc = path_attch;
+	}
+
+	private void inicializateProps() {        
+        String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";     
         pop3Props.setProperty("mail.pop3.socketFactory.class", SSL_FACTORY);
         pop3Props.setProperty("mail.pop3.socketFactory.fallback", "false");
         pop3Props.setProperty("mail.pop3.port",  this.port);
         pop3Props.setProperty("mail.pop3.socketFactory.port", this.port);
         
-        this.session = Session.getInstance(pop3Props, null);
-        
-        this.path_attc = path_attch;
 	}
-
+	
+	private void clearProps() {
+		this.pop3Props.clear();
+	}
+	
 	@Override
 	public  List<model.Message> receive() throws MessagingException, IOException {
-        
+
+		this.inicializateProps();
+        this.session = Session.getInstance(pop3Props);
 		URLName url = new URLName("pop3", this.host, Integer.parseInt(this.port), "",
                 this.user, this.pass);
 	    Store store = new POP3SSLStore(session, url);
@@ -92,13 +99,16 @@ public class Pop3Protocol extends ReceiverProtocol {
 					modelmessage.addCC(InternetAddress.toString(bccTo));
 			}
 			
-			modelmessage.addAttachments(attachs);
-					
+			if (attachs.size() != 0) {
+				modelmessage.addAttachments(attachs);
+			}
 			res.add(modelmessage);
 			m.setFlag(Flag.DELETED, true);
 		}
 		folder.close(true);
-		store.close();		
+		store.close();	
+		this.session=null;
+		this.clearProps();
 		return res;
 	}
 

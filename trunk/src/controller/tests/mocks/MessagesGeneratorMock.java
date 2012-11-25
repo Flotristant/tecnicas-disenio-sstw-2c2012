@@ -106,7 +106,12 @@ public class MessagesGeneratorMock {
 		return messages;
 	}
 	
-
+	public List<Message> getAMessageAltaGrupoInvalid() {
+		List<model.Message> messages = new ArrayList<Message>();
+		model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[ALTA-GRUPO]", "");
+		messages.add(m);
+		return messages;
+	}
 	
 
 }
