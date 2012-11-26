@@ -30,8 +30,8 @@ public class ProjectControllerWithServices {
 	@Test
 	public void test1() {
 		ClassAccount clas = null;
-		 String pathIncoming = System.getProperty("user.dir");
-		 pathIncoming = pathIncoming+"/testFiles/testFilesOutBox/";
+		// String pathIncoming = System.getProperty("user.dir");
+		 String pathIncoming = "./testFiles/testFilesOutBox/";
 		
 		 try {
 			clas = new ClassAccount("Tecnicsa de diseño", "Es una materia de programacion", "7510",pathIncoming);
