@@ -67,6 +67,9 @@ public class ProjectControllerTestCase{
 		ProjectController p = new ProjectController(this.ruleControllerFactory);
 		List<model.Message> anwser = p.processIncoming(altaMateriaMessages);
 		Assert.assertEquals(anwser, null);
+		
+		//alta de usuario con codigo incorrecto
+		
 	}
 	
 	@Test 
@@ -112,15 +115,14 @@ public class ProjectControllerTestCase{
 		Assert.assertEquals(m.getSubject(), "Message has no attachment");
 		
 		//Mail con datos y atacch validos
-		String pathIncoming = System.getProperty("user.dir");
-		pathIncoming = pathIncoming+"/testFiles/incoming/";
+//		String pathIncoming = System.getProperty("user.dir");
+		String pathIncoming = "./testFiles/incoming/";
 		altaGrupoMessages = mock.getAltaGruposMessagesValid(pathIncoming,"attach1Valid");
 		anwser = p.processIncoming(altaGrupoMessages);
 		Assert.assertEquals(anwser, null);
 		
 		//Mail con datos validos pero con un attach con padron incorrecto
-		pathIncoming = System.getProperty("user.dir");
-		pathIncoming = pathIncoming+"/testFiles/incoming/";
+
 		altaGrupoMessages = mock.getAltaGruposMessagesValid(pathIncoming,"attach2Invalid");
 		anwser = p.processIncoming(altaGrupoMessages);
 		Assert.assertEquals(anwser.size(), 1);
@@ -128,8 +130,7 @@ public class ProjectControllerTestCase{
 		Assert.assertEquals(m.getSubject(), "Student doesn't belong to this course");
 		
 		//Mail con datos validos pero con el attach mal formado 
-		pathIncoming = System.getProperty("user.dir");
-		pathIncoming = pathIncoming+"/testFiles/incoming/";
+
 		altaGrupoMessages = mock.getAltaGruposMessagesValid(pathIncoming,"attach3Invalid");
 		anwser = p.processIncoming(altaGrupoMessages);
 		Assert.assertEquals(anwser.size(), 1);
@@ -137,8 +138,7 @@ public class ProjectControllerTestCase{
 		Assert.assertEquals(m.getSubject(), "Attachment hasn't only numeric registers");
 
 		//Mail con datos validos pero en el atach un padron ya perteneciente a otro grupo
-		pathIncoming = System.getProperty("user.dir");
-		pathIncoming = pathIncoming+"/testFiles/incoming/";
+
 		altaGrupoMessages = mock.getAltaGruposMessagesValid(pathIncoming,"attach4Invalid");
 		anwser = p.processIncoming(altaGrupoMessages);
 		Assert.assertEquals(anwser.size(), 1);
@@ -146,8 +146,7 @@ public class ProjectControllerTestCase{
 		Assert.assertEquals(m.getSubject(), "Student already belong to another group");
 		
 		//Mail con mas de un attach
-		pathIncoming = System.getProperty("user.dir");
-		pathIncoming = pathIncoming+"/testFiles/incoming/";
+
 		altaGrupoMessages = mock.getAltaGruposMessagesWithMoreThanOneAttach(pathIncoming,"attach4Invalid");
 		anwser = p.processIncoming(altaGrupoMessages);
 		Assert.assertEquals(anwser.size(), 1);

@@ -39,8 +39,7 @@ public class ActionValidateAndSaveStudentInGroupTestCase {
 		this.message = new Message("", "", "", "");
 		attach = new HashMap<String, String>();
 		this.createAttachments("./testFiles/incoming/");
-		this.pathIncoming = System.getProperty("user.dir");
-		this.pathIncoming = this.pathIncoming+"/testFiles/incoming/";
+		this.pathIncoming = "./testFiles/incoming/";
 		
 	}
 
