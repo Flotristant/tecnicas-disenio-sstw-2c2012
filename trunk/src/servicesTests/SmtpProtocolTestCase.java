@@ -112,8 +112,8 @@ public class SmtpProtocolTestCase {
 		 model.Message m = new model.Message("pruebatecnicas@gmail.com","pruebatecnicas@hotmail.com",
 				 "subject","body");
 		 
-		 String pathActual = System.getProperty("user.dir");
-		 pathActual = pathActual+"/testFiles/testFilesOutBox/";
+	//	 String pathActual = System.getProperty("user.dir");
+		 String pathActual = "./testFiles/testFilesOutBox/";
 		 HashMap<String, String> hm=  new HashMap<String, String>();
 		 hm.put("Main.cpp",pathActual);
 		 hm.put("screenshot.glade", pathActual);

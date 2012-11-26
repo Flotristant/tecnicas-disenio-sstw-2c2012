@@ -49,7 +49,6 @@ public class SmtpProtocol extends SenderProtocol {
 	}
 	
 	private void clearProps() {
-		this.session=null;
 		this.props.clear();
 	}
 	
