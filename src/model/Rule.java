@@ -19,6 +19,9 @@ public abstract class Rule implements IRule {
 	private String codigoMateria;
 	private Integer padron;
 	private String name;
+	private String tema;
+	private String ticketId;
+	private Message message;
 	private List<IResponseMailEventListener> listeners;
 	private String codigoMateriaInSubject;
 	private IMateriaPersistence materiaPersistence;
@@ -52,6 +55,7 @@ public abstract class Rule implements IRule {
 	
 	@Override
 	public void execute(Message message) throws PersistenceException {
+		this.setMessage(message);
 		this.setCodigoMateria(materiaPersistence.getCodigoMateria(message.getTo()));
 		String subject = message.getSubject();
 		Pattern pattern = Pattern.compile(this.pattern);
@@ -127,5 +131,29 @@ public abstract class Rule implements IRule {
 	@Override
 	public void addSubscriber(IResponseMailEventListener listener) {
 		this.listeners.add(listener);
+	}
+
+	public String getTema() {
+		return tema;
+	}
+
+	public void setTema(String tema) {
+		this.tema = tema;
+	}
+
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+
+	public String getTicketId() {
+		return ticketId;
+	}
+
+	public void setTicketId(String ticketId) {
+		this.ticketId = ticketId;
 	}
 }

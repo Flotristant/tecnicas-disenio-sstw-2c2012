@@ -14,5 +14,6 @@ public class RuleConsultaTema extends Rule {
 	@Override
 	protected void searchComponentsInSubject(Matcher matcher) {
 		super.setTypeOfQuery(matcher.group(1));
+		super.setTema(matcher.group(2));
 	}
 }

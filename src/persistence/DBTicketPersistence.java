@@ -7,7 +7,7 @@ import persistence.exceptions.PersistenceException;
 
 import model.Message;
 
-public class DBTicketPersistence extends DBPersistence implements ITicketPersistence {
+public class DBTicketPersistence extends DBPersistence{
 
 	private String pathAttach;
 	private Integer ticketId;
@@ -17,12 +17,11 @@ public class DBTicketPersistence extends DBPersistence implements ITicketPersist
 		this.pathAttach = codigoMateria + "/Tickets/attachments/";
 	}
 
-	@Override
-	public Integer createTicket(Message message, String type, String codigoMateria, String tema, String nameAttach) throws PersistenceException {
+	public Integer createTicket(Message message, String type, String codigoMateria, String tema, String idTicket) throws PersistenceException {
 		try {
 			initializeTicket(codigoMateria);
 			this.statement.executeUpdate(String.format("INSERT INTO TICKET VALUES (null, '%s', '%s', 'SIN ASIGNAR', NULL, '%s', '%s', '%s')", type, 
-					tema, message.getBody(), this.pathAttach + nameAttach, message.getSender()));
+					tema, message.getBody(), this.pathAttach + idTicket, message.getSender()));
 			ResultSet rs = this.statement.executeQuery("SELECT last_insert_rowid()");
 			
 			rs.next();
@@ -35,43 +34,6 @@ public class DBTicketPersistence extends DBPersistence implements ITicketPersist
 		}
 	}
 
-	@Override
-	public void assignTicket(String codigoMateria, Integer idTicket, String mailAyudante) throws PersistenceException {
-		try {
-			initializeTicket(codigoMateria);
-			this.statement.executeUpdate(String.format("UPDATE TICKET SET Estado='ASIGNADO', " +
-						"MailAyudanteAsignado='%s' WHERE Id=%d", mailAyudante, idTicket));	
-			closeStatementAndConnection();
-		}catch (Exception e) {
-			throw new PersistenceException();
-		}
-	}
-	
-	@Override
-	public void resolveTicket(String codigoMateria, Integer idTicket) throws PersistenceException {
-		try {
-			initializeTicket(codigoMateria);
-			this.statement.executeUpdate(String.format("UPDATE TICKET SET Estado='RESOLVED' " +
-						"WHERE Id=%d", idTicket));	
-			closeStatementAndConnection();
-		}catch (Exception e) {
-			throw new PersistenceException();
-		}
-	}
-	
-	@Override
-	public void closeTicket(String codigoMateria, Integer idTicket) throws PersistenceException {
-		try {
-			initializeTicket(codigoMateria);
-			this.statement.executeUpdate(String.format("UPDATE TICKET SET Estado='CLOSED'" +
-						" WHERE Id=%d", idTicket));	
-			closeStatementAndConnection();
-		}catch (Exception e) {
-			throw new PersistenceException();
-		}
-	}
-
-	@Override
 	public void associateMessageToTicket(String codigoMateria, Integer idTicket, Message message) throws PersistenceException{
 		try {
 			initializeTicket(codigoMateria);
@@ -97,25 +59,8 @@ public class DBTicketPersistence extends DBPersistence implements ITicketPersist
 		return countAyudanteIsSender == 0;
 	}
 
-	@Override
-	public Iterable<Integer> getUnassignedTickets(String codigoMateria) throws PersistenceException{
-		try {
-			super.initialize(codigoMateria);
-			ResultSet rs = this.statement.executeQuery("SELECT Id FROM TICKET WHERE ESTADO='SIN ASIGNAR';");
-			
-			ArrayList<Integer> idsTickets = new ArrayList<Integer>();
-			while (rs.next())
-				idsTickets.add(rs.getInt("Id"));
-			
-			rs.close();
-			closeStatementAndConnection();
-			return idsTickets;
-		}catch (Exception e) {
-			throw new PersistenceException();
-		}
-	}
-	
-	@Override
+
+
 	public boolean isTicketClosed(String codigoMateria, Integer idTicket) throws PersistenceException {
 		try {	
 			super.initialize(codigoMateria);
@@ -163,4 +108,80 @@ public class DBTicketPersistence extends DBPersistence implements ITicketPersist
 			throw new PersistenceException();
 		}
 	}
+
+	public String getNextTicketId(String codigoMateria) throws PersistenceException {
+		try {
+			this.initialize(codigoMateria);
+			ResultSet rs = this.statement.executeQuery(String.format("SELECT MAX(Id) FROM TICKET"));
+			rs.next();
+			Integer nextTicketId = rs.getInt(1);
+			rs.close();
+			
+			this.closeStatementAndConnection();
+			return String.valueOf(nextTicketId + 1);
+		} catch (Exception e) {
+			throw new PersistenceException();
+		}
+	}
+	
+	/*
+	 * GUI
+	 */
+	
+	public void assignTicket(String codigoMateria, Integer idTicket, String mailAyudante) throws PersistenceException {
+		try {
+			initializeTicket(codigoMateria);
+			this.statement.executeUpdate(String.format("UPDATE TICKET SET Estado='ASIGNADO', " +
+						"MailAyudanteAsignado='%s' WHERE Id=%d", mailAyudante, idTicket));	
+			closeStatementAndConnection();
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
+	}
+	
+
+	public void resolveTicket(String codigoMateria, Integer idTicket) throws PersistenceException {
+		try {
+			initializeTicket(codigoMateria);
+			this.statement.executeUpdate(String.format("UPDATE TICKET SET Estado='RESOLVED' " +
+						"WHERE Id=%d", idTicket));	
+			closeStatementAndConnection();
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
+	}
+	
+
+	public void closeTicket(String codigoMateria, Integer idTicket) throws PersistenceException {
+		try {
+			initializeTicket(codigoMateria);
+			this.statement.executeUpdate(String.format("UPDATE TICKET SET Estado='CLOSED'" +
+						" WHERE Id=%d", idTicket));	
+			closeStatementAndConnection();
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
+	}
+	
+
+	public Iterable<Integer> getUnassignedTickets(String codigoMateria) throws PersistenceException{
+		try {
+			super.initialize(codigoMateria);
+			ResultSet rs = this.statement.executeQuery("SELECT Id FROM TICKET WHERE ESTADO='SIN ASIGNAR';");
+			
+			ArrayList<Integer> idsTickets = new ArrayList<Integer>();
+			while (rs.next())
+				idsTickets.add(rs.getInt("Id"));
+			
+			rs.close();
+			closeStatementAndConnection();
+			return idsTickets;
+		}catch (Exception e) {
+			throw new PersistenceException();
+		}
+	}
+	/*
+	 * FIN GUI
+	 */
+	
 }

@@ -131,6 +131,15 @@ public class DBTicketPersistenceTestCase {
 		Assert.assertEquals(Integer.valueOf(3), idsTicket.get(2));
 	}
 	
+	@Test
+	public void testShouldReturnCorrectlyNextTicketId() throws PersistenceException{
+		this.ticket.createTicket(this.message, "publica", this.codigoMateria, "test1", "franciso");
+		this.ticket.createTicket(this.message, "privada", this.codigoMateria, "test2", "caty");
+		Assert.assertEquals("3", this.ticket.getNextTicketId(this.codigoMateria));
+		this.ticket.createTicket(this.message, "publica", this.codigoMateria, "test3", "sender");
+		Assert.assertEquals("4", this.ticket.getNextTicketId(this.codigoMateria));
+	}
+	
 	@After
 	public void setDown(){
 		File file = new File("7510.db");

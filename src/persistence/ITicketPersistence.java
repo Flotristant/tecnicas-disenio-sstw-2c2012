@@ -5,9 +5,9 @@ import model.Message;
 
 public interface ITicketPersistence {
 
-	public Integer createTicket(Message message, String type, String codigoMateria, String tema, String nameAttach) throws PersistenceException;
+	public Integer createTicket(Message message, String type, String codigoMateria, String tema) throws PersistenceException;
 	
-	public void assignTicket(String codigoMateria, Integer idTicket, String nameAyudante) throws PersistenceException;
+	public void assignTicket(String codigoMateria, Integer idTicket, String mailAyudante) throws PersistenceException;
 	
 	public void associateMessageToTicket(String codigoMateria, Integer idTicket, Message message) throws PersistenceException;
 
