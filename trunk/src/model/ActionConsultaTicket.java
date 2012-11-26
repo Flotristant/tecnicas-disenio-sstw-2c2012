@@ -1,5 +1,6 @@
 package model;
 
+import model.listeners.IResponseMailEventListener;
 import persistence.ITicketPersistence;
 
 public class ActionConsultaTicket extends ActionRule {
@@ -26,6 +27,10 @@ public class ActionConsultaTicket extends ActionRule {
 		this.ticketId = rule.getTicketId();
 		this.codigoMateria = rule.getCodigoMateria();
 		this.message = rule.getMessage();
+	}
+
+	@Override
+	protected void addSubscriber(IResponseMailEventListener listener) {
 	}
 
 }

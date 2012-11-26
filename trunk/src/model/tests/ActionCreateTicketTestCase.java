@@ -3,12 +3,10 @@ package model.tests;
 import java.util.HashMap;
 
 import junit.framework.Assert;
-import model.ActionConsultaTicket;
 import model.ActionCreateTicket;
 import model.Message;
 import model.Rule;
 import model.RuleConsultaTema;
-import model.RuleConsultaTicket;
 
 import org.junit.Before;
 import org.junit.Test;

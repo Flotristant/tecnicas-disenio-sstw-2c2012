@@ -5,6 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Map;
 
+import model.listeners.IResponseMailEventListener;
+
 import persistence.IStudentPersistence;
 
 
@@ -74,5 +76,9 @@ public class ActionValidateAndSaveStudentInGroup extends ActionRule {
 	protected void initializeActions(Rule rule) {
 		this.attachment = this.message.getAttachments();
 		this.codigoMateria = rule.getCodigoMateria();
+	}
+
+	@Override
+	protected void addSubscriber(IResponseMailEventListener listener) {
 	}
 }

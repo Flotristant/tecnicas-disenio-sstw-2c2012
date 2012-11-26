@@ -1,5 +1,7 @@
 package model;
 
+import model.listeners.IResponseMailEventListener;
+
 public abstract class ActionRule {
 
 	protected Message message;
@@ -13,4 +15,5 @@ public abstract class ActionRule {
 
 	protected abstract void initializeActions(Rule rule);
 	
+	protected abstract void addSubscriber(IResponseMailEventListener listener);
 }

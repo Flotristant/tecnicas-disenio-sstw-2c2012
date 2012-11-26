@@ -2,6 +2,8 @@ package model;
 
 import java.util.Map;
 
+import model.listeners.IResponseMailEventListener;
+
 import persistence.ITpPersistence;
 import persistence.exceptions.PersistenceException;
 
@@ -28,6 +30,10 @@ public class ActionSaveTp extends ActionRule {
 		this.tpNumber = Integer.valueOf(rule.getTpNumber());
 		this.sender = this.message.getSender();
 		this.attachments = this.message.getAttachments();
+	}
+
+	@Override
+	protected void addSubscriber(IResponseMailEventListener listener) {
 	}
 	
 	
