@@ -10,7 +10,6 @@ public class RuleSpam extends Rule{
 
 	public RuleSpam(IMateriaPersistence  materiaPersistence) throws Exception {
 		super(materiaPersistence);
-		this.setCodigoMateria(materiaPersistence.getCodigoMateria(null));
 	}
 
 	@Override
