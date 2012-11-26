@@ -11,10 +11,9 @@ public class MateriaPersistenceMock implements IMateriaPersistence {
 	}
 
 	@Override
-	public void addMateria(int codigoMateria, String email)
-			throws PersistenceException {
-		// TODO Auto-generated method stub
-		
+	public void addMateria(int codigoMateria, String nombre, String desc,
+			String email, String user, String pass, String pop3host, int pop3port, String smtphost, int smtpport)
+			throws PersistenceException {		
 	}
 
 }
