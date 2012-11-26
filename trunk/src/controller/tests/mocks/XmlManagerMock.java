@@ -43,7 +43,6 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 
 			Rule rule = new RuleAltaMateria(this.materiaPersistence);
 			rule.setPattern("\\[ALTA-MATERIA-([0-9]{4})\\] ([0-9]{5})-(.*)");
-			rule.addAction(this.actionFactory.create("ActionValidateCodeClassWithMock"));
 			rule.addAction(this.actionFactory.create("ActionAltaAlumnoWithMock"));
 			this.rules.add(rule);
 

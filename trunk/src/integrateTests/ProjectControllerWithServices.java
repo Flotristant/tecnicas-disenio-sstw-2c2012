@@ -3,14 +3,10 @@ package integrateTests;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-
-import junit.framework.Assert;
-
 import model.*;
 import model.exceptions.InvalidAssociatedProtocolsException;
 import model.exceptions.InvalidPathDirectoryException;

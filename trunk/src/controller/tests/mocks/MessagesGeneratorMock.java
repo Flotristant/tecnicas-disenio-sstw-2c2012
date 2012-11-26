@@ -38,6 +38,14 @@ public class MessagesGeneratorMock {
 		return messages;
 	}
 	
+	public List<model.Message> getAltaMateriaMessagesWithCodeInvalid() {
+		List<model.Message> messages = new ArrayList<Message>();
+		model.Message m = new model.Message("from@hotmail.com", "to@gmail.com", "[ALTA-MATERIA-2020] 90100-Sasa Rara", "");
+		model.Message m2 = new model.Message("from2@hotmail.com", "to@gmail.com", "[ALTA-MATERIA-6666] 80000-Roro Ruru", "");
+		messages.add(m);
+		messages.add(m2);	
+		return messages;
+	}
 	public List<model.Message> getAltaMateriaMessagesInvalid() {
 		List<model.Message> messages = new ArrayList<Message>();
 		model.Message m = new model.Message("from@hotmail.com", "to@gmail.com", "[ALTA-MATERIA-7510] 90100-Sasa Rara", "");

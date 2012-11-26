@@ -42,9 +42,6 @@ public class Message {
 		return to;
 	}
 
-	private void setTo(String to) {
-		this.to = to;
-	}
 
 	public String getSubject() {
 		return subject;
