@@ -5,9 +5,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
-
 import junit.framework.Assert;
-
 import org.junit.After;
 import org.junit.Before;
 import controller.tests.mocks.*;
@@ -69,6 +67,15 @@ public class ProjectControllerTestCase{
 		Assert.assertEquals(anwser, null);
 		
 		//alta de usuario con codigo incorrecto
+		altaMateriaMessages = mock.getAltaMateriaMessagesWithCodeInvalid();
+		anwser = p.processIncoming(altaMateriaMessages);
+		Assert.assertEquals(anwser.size(),altaMateriaMessages.size());
+		Iterator<model.Message> it = anwser.iterator();
+		while (it.hasNext()) {
+			model.Message m = it.next();
+			Assert.assertEquals(m.getSubject(), "El código de la materia es incorrecto");
+		}
+		
 		
 	}
 	

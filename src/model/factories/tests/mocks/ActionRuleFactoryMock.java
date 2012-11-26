@@ -7,7 +7,6 @@ import persistence.DBStudentPersistence;
 import model.ActionAltaAlumno;
 import model.ActionRule;
 import model.ActionSaveTp;
-import model.ActionValidateCodeClass;
 import model.ActionValidateSender;
 import model.ActionValidateAndSaveStudentInGroup;
 import model.factories.IActionRuleFactory;
@@ -28,7 +27,7 @@ public class ActionRuleFactoryMock implements IActionRuleFactory{
 		
 		case "ActionValidateStudentInGroup" : return new ActionValidateAndSaveStudentInGroup(new DBStudentPersistence());
 		case "ActionValidateStudentInGroupWithMock" : return new ActionValidateAndSaveStudentInGroup(new StudentPersistenceMock());
-		case "ActionValidateCodeClassWithMock": return new ActionValidateCodeClass();
+		
 		
 		case "ActionSpamMock": return new ActionSpamMock();
 		}
