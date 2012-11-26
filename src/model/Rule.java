@@ -130,6 +130,8 @@ public abstract class Rule implements IRule {
 	
 	@Override
 	public void addSubscriber(IResponseMailEventListener listener) {
+		for (ActionRule action : this.collectionActions)
+			action.addSubscriber(listener);
 		this.listeners.add(listener);
 	}
 

@@ -1,5 +1,6 @@
 package model;
 
+import model.listeners.IResponseMailEventListener;
 import persistence.IStudentPersistence;
 
 public class ActionAltaAlumno extends ActionRule {
@@ -30,6 +31,10 @@ public class ActionAltaAlumno extends ActionRule {
 		this.codigo = rule.getCodigoMateria();
 		this.sender = this.message.getSender();
 		this.codigoInSubject = rule.getCodigoMateriaInSubject();
+	}
+
+	@Override
+	protected void addSubscriber(IResponseMailEventListener listener) {
 	}
 	
 }

@@ -1,5 +1,6 @@
 package model;
 
+import model.listeners.IResponseMailEventListener;
 import persistence.IMailPersistence;
 import persistence.exceptions.PersistenceException;
 
@@ -23,6 +24,10 @@ public class ActionValidateSender extends ActionRule {
 
 	@Override
 	protected void initializeActions(Rule rule) {
+	}
+
+	@Override
+	protected void addSubscriber(IResponseMailEventListener listener) {
 	}
 		
 }
