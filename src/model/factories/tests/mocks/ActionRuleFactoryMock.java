@@ -5,6 +5,8 @@ import persistence.tests.mocks.*;
 import persistence.DBMailPersistence;
 import persistence.DBStudentPersistence;
 import model.ActionAltaAlumno;
+import model.ActionConsultaTicket;
+import model.ActionCreateTicket;
 import model.ActionRule;
 import model.ActionSaveTp;
 import model.ActionValidateSender;
@@ -27,6 +29,11 @@ public class ActionRuleFactoryMock implements IActionRuleFactory{
 		
 		case "ActionValidateStudentInGroup" : return new ActionValidateAndSaveStudentInGroup(new DBStudentPersistence());
 		case "ActionValidateStudentInGroupWithMock" : return new ActionValidateAndSaveStudentInGroup(new StudentPersistenceMock());
+		
+		case "ActionCreateTicketWithMock":return new ActionCreateTicket(new TicketPersistenceMock(),new MateriaPersistenceMock());
+		case "ActionConsultaTicketWithMock": return new ActionConsultaTicket(new TicketPersistenceMock());
+			
+		
 		
 		
 		case "ActionSpamMock": return new ActionSpamMock();

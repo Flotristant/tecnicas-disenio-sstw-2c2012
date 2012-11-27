@@ -53,10 +53,6 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 			rule2.addAction(this.actionFactory.create("ActionValidateStudentInGroupWithMock"));
 			this.rules.add(rule2);
 
-			Rule rule3 = new RuleConsultaTema(this.materiaPersistence);
-			rule3.setPattern("\\[CONSULTA-((PUBLICA)|(PRIVADA))\\] .*");
-			rule3.addAction(this.actionFactory.create("ActionValidateSenderWithMock"));
-			this.rules.add(rule3);
 
 			Rule rule4 = new RuleEntregaTp(this.materiaPersistence);
 			rule4.setPattern("\\[ENTREGA-TP-([0-9]+)\\]");
