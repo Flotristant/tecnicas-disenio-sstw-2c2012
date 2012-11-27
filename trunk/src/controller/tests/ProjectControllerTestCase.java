@@ -31,10 +31,9 @@ public class ProjectControllerTestCase{
 		this.createAttachments("./testFiles/incoming/");
 	}
 	
-	@SuppressWarnings("unused")
 	@Test
 	public void testShouldCreateControllerCorrectlyWithNoExceptions() {
-		ProjectController p = this.createController();
+		this.createController();
 	}
 	
 	private ProjectController createController(){
