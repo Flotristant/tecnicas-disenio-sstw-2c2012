@@ -63,7 +63,7 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 	
 			Rule rule5 = new RuleConsultaTema(materiaPersistence);
 			rule5.setPattern("\\[CONSULTA-((PUBLICA)|(PRIVADA))\\] (.*)");
-			rule5.addAction(this.actionFactory.create("ActionValidateSender"));
+			rule5.addAction(this.actionFactory.create("ActionValidateSenderWithMock"));
 			rule5.addAction(this.actionFactory.create("ActionCreateTicketWithMock"));
 			this.rules.add(rule5);
 			
