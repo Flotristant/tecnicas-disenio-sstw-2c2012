@@ -88,5 +88,10 @@ public class ClassAccount {
 			Email e = it.next();
 			db.addMateria(Integer.parseInt(this.getCode()), this.getName(), this.getDescription(), e.getUser(), e.getUser(), e.getPassword(), e.getReceiver().getHost(),Integer.parseInt(e.getReceiver().getPort()), e.getSender().getHost(), Integer.parseInt(e.getSender().getPort()));
 		}
+		db.addGroupMailMateria(this.getCode(), this.getMailGrupo());
+	}
+
+	private String getMailGrupo() {
+		return this.emailGrupo;
 	}
 }
