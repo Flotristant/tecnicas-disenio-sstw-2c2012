@@ -35,7 +35,6 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 			e.printStackTrace();
 			throw new PersistenceException();
 		}
-//		CodigoMateria INTEGER, Descripcion text, Nombre text, Email text, User text, Pass text, Pop3host text, Pop3port INTEGER, Smtphost text, Smtpport INTEGER, PRIMARY KEY(CodigoMateria, Email))");
 	
 	}
 
