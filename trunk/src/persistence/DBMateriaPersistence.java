@@ -73,4 +73,17 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 			throw new PersistenceException();
 		}
 	}	
+	
+	@Override
+	public void addGroupMailMateria(String codigoMateria, String mail) throws PersistenceException{
+		try {
+			this.initializeDBMateria();
+			this.statement.executeUpdate(String.format("INSERT INTO GROUPMAILMATERIA (CodigoMateria, MailGroup) VALUES (%d, '%s');", codigoMateria, mail));
+						
+			this.closeStatementAndConnection();
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new PersistenceException();
+		}
+	}
 }
