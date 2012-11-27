@@ -54,5 +54,23 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 		} catch (Exception e) {
 			throw new PersistenceException();
 		}
+	}
+
+	@Override
+	public String getGroupMailMateria(String codigoMateria) throws PersistenceException {
+		try {
+			this.initializeDBMateria();
+			int codigo = Integer.parseInt(codigoMateria);
+			ResultSet rs = this.statement.executeQuery(String.format("SELECT MailGroup FROM GROUPMAILMATERIA WHERE CodigoMateria=%d;", codigo));
+						
+			rs.next();
+			String mail = rs.getString(1);
+			
+			rs.close();
+			this.closeStatementAndConnection();
+			return mail;
+		} catch (Exception e) {
+			throw new PersistenceException();
+		}
 	}	
 }

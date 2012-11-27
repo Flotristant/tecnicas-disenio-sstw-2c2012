@@ -26,7 +26,7 @@ public class ActionCreateTicketTestCase {
 		this.materiaPersistence = new MateriaPersistenceMock();
 		this.rule = new RuleConsultaTema(this.materiaPersistence);
 		this.ticketPersistence = new TicketPersistenceMock();
-		this.createTicket = new ActionCreateTicket(this.ticketPersistence);
+		this.createTicket = new ActionCreateTicket(this.ticketPersistence, null);
 	}
 	
 	@Test
