@@ -18,8 +18,8 @@ public class MateriaPersistenceMock implements IMateriaPersistence {
 
 	@Override
 	public String getGroupMailMateria(String codigoMateria) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "grupomateria@gmail.com";
 	}
 
 	@Override
