@@ -59,10 +59,6 @@ public class RuleXmlManager implements IXmlManager<Iterable<IRule>> {
 
 	private IRule getRuleFromXmlElement(Element ruleElement) throws Exception {
 		IRule rule = this.ruleFactory.create(ruleElement.getAttribute("name"));
-//		if (rule == null) {
-			System.out.println(ruleElement.getAttribute("name"));
-			System.out.println(ruleElement.getAttribute("pattern"));
-//		}
 		rule.setPattern(ruleElement.getAttribute("pattern"));
 		 
 			
