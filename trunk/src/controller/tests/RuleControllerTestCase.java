@@ -5,6 +5,7 @@ import junit.framework.Assert;
 
 import model.ActionAltaAlumno;
 import model.ActionRule;
+import model.IRule;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -49,9 +50,11 @@ public class RuleControllerTestCase {
 		bootst.run();
 		
 		IRuleControllerFactory ruleControllerFactory = bootst.getContainer().getComponent(IRuleControllerFactory.class);
-//		IRuleController controller = ruleControllerFactory.create();
-		RuleXmlManager altaAlumno =  (RuleXmlManager) bootst.getContainer().getComponent(IXmlManager.class);
-
+		IRuleController controller = ruleControllerFactory.create();
+		Assert.assertNotNull(controller);
+//		RuleXmlManager altaAlumno =  (RuleXmlManager) bootst.getContainer().getComponent(IXmlManager.class);
+//		String name = "RuleAltaAlumno";
+//		IRule altaAlumno =  (IRule) bootst.getContainer().getComponent(IRule.class + name);
 //		Assert.assertEquals(5, this.ruleXmlManager.getCreatedRules().size());
 //		Assert.assertEquals(this.xmlFileManager.getAttrElement(), this.ruleXmlManager.getDocumentToSave().getAttribute("name"));
 	}

@@ -9,7 +9,6 @@ public class RuleAltaMateria extends Rule {
 
 	public RuleAltaMateria(IMateriaPersistence  materiaPersistence) throws PersistenceException {
 		super(materiaPersistence);
-		this.setCodigoMateria(materiaPersistence.getCodigoMateria(null));
 	}
 
 	@Override

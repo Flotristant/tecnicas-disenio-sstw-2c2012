@@ -8,7 +8,6 @@ public class ActionConsultaTicket extends ActionRule {
 	private String ticketId;
 	private ITicketPersistence ticketPersistence;
 	private String codigoMateria;
-	private Message message;
 	
 	public ActionConsultaTicket(ITicketPersistence ticketPersistence){
 		this.ticketPersistence = ticketPersistence;
@@ -26,7 +25,6 @@ public class ActionConsultaTicket extends ActionRule {
 	protected void initializeActions(Rule rule) {
 		this.ticketId = rule.getTicketId();
 		this.codigoMateria = rule.getCodigoMateria();
-		this.message = rule.getMessage();
 	}
 
 	@Override
