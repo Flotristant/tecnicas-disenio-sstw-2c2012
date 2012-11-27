@@ -1,5 +1,7 @@
 package controller.tests;
 
+import static org.junit.Assert.fail;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -29,9 +31,10 @@ public class ProjectControllerTestCase{
 		this.createAttachments("./testFiles/incoming/");
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
 	public void testShouldCreateControllerCorrectlyWithNoExceptions() {
-		this.createController();
+		ProjectController p = this.createController();
 	}
 	
 	private ProjectController createController(){
@@ -161,6 +164,30 @@ public class ProjectControllerTestCase{
 				
 		}
 		
+	@Test
+	public void testProcessMessageConsultaTema() {
+		MessagesGeneratorMock mock = new MessagesGeneratorMock();
+		List<model.Message> consultaTemaMessage = mock.getAMessageConsultaPublicaValid();
+		ProjectController p = new ProjectController(this.ruleControllerFactory);
+		List<model.Message> anwser = null;
+		try {
+			anwser = p.processIncoming(consultaTemaMessage);
+			Assert.assertEquals(anwser.size(), 2);
+			Iterator<model.Message> it = anwser.iterator();			
+		} catch (PersistenceException e) {
+			fail();
+		}
+		
+		consultaTemaMessage = mock.getAMessageConsultaPrivadaValid();
+		try {
+			anwser = p.processIncoming(consultaTemaMessage);
+			Assert.assertEquals(anwser.size(), 1);
+			model.Message m  = anwser.get(0);
+			Assert.assertEquals(m.getSubject(), "Se ha creado el ticket numero 1 del tema " + "Base de datos");
+		} catch (PersistenceException e) {
+			fail();
+		}
+	}
 	
 	@Test
 	public void testHandlerProjectMessage() {
