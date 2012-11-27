@@ -20,7 +20,7 @@ public class ActionSpam extends ActionRule {
 
 	@Override
 	protected void initializeActions(Rule rule) {
-		this.attachments = rule.getMessage().getAttachments();
+		this.attachments = this.message.getAttachments();
 	}
 
 	@Override
