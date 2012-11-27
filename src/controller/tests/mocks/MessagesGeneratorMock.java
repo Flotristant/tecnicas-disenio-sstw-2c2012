@@ -134,4 +134,18 @@ public class MessagesGeneratorMock {
 		messages.add(m);
 		return messages;
 	}
+	
+	public List<Message> getAMesageConsultaTicketValid() {
+		List<model.Message> messages = new ArrayList<Message>();
+		model.Message m = new model.Message("from@hotmail.com", "to@hotmail.com", "[CONSULTA] 1", "Es un numero");
+		messages.add(m);
+		return messages;
+	}
+	
+	public List<Message> getAMesageConsultaTicketClosed() {
+		List<model.Message> messages = new ArrayList<Message>();
+		model.Message m = new model.Message("from@hotmail.com", "to@hotmail.com", "[CONSULTA] 10", "Es un numero");
+		messages.add(m);
+		return messages;
+	}
 }

@@ -62,6 +62,11 @@ public class TicketPersistenceMock implements ITicketPersistence{
 	@Override
 	public boolean isTicketClosed(String codigoMateria, Integer idTicket)
 			throws PersistenceException {
+		
+		
+		if (idTicket != 1) {
+			return true;
+		}
 		if (codigoMateria.equals("7510"))
 				return false;
 		return true;

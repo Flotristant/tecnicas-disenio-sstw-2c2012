@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import model.Rule;
 import model.RuleAltaGrupo;
 import model.RuleAltaMateria;
-import model.RuleConsultaTema;
 import model.RuleEntregaTp;
 import model.RuleSpam;
 import model.factories.tests.mocks.ActionRuleFactoryMock;
