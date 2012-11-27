@@ -5,6 +5,8 @@ import java.io.IOException;
 
 import javax.mail.MessagingException;
 
+import org.junit.Test;
+
 import model.*;
 import model.exceptions.InvalidAssociatedProtocolsException;
 import services.*;
@@ -45,19 +47,20 @@ public class Integrate {
 		return clas;
 	}
 	
+	
 	public ProjectController setUpProjectController() {
 		Bootstrapper b = new Bootstrapper();
 		b.run();
 		return new ProjectController(new RuleControllerFactory(b.getContainer()));
 	}
 	
+	@Test
 	public void testIntegral() {
 		ClassAccount clase = this.setUpClassAccount();
 		ProjectController pcontroller = this.setUpProjectController();
 		try {
 			clase.processAccount(pcontroller);
 		} catch (MessagingException | IOException | PersistenceException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
