@@ -22,4 +22,11 @@ public class MateriaPersistenceMock implements IMateriaPersistence {
 		return null;
 	}
 
+	@Override
+	public void addGroupMailMateria(String codigoMateria, String mail)
+			throws PersistenceException {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
