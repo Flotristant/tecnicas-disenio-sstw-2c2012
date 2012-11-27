@@ -8,7 +8,6 @@ public class RuleConsultaTema extends Rule {
 
 	public RuleConsultaTema(IMateriaPersistence  materiaPersistence) throws Exception {
 		super(materiaPersistence);
-		this.setCodigoMateria(materiaPersistence.getCodigoMateria(null));
 	}
 
 	@Override

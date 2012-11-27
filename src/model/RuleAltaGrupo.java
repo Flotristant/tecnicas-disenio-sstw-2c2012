@@ -8,7 +8,6 @@ public class RuleAltaGrupo extends Rule {
 
 	public RuleAltaGrupo(IMateriaPersistence  materiaPersistence) throws Exception {
 		super(materiaPersistence);
-		this.setCodigoMateria(materiaPersistence.getCodigoMateria(null));
 	}
 
 	@Override

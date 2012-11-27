@@ -65,8 +65,8 @@ public class Bootstrapper {
 					.as(CACHE).addComponent(IRuleControllerFactory.class, RuleControllerFactory.class)
 					.as(CACHE).addComponent(IRuleController.class, RuleController.class)
 					.as(CACHE).addComponent(IXmlFileManager.class, XmlFileManager.class)
-					.addComponent(IXmlManager.class, RuleXmlManager.class)       // no se si le va a gustar
-//					.addComponent(IXmlManager.class, RuleXmlManager.class)
+					.addComponent(RuleXmlManager.class)       // no se si le va a gustar
+//					.addComponent(class<Integer>.class, RuleXmlManager.class)
 					.as(CACHE).addComponent(IRuleFactory.class, RuleFactory.class)
 					.as(CACHE).addComponent(IRule.class + "RuleAltaGrupo", RuleAltaGrupo.class)
 					.as(CACHE).addComponent(IRule.class + "RuleAltaMateria", RuleAltaMateria.class)

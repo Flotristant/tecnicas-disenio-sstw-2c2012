@@ -59,8 +59,13 @@ public class RuleXmlManager implements IXmlManager<Iterable<IRule>> {
 
 	private IRule getRuleFromXmlElement(Element ruleElement) throws Exception {
 		IRule rule = this.ruleFactory.create(ruleElement.getAttribute("name"));
+		if (rule == null) {
+			System.out.println(ruleElement.getAttribute("name"));
+			System.out.println(ruleElement.getAttribute("pattern"));
+		}
 		rule.setPattern(ruleElement.getAttribute("pattern"));
-		
+		 
+			
 		for (int i = 0; i < ruleElement.getChildNodes().getLength(); i++) {
 			Node actionNode = ruleElement.getChildNodes().item(i);
 			rule.addAction(new ActionXmlManager(this.actionRuleFactory).getItemFromXmlElement((Element)actionNode));
