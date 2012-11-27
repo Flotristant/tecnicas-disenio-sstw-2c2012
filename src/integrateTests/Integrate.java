@@ -51,7 +51,9 @@ public class Integrate {
 	public ProjectController setUpProjectController() {
 		Bootstrapper b = new Bootstrapper();
 		b.run();
-		return new ProjectController(new RuleControllerFactory(b.getContainer()));
+		RuleControllerFactory r = new RuleControllerFactory(b.getContainer());
+		IRuleController rulecontroller = r.create();
+		return new ProjectController(r);
 	}
 	
 	@Test
