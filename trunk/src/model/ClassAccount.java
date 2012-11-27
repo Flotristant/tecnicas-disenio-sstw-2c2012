@@ -1,23 +1,21 @@
 package model;
-import java.io.File;
 import controller.ProjectController;
+import persistence.DBMateriaPersistence;
 import java.io.IOException;
 import java.util.*;
 
 import javax.mail.MessagingException;
 
 import persistence.exceptions.PersistenceException;
-
-import model.exceptions.InvalidPathDirectoryException;
 public class ClassAccount {
-	private String name, description, code, path_attach;
+	private String name, description, code, emailGrupo;
 	private List<Email> account_email;
 	
-	public ClassAccount(String name, String description, String code, String path_attach) throws InvalidPathDirectoryException{
+	public ClassAccount(String name, String description, String code, String emailgrupo) {
 		this.setName(name);
 		this.setDescription(description);
 		this.setCode(code);
-		this.setPath_attach(path_attach);
+		this.emailGrupo = emailgrupo;
 		this.account_email = new ArrayList<Email>();
 	}
 	
@@ -55,7 +53,7 @@ public class ClassAccount {
 		Iterator<Email> it = this.account_email.iterator();
 		while (it.hasNext()) {
 			Email e= it.next();
-			e.processMail(controller, this.path_attach);			
+			e.processMail(controller);			
 		}
 	}
 
@@ -82,17 +80,13 @@ public class ClassAccount {
 	public String getCode() {
 		return code;
 	}
-
-	public void setPath_attach(String path_attach) throws InvalidPathDirectoryException {
-		File dir = new File(path_attach);
-		if (!dir.isDirectory()) {
-				throw new InvalidPathDirectoryException();
+	
+	public void persists() throws NumberFormatException, PersistenceException {
+		DBMateriaPersistence db = new DBMateriaPersistence();
+		Iterator<Email> it = this.account_email.iterator();
+		while (it.hasNext()) {
+			Email e = it.next();
+			db.addMateria(Integer.parseInt(this.getCode()), this.getName(), this.getDescription(), e.getUser(), e.getUser(), e.getPassword(), e.getReceiver().getHost(),Integer.parseInt(e.getReceiver().getPort()), e.getSender().getHost(), Integer.parseInt(e.getSender().getPort()));
 		}
-		this.path_attach = path_attach;
 	}
-
-	public String getPath_attach() {
-		return path_attach;
-	}
-
 }

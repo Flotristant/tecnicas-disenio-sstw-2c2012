@@ -23,15 +23,10 @@ public class ClassAccountTestCase {
 	@Test
 	public void testClassAccountValid() {
 		ClassAccount cAcc;
-		try {
-			cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/");
+			cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","grupo@yahoo.com");
 			Assert.assertEquals("Tecnicas de Diseño", cAcc.getName());
 			Assert.assertEquals("Materia de programacion", cAcc.getDescription());
 			Assert.assertEquals("75-10", cAcc.getCode());
-			Assert.assertEquals("75-10","/home/", cAcc.getPath_attach());
-		} catch (InvalidPathDirectoryException e) {
-			fail("Path invalido");
-		}
 	}
 	
 	
@@ -39,11 +34,7 @@ public class ClassAccountTestCase {
 	public void testClassAccountEmails() {
 		
 		ClassAccount cAcc=null;
-		try {
-			cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/");
-		} catch (InvalidPathDirectoryException e1) {
-			fail("Path invalido");
-		}
+		cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","grupo@yahoo.com");
 		Assert.assertEquals(cAcc.getEmails(), null);
 		
 		Email e,e2,e3;
@@ -93,17 +84,7 @@ public class ClassAccountTestCase {
 		Assert.assertTrue(listaEmails.contains("hsa2@yahoo.com"));
 				
 	}
-	
-	@Test(expected=InvalidPathDirectoryException.class)
-	public void testClassInvalidPath() throws InvalidPathDirectoryException {
-		@SuppressWarnings("unused")
-		ClassAccount cAcc = new ClassAccount("Tecnicas de Diseño", "Materia de programacion", "75-10","/home/Pepe/");				
-	}
-	
-	@Test
-	public void testClassAccountProcess() {
-		//TODO:
-	}
+
 	
 	
 }

@@ -7,6 +7,7 @@ import javax.mail.MessagingException;
 import persistence.exceptions.PersistenceException;
 
 import model.exceptions.InvalidAssociatedProtocolsException;
+import services.Pop3Protocol;
 import services.SenderProtocol;
 import services.ReceiverProtocol;
 import controller.ProjectController;;
@@ -38,7 +39,7 @@ public class Email {
 		this.receiver=receiver;
 	}
 
-	public void processMail(ProjectController controller, String working_path) throws MessagingException, IOException, PersistenceException {
+	public void processMail(ProjectController controller) throws MessagingException, IOException, PersistenceException {
 		List<model.Message> incomingMessages = this.receiver.receive();
 		List<model.Message> answerMessages = controller.processIncoming(incomingMessages);
 		if(answerMessages != null ) {
@@ -60,6 +61,14 @@ public class Email {
 
 	public String getPassword() {
 		return pass;
+	}
+	
+	public ReceiverProtocol getReceiver() {
+		return this.receiver;
+	}
+	
+	public SenderProtocol getSender() {
+		return this.sender;
 	}
 	
 }
