@@ -31,5 +31,6 @@ public abstract class DBPersistence {
         this.conn = DriverManager.getConnection("jdbc:sqlite:Materias.db"); 
         this.statement = this.conn.createStatement(); 
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS MATERIAS (CodigoMateria INTEGER, Descripcion text, Nombre text, Email text, User text, Pass text, Pop3host text, Pop3port INTEGER, Smtphost text, Smtpport INTEGER, PRIMARY KEY(CodigoMateria, Email))");
+        this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS GROUPMAILMATERIA (CodigoMateria INTEGER PRIMARY KEY, MailGroup text)");
 	}
 }

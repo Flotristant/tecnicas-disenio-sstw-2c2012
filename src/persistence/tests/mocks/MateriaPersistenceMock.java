@@ -16,4 +16,10 @@ public class MateriaPersistenceMock implements IMateriaPersistence {
 			throws PersistenceException {		
 	}
 
+	@Override
+	public String getGroupMailMateria(String codigoMateria) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

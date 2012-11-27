@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.listeners.IResponseMailEventListener;
+import persistence.IMateriaPersistence;
 import persistence.ITicketPersistence;
 
 public class ActionCreateTicket extends ActionRule {
@@ -14,10 +15,12 @@ public class ActionCreateTicket extends ActionRule {
 	private Message message;
 	private ITicketPersistence ticketPersistence;
 	private List<IResponseMailEventListener> listeners;
+	private IMateriaPersistence materiaPersistence;
 	
-	public ActionCreateTicket(ITicketPersistence ticketPersistence){
+	public ActionCreateTicket(ITicketPersistence ticketPersistence, IMateriaPersistence materiaPersistence){
 		this.ticketPersistence = ticketPersistence;
 		this.listeners = new ArrayList<IResponseMailEventListener>();
+		this.materiaPersistence = materiaPersistence;
 	}
 
 	@Override
@@ -28,7 +31,7 @@ public class ActionCreateTicket extends ActionRule {
 		for(IResponseMailEventListener listener : this.listeners) {
 			listener.handleCreatedEvent(message, "Se ha creado el ticket numero " + ticketId + " del tema " + this.tema);
 			if(type.equals("PUBLICA")) {
-				this.message.setSender(this.message.getTo());
+				this.message.setSender(this.materiaPersistence.getGroupMailMateria(this.codigoMateria));
 				listener.handleCreatedEvent(message, "Se ha creado el ticket numero " + ticketId + " del tema " + this.tema);
 			}
 		}
