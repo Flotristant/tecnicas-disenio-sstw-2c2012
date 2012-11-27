@@ -6,6 +6,7 @@ import model.Rule;
 import model.RuleAltaGrupo;
 import model.RuleAltaMateria;
 import model.RuleConsultaTema;
+import model.RuleConsultaTicket;
 import model.RuleEntregaTp;
 import model.RuleSpam;
 import model.factories.tests.mocks.ActionRuleFactoryMock;
@@ -63,11 +64,24 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 			rule4.addAction(this.actionFactory.create("ActionSaveTpWithMock"));
 			this.rules.add(rule4);
 		
-			Rule rule5 = new RuleSpam(this.materiaPersistence);
-			rule5.setPattern(".*");
-			
+	
+			Rule rule5 = new RuleConsultaTema(materiaPersistence);
+			rule5.setPattern("\\[CONSULTA-((PUBLICA)|(PRIVADA))\\] (.*)");
+			rule5.addAction(this.actionFactory.create("ActionValidateSender"));
+			rule5.addAction(this.actionFactory.create("ActionCreateTicketWithMock"));
 			this.rules.add(rule5);
+			
+			Rule rule6 = new RuleConsultaTicket(materiaPersistence);
+			rule6.setPattern("\\[CONSULTA\\] ([0-9]+)");
+			rule6.addAction(this.actionFactory.create("ActionValidateSender"));
+			rule6.addAction(this.actionFactory.create("ActionConsultaTicketWithMock"));
+			this.rules.add(rule6);
+			
+			Rule rule7 = new RuleSpam(this.materiaPersistence);
+			rule7.setPattern(".*");
+			this.rules.add(rule7);
 		
+			
 			return this.rules;
 	}
 	
