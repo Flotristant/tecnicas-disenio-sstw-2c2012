@@ -69,7 +69,7 @@ public class XmlManagerMock implements IXmlManager<Iterable<Rule>> {
 			
 			Rule rule6 = new RuleConsultaTicket(materiaPersistence);
 			rule6.setPattern("\\[CONSULTA\\] ([0-9]+)");
-			rule6.addAction(this.actionFactory.create("ActionValidateSender"));
+			rule6.addAction(this.actionFactory.create("ActionValidateSenderWithMock"));
 			rule6.addAction(this.actionFactory.create("ActionConsultaTicketWithMock"));
 			this.rules.add(rule6);
 			
