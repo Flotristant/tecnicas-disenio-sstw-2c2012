@@ -11,7 +11,6 @@ import model.ActionSpam;
 import model.ActionValidateSender;
 import model.ActionValidateAndSaveStudentInGroup;
 import model.IRule;
-import model.Rule;
 import model.RuleAltaGrupo;
 import model.RuleAltaMateria;
 import model.RuleConsultaTema;
@@ -65,8 +64,7 @@ public class Bootstrapper {
 					.as(CACHE).addComponent(IRuleControllerFactory.class, RuleControllerFactory.class)
 					.as(CACHE).addComponent(IRuleController.class, RuleController.class)
 					.as(CACHE).addComponent(IXmlFileManager.class, XmlFileManager.class)
-					.addComponent(RuleXmlManager.class)       // no se si le va a gustar
-//					.addComponent(class<Integer>.class, RuleXmlManager.class)
+					.addComponent(IXmlManager.class, RuleXmlManager.class)
 					.as(CACHE).addComponent(IRuleFactory.class, RuleFactory.class)
 					.as(CACHE).addComponent(IRule.class + "RuleAltaGrupo", RuleAltaGrupo.class)
 					.as(CACHE).addComponent(IRule.class + "RuleAltaMateria", RuleAltaMateria.class)
