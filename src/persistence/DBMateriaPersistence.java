@@ -27,8 +27,8 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 			String email, String user, String pass, String pop3host, int pop3port, String smtphost, int smtpport) throws PersistenceException {
 		try {
 			this.initializeDBMateria();
-			this.statement.executeUpdate(String.format("INSERT INTO MATERIAS (CodigoMateria, Descripcion, Nombre, Email, User, Pass, Pop3host, Pop3port, Smtphost, Smtpport) VALUES (%d, '%s', '%s', '%s', '%s', '%s', '%s', %d, '%s', %d);", codigoMateria, desc, nombre,
-					email, user, pass, pop3host, pop3port, smtphost, smtpport));
+			this.statement.executeUpdate(String.format("INSERT INTO MATERIAS (CodigoMateria, Descripcion, Nombre, Email, Pass, Pop3host, Pop3port, Smtphost, Smtpport) VALUES (%d, '%s', '%s', '%s', '%s', '%s', %d, '%s', %d);", codigoMateria, desc, nombre,
+					email, pass, pop3host, pop3port, smtphost, smtpport));
 						
 			this.closeStatementAndConnection();
 		} catch (Exception e) {
@@ -76,8 +76,9 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 	@Override
 	public void addGroupMailMateria(String codigoMateria, String mail) throws PersistenceException{
 		try {
+			int codigo = Integer.parseInt(codigoMateria);
 			this.initializeDBMateria();
-			this.statement.executeUpdate(String.format("INSERT INTO GROUPMAILMATERIA (CodigoMateria, MailGroup) VALUES (%d, '%s');", codigoMateria, mail));
+			this.statement.executeUpdate(String.format("INSERT INTO GROUPMAILMATERIA (CodigoMateria, MailGroup) VALUES (%d, '%s');", codigo, mail));
 						
 			this.closeStatementAndConnection();
 		} catch (Exception e) {

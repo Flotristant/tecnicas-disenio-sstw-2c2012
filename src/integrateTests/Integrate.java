@@ -43,7 +43,16 @@ public class Integrate {
 		} catch (InvalidAssociatedProtocolsException e1) {
 			fail("Email mal formado");
 		}
-		 clas.addEmail(e);		 
+		 clas.addEmail(e);		
+		 try {
+			clas.persists();
+		} catch (NumberFormatException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (PersistenceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		return clas;
 	}
 	
