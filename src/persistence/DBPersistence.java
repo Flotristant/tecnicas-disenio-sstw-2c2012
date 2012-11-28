@@ -12,7 +12,9 @@ public abstract class DBPersistence {
 	
 	protected void initialize(String codigoMateria) throws Exception {
 		Class.forName("org.sqlite.JDBC");
-        this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",codigoMateria)); 
+      this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",codigoMateria)); 
+//		Class.forName("org.sqlite.JDBC");
+//		this.conn = DriverManager.getConnection(String.format("jdbc:sqlite:%s.db",codigoMateria)); 
         this.statement = this.conn.createStatement(); 
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS TP (Padron INTEGER, TpNumber INTEGER, PathTp text, PRIMARY KEY(Padron, TpNumber), FOREIGN KEY(Padron) REFERENCES ALUMNO(Padron));");
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS ALUMNO (Padron INTEGER PRIMARY KEY, Name text, Sender text);");
@@ -28,7 +30,9 @@ public abstract class DBPersistence {
 	
 	protected void initializeDBMateria() throws SQLException, ClassNotFoundException{
 		Class.forName("org.sqlite.JDBC");
-        this.conn = DriverManager.getConnection("jdbc:sqlite:Materias.db"); 
+		this.conn = DriverManager.getConnection("jdbc:sqlite:Materias.db"); 
+//		Class.forName("com.mysql.jdbc.Driver");
+//        this.conn = DriverManager.getConnection("jdbc:mysql:Materias.db","mysql","mysql"); 
         this.statement = this.conn.createStatement(); 
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS MATERIAS (CodigoMateria INTEGER, Descripcion text, Nombre text, Email text, Pass text, Pop3host text, Pop3port INTEGER, Smtphost text, Smtpport INTEGER, PRIMARY KEY(CodigoMateria, Email))");
         this.statement.executeUpdate("CREATE TABLE IF NOT EXISTS GROUPMAILMATERIA (CodigoMateria INTEGER PRIMARY KEY, MailGroup text)");

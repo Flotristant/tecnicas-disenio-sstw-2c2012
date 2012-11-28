@@ -1,18 +1,30 @@
 package integrateTests;
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 
+import junit.framework.Assert;
+
+import org.junit.After;
 import org.junit.Test;
 
 import model.*;
 import model.exceptions.InvalidAssociatedProtocolsException;
 import services.*;
+import services.exceptions.InvalidPortFormatException;
+import services.exceptions.InvalidUserFormatException;
 import application.Bootstrapper;
 import controller.*;
+import controller.factories.IRuleControllerFactory;
 import controller.factories.RuleControllerFactory;
+import controller.tests.mocks.MessagesGeneratorMock;
 
 import persistence.exceptions.PersistenceException;
 
@@ -56,23 +68,54 @@ public class Integrate {
 		return clas;
 	}
 	
+	public void sendMail() {
+		 SmtpProtocol sender = null;
+		 try {
+			 sender = new SmtpProtocol("pruebatecnicas@hotmail.com", "Mailprueba01", "587", "smtp.live.com");
+		 } catch (InvalidPortFormatException | InvalidUserFormatException e1) {
+			fail("Sender armado invalido");
+		 }
+		 MessagesGeneratorMock mock = new MessagesGeneratorMock();
+		 List<model.Message>list = mock.getAMessageAltaGrupoInvalid();
+
+			 try {
+				sender.send(list);
+			} catch (AddressException e1) {
+				e1.printStackTrace();
+			} catch (MessagingException e1) {
+				e1.printStackTrace();
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		  
+	}
 	
 	public ProjectController setUpProjectController() {
 		Bootstrapper b = new Bootstrapper();
 		b.run();
-		RuleControllerFactory r = new RuleControllerFactory(b.getContainer());
-		IRuleController rulecontroller = r.create();
-		return new ProjectController(r);
+		return (ProjectController) b.getContainer().getComponent(IProjectController.class);
 	}
 	
 	@Test
 	public void testIntegral() {
 		ClassAccount clase = this.setUpClassAccount();
 		ProjectController pcontroller = this.setUpProjectController();
+//	this.sendMail();
 		try {
 			clase.processAccount(pcontroller);
 		} catch (MessagingException | IOException | PersistenceException e) {
 			e.printStackTrace();
 		}
+//		String s = "[ALTA-MATERIA-7508] 91227-francisco";
+//		Pattern pattern = Pattern.compile("\\[ALTA-MATERIA-([0-9]{4})\\] ([0-9]{5})\\-(.*)");
+//		Matcher matcher = pattern.matcher(s);
+//		Assert.assertTrue(matcher.matches());
+	}
+	
+	
+	@After
+	public void setDown() throws Exception {
+		File fichero = new File("Materias.db");
+		fichero.delete();
 	}
 }

@@ -11,6 +11,8 @@ public class ActionSpam extends ActionRule {
 
 	@Override
 	public void execute() throws Exception {
+		if (this.attachments == null) return;
+		
 		for (String key : attachments.keySet()) {
 			String path = attachments.get(key);
 				File inFile = new File(path + key);
