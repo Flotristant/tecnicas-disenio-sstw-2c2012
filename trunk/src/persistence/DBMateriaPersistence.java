@@ -10,7 +10,7 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 	public String getCodigoMateria(String email) throws PersistenceException {
 		try {
 			this.initializeDBMateria();
-			ResultSet rs = this.statement.executeQuery(String.format("SELECT CodigoMateria FROM MATERIAS WHERE Email = %s", email));
+			ResultSet rs = this.statement.executeQuery(String.format("SELECT CodigoMateria FROM MATERIAS WHERE Email = '%s'", email));
 			rs.next();
 			String codigoMateria = rs.getString(1);
 			rs.close();
