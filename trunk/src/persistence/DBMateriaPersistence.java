@@ -1,5 +1,6 @@
 package persistence;
 
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 import persistence.exceptions.PersistenceException;
@@ -11,6 +12,7 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 		try {
 			this.initializeDBMateria();
 			ResultSet rs = this.statement.executeQuery(String.format("SELECT CodigoMateria FROM MATERIAS WHERE Email = '%s'", email));
+			
 			rs.next();
 			String codigoMateria = rs.getString(1);
 			rs.close();
@@ -18,6 +20,7 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 			this.closeStatementAndConnection();
 			return codigoMateria;
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new PersistenceException();
 		}
 	}
