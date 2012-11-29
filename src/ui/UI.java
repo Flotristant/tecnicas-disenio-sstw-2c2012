@@ -136,7 +136,7 @@ public class UI extends JFrame {
 	public UI(UIActionListener listener) {
 		this.listener = listener;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 303);
+		setBounds(100, 100, 450, 125);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

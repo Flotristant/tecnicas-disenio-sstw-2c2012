@@ -10,16 +10,16 @@ public class DaemonThread extends Thread {
 
 	@Override
 	public void run() {
-		if (this.statusChangedListener != null) this.statusChangedListener.newStatus(StatusChangedListener.status.Up);
+		this.statusChangedListener.newStatus(StatusChangedListener.status.Up);
 		log("Running daemon.");
 		integrateTests.Integrate process = new integrateTests.Integrate();
 		while (!this.dead) {
 			try {
 				process.testIntegral();
-				this.statusChangedListener.newStatus(StatusChangedListener.status.Up);
+				if (!this.dead) this.statusChangedListener.newStatus(StatusChangedListener.status.Up);
 				System.out.print(".");
 			} catch (Exception e) {
-				this.statusChangedListener.newStatus(StatusChangedListener.status.Error);
+				if (!this.dead) this.statusChangedListener.newStatus(StatusChangedListener.status.Error);
 				e.printStackTrace();
 			}
 
