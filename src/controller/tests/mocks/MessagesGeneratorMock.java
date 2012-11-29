@@ -135,6 +135,13 @@ public class MessagesGeneratorMock {
 		return messages;
 	}
 	
+	public List<Message> getAMessageConsultaPrivada() {
+			List<model.Message> messages = new ArrayList<Message>();
+			model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[CONSULTA-PRIVADA] Punteros", "Que es un puntero?");
+			messages.add(m);
+			return messages;
+	}
+	
 	public List<Message> getAMesageConsultaTicketValid() {
 		List<model.Message> messages = new ArrayList<Message>();
 		model.Message m = new model.Message("from@hotmail.com", "to@hotmail.com", "[CONSULTA] 1", "Es un numero");
