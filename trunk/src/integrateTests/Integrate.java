@@ -76,7 +76,7 @@ public class Integrate {
 			fail("Sender armado invalido");
 		 }
 		 MessagesGeneratorMock mock = new MessagesGeneratorMock();
-		 List<model.Message>list = mock.getAMessageAltaGrupoInvalid();
+		 List<model.Message>list = mock.getAMessageConsultaPrivada();
 
 			 try {
 				sender.send(list);
@@ -87,7 +87,7 @@ public class Integrate {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		  
+		 sender= null;
 	}
 	
 	public ProjectController setUpProjectController() {
@@ -100,7 +100,7 @@ public class Integrate {
 	public void testIntegral() {
 		ClassAccount clase = this.setUpClassAccount();
 		ProjectController pcontroller = this.setUpProjectController();
-//	this.sendMail();
+	this.sendMail();
 		try {
 			clase.processAccount(pcontroller);
 		} catch (MessagingException | IOException | PersistenceException e) {

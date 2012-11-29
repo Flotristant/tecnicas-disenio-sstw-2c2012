@@ -20,7 +20,8 @@ public class DBMateriaPersistence extends DBPersistence implements IMateriaPersi
 			this.closeStatementAndConnection();
 			return codigoMateria;
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.print("Clase ya existente");
+		//	e.printStackTrace();
 			throw new PersistenceException();
 		}
 	}

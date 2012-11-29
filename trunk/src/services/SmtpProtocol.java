@@ -20,7 +20,7 @@ public class SmtpProtocol extends SenderProtocol {
 		super(user, pass, port, host);
 		
 		props = new Properties();
-		props = System.getProperties();
+		//props = System.getProperties();
 				
 	}
 
