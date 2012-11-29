@@ -45,7 +45,6 @@ public class TpPersistence implements ITpPersistence {
 						
 						in.close();
 						out.close();
-						inFile.delete();
 					} catch(IOException e) {
 						e.printStackTrace();
 						System.err.println("Hubo un error de entrada/salida");
