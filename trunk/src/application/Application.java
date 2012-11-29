@@ -26,13 +26,13 @@ public class Application {
 		ui = new UI(new UI.UIActionListener(){
 
 			@Override
-			public boolean onAddSubjectClicked(int subject, int student) {
+			public boolean onAddSubjectClicked(int subject) {
 				// TODO Auto-generated method stub
 				return false;
 			}
 
 			@Override
-			public void onDeleteSubjectClicked(int subject, int student) {
+			public void onDeleteSubjectClicked(int subject) {
 				// TODO Auto-generated method stub
 				
 			}

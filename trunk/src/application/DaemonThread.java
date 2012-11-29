@@ -12,8 +12,8 @@ public class DaemonThread extends Thread {
 	public void run() {
 		if (this.statusChangedListener != null) this.statusChangedListener.newStatus(StatusChangedListener.status.Up);
 		log("Running daemon.");
+		integrateTests.Integrate process = new integrateTests.Integrate();
 		while (!this.dead) {
-			integrateTests.Integrate process = new integrateTests.Integrate();
 			try {
 				process.testIntegral();
 				this.statusChangedListener.newStatus(StatusChangedListener.status.Up);
