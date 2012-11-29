@@ -27,8 +27,8 @@ public class UI extends JFrame {
 	public interface UIActionListener {
 		public void onRun();
 		public void onStop();
-		public boolean onAddSubjectClicked(int subject, int student);
-		public void onDeleteSubjectClicked(int subject, int student);
+		public boolean onAddSubjectClicked(int subject);
+		public void onDeleteSubjectClicked(int subject);
 	}
 
 	private static final long serialVersionUID = -9145648551464767892L;
@@ -52,7 +52,7 @@ public class UI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					final HashMap<Integer, Set<Integer>> inscriptions = new HashMap<Integer, Set<Integer>>();
+					final HashSet<Integer> inscriptions = new HashSet<Integer>();
 					UI.UIActionListener listener = new UIActionListener(){
 
 						@Override
@@ -63,21 +63,17 @@ public class UI extends JFrame {
 						}
 
 						@Override
-						public boolean onAddSubjectClicked(int subject, int student) {
-							System.out.println(String.format("Add inscription to %d for student %d", subject, student));
-							if (!inscriptions.containsKey(subject)) {
-								inscriptions.put(subject, new HashSet<Integer>());
-								inscriptions.get(subject).add(student);
-							}
+						public boolean onAddSubjectClicked(int subject) {
+							System.out.println(String.format("Add inscription to %d", subject));
+							inscriptions.add(subject);
 							UI.ui_instance.setInscriptions(inscriptions);
 							return true;
 						}
 
 						@Override
-						public void onDeleteSubjectClicked(int subject,
-								int student) {
-							System.out.println(String.format("Delete inscription to %d for student %d", subject, student));
-							inscriptions.get(subject).remove(student);
+						public void onDeleteSubjectClicked(int subject) {
+							System.out.println(String.format("Delete inscription to %d", subject));
+							inscriptions.remove(subject);
 							UI.ui_instance.setInscriptions(inscriptions);
 						}
 
@@ -121,14 +117,12 @@ public class UI extends JFrame {
 		}
 	};
 	
-	public void setInscriptions(Map<Integer, Set<Integer>> students_by_subject) {
+	public void setInscriptions(Set<Integer> students_by_subject) {
 		for (int i=0; i<tablemodel.getRowCount(); i++) {
 			tablemodel.removeRow(i);
 		}
-		for (Integer subject : students_by_subject.keySet()) {
-			for (Integer student : students_by_subject.get(subject)) {
-				tablemodel.addRow(new Integer[]{subject, student});
-			}
+		for (Integer subject : students_by_subject) {
+			tablemodel.addRow(new Integer[]{subject});
 		}
 	}
 	
@@ -157,12 +151,11 @@ public class UI extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"Materia", "Alumno"
+				"Materia"
 			}
 		);
 		table.setModel(tablemodel);
-		table.getColumnModel().getColumn(0).setPreferredWidth(150);
-		table.getColumnModel().getColumn(0).setMaxWidth(300);
+
 		scrollPane.setViewportView(table);
 		
 		JButton btnNewButton = new JButton("Agregar");
@@ -170,8 +163,8 @@ public class UI extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				new AddSignUpDialog(new AddSignUpDialog.UIEventListener(){
 					@Override
-					public boolean add(int subject, int student) {
-						return UI.this.listener.onAddSubjectClicked(subject, student);
+					public boolean add(int subject) {
+						return UI.this.listener.onAddSubjectClicked(subject);
 					}}).setVisible(true);
 			}
 		});
@@ -182,7 +175,7 @@ public class UI extends JFrame {
 		btnBorrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				for (int row : table.getSelectedRows()) {
-					UI.this.listener.onDeleteSubjectClicked((int)tablemodel.getValueAt(row, 0), (int)tablemodel.getValueAt(row, 1));
+					UI.this.listener.onDeleteSubjectClicked((int)tablemodel.getValueAt(row, 0));
 				}
 			}
 		});

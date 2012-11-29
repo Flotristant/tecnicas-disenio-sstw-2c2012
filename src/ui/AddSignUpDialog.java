@@ -20,12 +20,11 @@ public class AddSignUpDialog extends JDialog {
 	private static final long serialVersionUID = 9184841576275841439L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textField;
-	private JTextField textField_1;
 	
 	private UIEventListener listener;
 	
 	public interface UIEventListener {
-		public boolean add(int subject, int student);
+		public boolean add(int subject);
 	}
 
 	/**
@@ -36,8 +35,8 @@ public class AddSignUpDialog extends JDialog {
 			AddSignUpDialog dialog = new AddSignUpDialog(new UIEventListener(){
 
 				@Override
-				public boolean add(int subject, int student) {
-					System.out.println(String.format("Adding signup to %d for student %d", subject, student));
+				public boolean add(int subject) {
+					System.out.println(String.format("Adding signup to %d", subject));
 					return true;
 				}});
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -52,7 +51,7 @@ public class AddSignUpDialog extends JDialog {
 	 */
 	public AddSignUpDialog(UIEventListener listener) {
 		this.listener = listener;
-		setBounds(100, 100, 175, 198);
+		setBounds(100, 100, 175, 144);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -63,19 +62,12 @@ public class AddSignUpDialog extends JDialog {
 			contentPanel.add(lblMateria);
 		}
 		
-		textField = new JFormattedTextField(NumberFormat.getIntegerInstance());
+		NumberFormat nf = NumberFormat.getIntegerInstance();
+		nf.setGroupingUsed(false);
+		textField = new JFormattedTextField(nf);
 		textField.setBounds(10, 36, 139, 20);
 		contentPanel.add(textField);
 		textField.setColumns(10);
-		
-		JLabel lblAlumno = new JLabel("Padr\u00F3n de alumno");
-		lblAlumno.setBounds(10, 67, 130, 14);
-		contentPanel.add(lblAlumno);
-		
-		textField_1 = new JFormattedTextField(NumberFormat.getIntegerInstance());
-		textField_1.setBounds(10, 92, 139, 20);
-		contentPanel.add(textField_1);
-		textField_1.setColumns(10);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -84,7 +76,7 @@ public class AddSignUpDialog extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						boolean res = AddSignUpDialog.this.listener.add(Integer.parseInt(textField.getText()), Integer.parseInt(textField_1.getText()));
+						boolean res = AddSignUpDialog.this.listener.add(Integer.parseInt(textField.getText()));
 						if (res) {
 							AddSignUpDialog.this.setVisible(false);
 						} else {
