@@ -124,6 +124,7 @@ public class SmtpProtocol extends SenderProtocol {
 			
 			}
 		}
+		this.session=null;
 		this.clearProps();
 	}
 }
