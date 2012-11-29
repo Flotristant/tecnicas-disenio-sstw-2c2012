@@ -112,7 +112,17 @@ public class DBTicketPersistence extends DBPersistence{
 	public String getNextTicketId(String codigoMateria) throws PersistenceException {
 		try {
 			this.initialize(codigoMateria);
-			ResultSet rs = this.statement.executeQuery(String.format("SELECT MAX(Id) FROM TICKET"));
+             ResultSet rs = this.statement.executeQuery("SELECT COUNT(*) FROM TICKET");
+     
+             rs.next();
+             Integer countTicket = Integer.valueOf(rs.getInt(1));
+             rs.close();
+            
+             if (countTicket == 0) {
+            	 this.closeStatementAndConnection();
+                     return "1";
+             }
+			rs = this.statement.executeQuery(String.format("SELECT MAX(Id) FROM TICKET"));
 			rs.next();
 			Integer nextTicketId = rs.getInt(1);
 			rs.close();

@@ -36,6 +36,9 @@ public class TicketPersistence implements ITicketPersistence {
 		String pathToSave;
 		String ticketId = dataBaseTicket.getNextTicketId(codigoMateria);
 		
+		if (attachments == null) {
+			return ticketId;
+		}
 		pathToSave = "./" + codigoMateria + "/Tickets/attachments/" + ticketId + "/";
 		File dirs = new File(pathToSave);
 		if (!dirs.mkdir())

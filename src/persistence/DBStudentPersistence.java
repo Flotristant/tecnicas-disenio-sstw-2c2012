@@ -77,6 +77,7 @@ public class DBStudentPersistence extends DBPersistence implements IStudentPersi
             Integer count = Integer.valueOf(rs.getString(1));
             rs.close();
             if(count == 0){
+            	this.closeStatementAndConnection();
                     return 1;
             }
 			
