@@ -20,7 +20,10 @@ public class ActionSaveTp extends ActionRule {
 	}
 	
 	@Override
-	public void execute() throws PersistenceException {
+	public void execute() throws Exception {
+		if (this.attachments == null ) {
+			throw new Exception("Mail sin tp");
+		}
 		this.tpPersistence.saveTp(this.codigoMateria, this.sender, this.tpNumber, this.attachments);
 	}
 
