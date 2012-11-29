@@ -70,7 +70,19 @@ public class DBStudentPersistence extends DBPersistence implements IStudentPersi
 	public int getNextGroupNumber(String codigoMateria) throws PersistenceException {
 		try {
 			this.initialize(codigoMateria);
-			ResultSet rs = this.statement.executeQuery(String.format("SELECT MAX(GroupNr) FROM GROUPALUMNO"));
+			
+			ResultSet rs = this.statement.executeQuery(String.format("SELECT COUNT(*) FROM GROUPALUMNO"));
+            
+            rs.next();
+            Integer count = Integer.valueOf(rs.getString(1));
+            rs.close();
+            if(count == 0){
+                    return 1;
+            }
+			
+			
+			
+			rs = this.statement.executeQuery(String.format("SELECT MAX(GroupNr) FROM GROUPALUMNO"));
 			rs.next();
 			Integer groupNumber = Integer.valueOf(rs.getString(1));
 			rs.close();
@@ -92,6 +104,7 @@ public class DBStudentPersistence extends DBPersistence implements IStudentPersi
 						
 			this.closeStatementAndConnection();
 		} catch (Exception e) {
+			e.printStackTrace();
 			throw new PersistenceException();
 		}
 		

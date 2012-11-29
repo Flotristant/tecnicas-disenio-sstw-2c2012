@@ -29,7 +29,7 @@ public class ActionValidateAndSaveStudentInGroup extends ActionRule {
 		     StringBuilder sb = new StringBuilder();
 		     String line = br.readLine();
 		     while (line != null) {
-		           sb.append(line);
+		           sb.append(line+"\n");
 		           line = br.readLine();
 		     }
 		     everything = sb.toString();
