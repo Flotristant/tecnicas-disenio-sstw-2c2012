@@ -4,17 +4,10 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
-
-import junit.framework.Assert;
-
 import org.junit.After;
 import org.junit.Test;
-
 import model.*;
 import model.exceptions.InvalidAssociatedProtocolsException;
 import services.*;
@@ -22,8 +15,6 @@ import services.exceptions.InvalidPortFormatException;
 import services.exceptions.InvalidUserFormatException;
 import application.Bootstrapper;
 import controller.*;
-import controller.factories.IRuleControllerFactory;
-import controller.factories.RuleControllerFactory;
 import controller.tests.mocks.MessagesGeneratorMock;
 
 import persistence.exceptions.PersistenceException;
@@ -68,8 +59,8 @@ public class Integrate {
 		 } catch (InvalidPortFormatException | InvalidUserFormatException e1) {
 			fail("Sender armado invalido");
 		 }
-		 MessagesGeneratorMock mock = new MessagesGeneratorMock();
-		 List<model.Message>list = mock.getAMessageConsultaPublica();
+		 MailGeneratorMock mock = new MailGeneratorMock();
+		 List<model.Message>list = mock.getAltaMateriaMessagesValid();
 
 			 try {
 				sender.send(list);
