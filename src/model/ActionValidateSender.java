@@ -7,6 +7,7 @@ import persistence.exceptions.PersistenceException;
 public class ActionValidateSender extends ActionRule {
 
 	private IMailPersistence mailPersistence;
+	private String codigoMateria;
 
 	public ActionValidateSender(IMailPersistence mailPersistence) {
 		this.mailPersistence = mailPersistence;
@@ -19,11 +20,12 @@ public class ActionValidateSender extends ActionRule {
 	}
 	
 	private boolean validateSender() throws PersistenceException {
-		return mailPersistence.existsMail(null, this.message.getSender());
+		return mailPersistence.existsMail(this.codigoMateria, this.message.getSender());
 	}
 
 	@Override
 	protected void initializeActions(Rule rule) {
+		this.codigoMateria = rule.getCodigoMateria();
 	}
 
 	@Override

@@ -106,10 +106,6 @@ public class Integrate {
 		} catch (MessagingException | IOException | PersistenceException e) {
 			e.printStackTrace();
 		}
-//		String s = "[ALTA-MATERIA-7508] 91227-francisco";
-//		Pattern pattern = Pattern.compile("\\[ALTA-MATERIA-([0-9]{4})\\] ([0-9]{5})\\-(.*)");
-//		Matcher matcher = pattern.matcher(s);
-//		Assert.assertTrue(matcher.matches());
 	}
 	
 	
