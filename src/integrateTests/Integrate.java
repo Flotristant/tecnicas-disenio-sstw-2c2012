@@ -30,7 +30,7 @@ import persistence.exceptions.PersistenceException;
 
 public class Integrate {
 	
-	public ClassAccount setUpClassAccount() {
+	public ClassAccount setUpClassAccount() throws NumberFormatException, PersistenceException {
 		ClassAccount clas = null;
 		String pathIncoming = "./testFiles/testFilesOutBox/";
 			clas = new ClassAccount("Tecnicas de diseño", "Es una materia de programacion", "7510", "grupo@yahoo.com");
@@ -55,16 +55,9 @@ public class Integrate {
 		} catch (InvalidAssociatedProtocolsException e1) {
 			fail("Email mal formado");
 		}
-		 clas.addEmail(e);		
-		 try {
-			clas.persists();
-		} catch (NumberFormatException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (PersistenceException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+		clas.addEmail(e);		
+		clas.persists();
+
 		return clas;
 	}
 	
@@ -97,15 +90,12 @@ public class Integrate {
 	}
 	
 	@Test
-	public void testIntegral() {
+	public void testIntegral() throws MessagingException, IOException, PersistenceException {
 		ClassAccount clase = this.setUpClassAccount();
 		ProjectController pcontroller = this.setUpProjectController();
 	this.sendMail();
-		try {
-			clase.processAccount(pcontroller);
-		} catch (MessagingException | IOException | PersistenceException e) {
-			e.printStackTrace();
-		}
+		clase.processAccount(pcontroller);
+
 	}
 	
 	

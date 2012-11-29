@@ -16,11 +16,17 @@ import java.awt.event.ActionEvent;
 import java.util.*;
 
 import javax.swing.JSeparator;
+import java.awt.Font;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+import java.awt.Color;
+import java.awt.SystemColor;
 
 public class UI extends JFrame {
 	
 	public interface UIActionListener {
-		public void onProcessMailsClicked();
+		public void onRun();
+		public void onStop();
 		public boolean onAddSubjectClicked(int subject, int student);
 		public void onDeleteSubjectClicked(int subject, int student);
 	}
@@ -50,8 +56,9 @@ public class UI extends JFrame {
 					UI.UIActionListener listener = new UIActionListener(){
 
 						@Override
-						public void onProcessMailsClicked() {
+						public void onRun() {
 							// ejecutar procesamiento de mails
+							UI.ui_instance.setStatus(Status.Up);
 							System.out.println("Procesamiento de mails");
 						}
 
@@ -73,6 +80,12 @@ public class UI extends JFrame {
 							inscriptions.get(subject).remove(student);
 							UI.ui_instance.setInscriptions(inscriptions);
 						}
+
+						@Override
+						public void onStop() {
+							UI.ui_instance.setStatus(Status.Down);
+							
+						}
 					};
 					UI.ui_instance = new UI(listener);
 					UI.ui_instance.setVisible(true);
@@ -82,6 +95,31 @@ public class UI extends JFrame {
 			}
 		});
 	}
+	
+	public static enum Status {Up, Error, Down};
+	
+	public Status status;
+	
+	public void setStatus(Status s) {
+		this.status = s;
+		switch (s) {
+		case Up:
+			this.lblStatusRunningOk.setText("Status: Running OK");
+			lblStatusRunningOk.setForeground(SystemColor.textHighlight);
+			this.btnRunning.setText("Stop daemon");
+			break;
+		case Error:
+			this.lblStatusRunningOk.setText("Status: Error");
+			lblStatusRunningOk.setForeground(SystemColor.RED);
+			this.btnRunning.setText("Stop daemon");
+			break;
+		case Down:
+			this.lblStatusRunningOk.setText("Status: Down");
+			lblStatusRunningOk.setForeground(SystemColor.BLACK);
+			this.btnRunning.setText("Start daemon");
+			break;
+		}
+	};
 	
 	public void setInscriptions(Map<Integer, Set<Integer>> students_by_subject) {
 		for (int i=0; i<tablemodel.getRowCount(); i++) {
@@ -93,6 +131,10 @@ public class UI extends JFrame {
 			}
 		}
 	}
+	
+	public JButton btnRunning;
+	
+	public JLabel lblStatusRunningOk;
 
 	/**
 	 * Create the frame.
@@ -100,14 +142,14 @@ public class UI extends JFrame {
 	public UI(UIActionListener listener) {
 		this.listener = listener;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 284);
+		setBounds(100, 100, 450, 303);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 27, 414, 125);
+		scrollPane.setBounds(10, 93, 414, 125);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -133,7 +175,7 @@ public class UI extends JFrame {
 					}}).setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(335, 164, 89, 23);
+		btnNewButton.setBounds(335, 230, 89, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnBorrar = new JButton("Borrar");
@@ -144,20 +186,40 @@ public class UI extends JFrame {
 				}
 			}
 		});
-		btnBorrar.setBounds(236, 164, 89, 23);
+		btnBorrar.setBounds(236, 230, 89, 23);
 		contentPane.add(btnBorrar);
 		
-		JSeparator separator = new JSeparator();
-		separator.setBounds(10, 201, 414, 2);
-		contentPane.add(separator);
-		
-		JButton btnProcesarMailsAhora = new JButton("Procesar mails ahora");
-		btnProcesarMailsAhora.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				UI.this.listener.onProcessMailsClicked();
+		btnRunning = new JButton("Start daemon");
+		btnRunning.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				switch (UI.this.status) {
+				case Error:
+				case Up:
+					UI.this.btnRunning.setText("Shutting down daemon...");
+					UI.this.listener.onStop();
+					break;
+				case Down:
+					UI.this.listener.onRun();
+					break;
+				}
 			}
 		});
-		btnProcesarMailsAhora.setBounds(148, 214, 139, 23);
-		contentPane.add(btnProcesarMailsAhora);
+		btnRunning.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		btnRunning.setBounds(10, 11, 414, 43);
+		contentPane.add(btnRunning);
+		
+		lblStatusRunningOk = new JLabel("Status: Running OK");
+		lblStatusRunningOk.setBackground(Color.BLACK);
+		lblStatusRunningOk.setForeground(SystemColor.textHighlight);
+		lblStatusRunningOk.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblStatusRunningOk.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStatusRunningOk.setBounds(10, 65, 414, 17);
+		contentPane.add(lblStatusRunningOk);
+		
+		this.defaults();
+	}
+	
+	private void defaults() {
+		this.setStatus(Status.Down);
 	}
 }
