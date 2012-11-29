@@ -76,7 +76,7 @@ public class Integrate {
 			fail("Sender armado invalido");
 		 }
 		 MessagesGeneratorMock mock = new MessagesGeneratorMock();
-		 List<model.Message>list = mock.getAMessageConsultaPrivada();
+		 List<model.Message>list = mock.getAMessageConsultaPublica();
 
 			 try {
 				sender.send(list);
