@@ -90,10 +90,7 @@ public class MailGeneratorMock {
 
 	public List<Message> getEntregaTpMessagesInvalid(String path_attach, String file_name) {
 		List<model.Message> messages = new ArrayList<Message>();
-		model.Message m = new model.Message("pruebatecnicas@hotmail.com", "to@gmail.com", "[ENTREGA-TP-1]", "");
-		HashMap<String, String> hash = new HashMap<String,String>();
-		hash.put(file_name, path_attach);
-		m.addAttachments(hash);
+		model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[ENTREGA-TP-1]", "");
 		messages.add(m);
 		return messages;
 	}
@@ -101,13 +98,6 @@ public class MailGeneratorMock {
 	public List<Message> getAMessageAltaGrupoInvalid() {
 		List<model.Message> messages = new ArrayList<Message>();
 		model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[ALTA-GRUPO]", "");
-		messages.add(m);
-		return messages;
-	}
-	
-	public List<Message> getAMessageConsultaPublicaValid() {
-		List<model.Message> messages = new ArrayList<Message>();
-		model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[CONSULTA-PUBLICA] Base de datos", "Como se usa el insert?");
 		messages.add(m);
 		return messages;
 	}
@@ -126,24 +116,11 @@ public class MailGeneratorMock {
 		return messages;
 	}
 	
-	public List<Message> getAMessageConsultaPrivada() {
-			List<model.Message> messages = new ArrayList<Message>();
-			model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[CONSULTA-PRIVADA] Punteros", "Que es un puntero?");
-			messages.add(m);
-			return messages;
-	}
-	
-	public List<Message> getAMesageConsultaTicketValid() {
+	public List<Message> getAMesageConsultaTicketClosed() {
 		List<model.Message> messages = new ArrayList<Message>();
 		model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[CONSULTA] 1", "Es un numero");
 		messages.add(m);
 		return messages;
 	}
 	
-	public List<Message> getAMesageConsultaTicketClosed() {
-		List<model.Message> messages = new ArrayList<Message>();
-		model.Message m = new model.Message("pruebatecnicas@hotmail.com", "pruebatecnicas@gmail.com", "[CONSULTA] 10", "Es un numero");
-		messages.add(m);
-		return messages;
-	}
 }

@@ -60,8 +60,15 @@ public class Integrate {
 			fail("Sender armado invalido");
 		 }
 		 MailGeneratorMock mock = new MailGeneratorMock();
-		 List<model.Message>list = mock.getAltaMateriaMessagesValid();
-
+//		 List<model.Message>list = mock.getAltaMateriaMessagesValid();
+//		 List<model.Message> list = mock.getAltaMateriaMessagesWithCodeInvalid();
+//		 List<model.Message> list = mock.getAMesageConsultaTicketClosed();
+//	     List<model.Message> list = mock.getSpamMessages();
+//		 List<model.Message> list= mock.getAMessageAltaGrupoInvalid();
+//	 List<model.Message> list = mock.getAltaGruposMessagesValid("./testFiles/testFilesOutBox/", "padrones");
+//		 List<model.Message> list = mock.getEntregaTpMessagesValid("./testFiles/testFilesOutBox/", "modelo.xml");
+//		 List<model.Message> list = mock.getAMessageConsultaPublica();
+		 List<model.Message> list = mock.getEntregaTpMessagesInvalid("./testFiles/testFilesOutBox/", "Semana02.pdf");
 			 try {
 				sender.send(list);
 			} catch (AddressException e1) {
