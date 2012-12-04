@@ -7,7 +7,6 @@ import javax.mail.MessagingException;
 import persistence.exceptions.PersistenceException;
 
 import model.exceptions.InvalidAssociatedProtocolsException;
-import services.Pop3Protocol;
 import services.SenderProtocol;
 import services.ReceiverProtocol;
 import controller.ProjectController;;

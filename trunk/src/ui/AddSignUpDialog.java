@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -39,7 +40,7 @@ public class AddSignUpDialog extends JDialog {
 					System.out.println(String.format("Adding signup to %d", subject));
 					return true;
 				}});
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,6 +76,7 @@ public class AddSignUpDialog extends JDialog {
 			{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						boolean res = AddSignUpDialog.this.listener.add(Integer.parseInt(textField.getText()));
 						if (res) {
@@ -91,6 +93,7 @@ public class AddSignUpDialog extends JDialog {
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
+					@Override
 					public void actionPerformed(ActionEvent e) {
 						AddSignUpDialog.this.setVisible(false);
 					}

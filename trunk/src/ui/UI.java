@@ -15,7 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.*;
 
-import javax.swing.JSeparator;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
@@ -50,6 +49,7 @@ public class UI extends JFrame {
 			e1.printStackTrace();
 		}
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
 					final HashSet<Integer> inscriptions = new HashSet<Integer>();
@@ -106,12 +106,12 @@ public class UI extends JFrame {
 			break;
 		case Error:
 			this.lblStatusRunningOk.setText("Status: Error");
-			lblStatusRunningOk.setForeground(SystemColor.RED);
+			lblStatusRunningOk.setForeground(Color.RED);
 			this.btnRunning.setText("Stop daemon");
 			break;
 		case Down:
 			this.lblStatusRunningOk.setText("Status: Down");
-			lblStatusRunningOk.setForeground(SystemColor.BLACK);
+			lblStatusRunningOk.setForeground(Color.BLACK);
 			this.btnRunning.setText("Start daemon");
 			break;
 		}
@@ -160,6 +160,7 @@ public class UI extends JFrame {
 		
 		JButton btnNewButton = new JButton("Agregar");
 		btnNewButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new AddSignUpDialog(new AddSignUpDialog.UIEventListener(){
 					@Override
@@ -173,6 +174,7 @@ public class UI extends JFrame {
 		
 		JButton btnBorrar = new JButton("Borrar");
 		btnBorrar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				for (int row : table.getSelectedRows()) {
 					UI.this.listener.onDeleteSubjectClicked((int)tablemodel.getValueAt(row, 0));
@@ -184,6 +186,7 @@ public class UI extends JFrame {
 		
 		btnRunning = new JButton("Start daemon");
 		btnRunning.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				switch (UI.this.status) {
 				case Error:

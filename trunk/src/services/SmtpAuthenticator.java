@@ -12,7 +12,8 @@ public class SmtpAuthenticator extends Authenticator {
        this.user = username;
        this.pw = password;
     }
-   public PasswordAuthentication getPasswordAuthentication()
+   @Override
+public PasswordAuthentication getPasswordAuthentication()
    {
       return new PasswordAuthentication(user, pw);
    }
