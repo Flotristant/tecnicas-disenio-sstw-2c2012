@@ -5,7 +5,6 @@ import java.util.Map;
 import model.listeners.IResponseMailEventListener;
 
 import persistence.ITpPersistence;
-import persistence.exceptions.PersistenceException;
 
 public class ActionSaveTp extends ActionRule {
 

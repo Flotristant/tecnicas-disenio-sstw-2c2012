@@ -42,7 +42,7 @@ public class BootstrapperTestCase {
 		
 		bootstrapper.run();
 		
-		Assert.assertEquals(17, this.container.getMappings().size());
+		Assert.assertEquals(26, this.container.getMappings().size());
 		Assert.assertSame(this.container, this.container.getMappings().get(MutablePicoContainer.class));
 		Assert.assertSame(ActionAltaAlumno.class, this.container.getMappings().get(ActionRule.class + "ActionAltaAlumno"));
 	}

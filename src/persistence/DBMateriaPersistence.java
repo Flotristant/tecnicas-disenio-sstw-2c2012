@@ -1,6 +1,5 @@
 package persistence;
 
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 
 import persistence.exceptions.PersistenceException;

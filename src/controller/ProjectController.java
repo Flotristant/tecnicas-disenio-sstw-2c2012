@@ -33,7 +33,7 @@ public class ProjectController implements IProjectController{
 			if (this.anwserMessages == null) {
 				this.anwserMessages = new ArrayList<Message>();
 			}
-			model.Message answerMessage = new model.Message(m.getTo(), m.getSender(), subject, "");
+			model.Message answerMessage = new model.Message(m.getTo(), m.getSender(), subject, m.getBody());
 			if (m.isWithAttachments()) {
 				answerMessage.addAttachments(m.getAttachments());
 			}

@@ -56,10 +56,10 @@ public class TpPersistenceTestCase {
 		
 		tpPersistence.saveTp(this.codigoMateria, "francisco", 1, attachments);
 		
-		File fichero = new File("./testFiles/incoming/attach1");
-		Assert.assertFalse(fichero.exists());
-		fichero = new File("./testFiles/incoming/attach2");
-		Assert.assertFalse(fichero.exists());
+		File fichero = new File("./7510/TPs/90116/1/attach1");
+		Assert.assertTrue(fichero.exists());
+		fichero = new File("./7510/TPs/90116/1/attach2");
+		Assert.assertTrue(fichero.exists());
 	}
 	
 	private void createAttachments(String pathIncoming) throws IOException {
